@@ -1,0 +1,49 @@
+@import './variables.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+}
+
+/* Custom styles for the premium feel */
+@layer utilities {
+    .text-hero {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(3.5rem, 10vw, 7rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        font-weight: 400;
+    }
+
+    .text-title {
+        font-family: 'Instrument Serif', serif;
+        font-size: clamp(2.5rem, 6vw, 4rem);
+        line-height: 1;
+        letter-spacing: -0.03em;
+        font-weight: 400;
+    }
+
+    .text-overline {
+        @apply uppercase tracking-[0.15em] text-[0.75rem] font-bold text-muted-foreground mb-4 block;
+    }
+
+    .bg-grid {
+        background-image: linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+        background-size: 80px 80px;
+    }
+
+    .glow-orb {
+        background: radial-gradient(circle, hsl(var(--accent) / 0.05) 0%, transparent 70%);
+    }
+}
