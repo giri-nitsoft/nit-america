@@ -91,7 +91,7 @@ const Licensing = () => {
                     >
                         <div className="relative w-full h-full overflow-hidden">
                             <video
-                                src="/us_korea.mp4"
+                                src="/us_korea_trimmed.mp4"
                                 autoPlay
                                 muted
                                 loop
