@@ -65,22 +65,42 @@ const Licensing = () => {
             {/* Background elements removed */}
 
             {/* Hero Section */}
-            <section className="container pt-32 pb-24 border-b border-border/50">
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="max-w-4xl"
-                >
-                    <span className="text-overline inline-flex items-center gap-2">
-                        <Globe className="h-3 w-3" /> GLOBAL VISION, LOCAL ACTION
-                    </span>
-                    <h1 className="text-hero mb-8">The bridge between US trends and Korea.</h1>
-                    <p className="text-xl text-muted-foreground leading-relaxed">
-                        We don't just broker deals; we build the entire pathway. NIT America operates as a strategic gateway,
-                        securing premium US brand licenses and deploying them through our specialized execution hub in Korea.
-                    </p>
-                </motion.div>
+            <section className="container pt-32 pb-24 border-b border-border/50 relative">
+                <div className="flex flex-col lg:flex-row items-center justify-between min-h-[400px]">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8 }}
+                        className="max-w-3xl relative z-10"
+                    >
+                        <span className="text-overline inline-flex items-center gap-2">
+                            <Globe className="h-3 w-3" /> GLOBAL VISION, LOCAL ACTION
+                        </span>
+                        <h1 className="text-hero mb-8">The bridge between US trends and Korea.</h1>
+                        <p className="text-xl text-muted-foreground leading-relaxed">
+                            We don't just broker deals; we build the entire pathway. NIT America operates as a strategic gateway,
+                            securing premium US brand licenses and deploying them through our specialized execution hub in Korea.
+                        </p>
+                    </motion.div>
+
+                    <motion.div
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                        className="lg:absolute lg:right-0 lg:top-32 w-full max-w-[440px] h-[400px] mt-12 lg:mt-0"
+                    >
+                        <div className="relative w-full h-full overflow-hidden">
+                            <video
+                                src="/us_korea.mp4"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                                className="w-full h-full object-cover"
+                            />
+                        </div>
+                    </motion.div>
+                </div>
             </section>
 
             {/* Hubs Section */}
@@ -122,6 +142,48 @@ const Licensing = () => {
                 </div>
                 <div className="mt-12 text-center">
                     <p className="text-sm text-muted-foreground italic">"Beyond brokerage — an integrated one-stop solution from discovery to full market expansion."</p>
+                </div>
+            </section>
+
+            {/* OUR BRANDS Section */}
+            <section className="container py-32 border-t border-border/50">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-24"
+                >
+                    <span className="text-xs font-bold text-accent tracking-[0.3em] uppercase mb-4 block">Portfolio</span>
+                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6">Our Brands</h2>
+                    <div className="h-1.5 w-24 bg-black mx-auto" />
+                </motion.div>
+
+                <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                    {[
+                        { name: "MAUI & SONS", image: "/mauiand.jpg" },
+                        { name: "LA GEAR", image: "/lagear.jpg" }
+                    ].map((brand, i) => (
+                        <motion.div
+                            key={brand.name}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            viewport={{ once: true }}
+                            className="relative w-full max-w-[400px] aspect-square mx-auto overflow-hidden group cursor-pointer border border-border/50"
+                        >
+                            <img
+                                src={brand.image}
+                                alt={brand.name}
+                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                            <div className="absolute bottom-6 left-6">
+                                <h3 className="text-3xl md:text-4xl font-black italic text-white uppercase tracking-tight drop-shadow-xl">
+                                    {brand.name}
+                                </h3>
+                            </div>
+                        </motion.div>
+                    ))}
                 </div>
             </section>
 
