@@ -13,9 +13,9 @@ const Licensing = () => {
             role: "Strategic Hub",
             focus: "US Operations",
             items: ["Brand discovery & trend sourcing", "Strategic networking", "Agreement & negotiation"],
-            color: "text-blue-400",
-            bg: "bg-blue-400/5",
-            border: "border-blue-400/20"
+            color: "text-accent",
+            bg: "bg-white",
+            border: "border-border"
         },
         {
             title: "NITSOFT",
@@ -23,9 +23,9 @@ const Licensing = () => {
             role: "Execution Hub",
             focus: "Korea Operations",
             items: ["Localized commerce IT infra", "Channel-driven distribution", "Operations & management"],
-            color: "text-purple-400",
-            bg: "bg-purple-400/5",
-            border: "border-purple-400/20"
+            color: "text-accent",
+            bg: "bg-white",
+            border: "border-border"
         }
     ];
 
@@ -61,8 +61,8 @@ const Licensing = () => {
     ];
 
     return (
-        <div className="relative min-h-screen">
-            <div className="fixed inset-0 z-[-1] bg-grid opacity-10" />
+        <div className="relative min-h-screen bg-white">
+            {/* Background elements removed */}
 
             {/* Hero Section */}
             <section className="container pt-32 pb-24 border-b border-border/50">
@@ -126,7 +126,7 @@ const Licensing = () => {
             </section>
 
             {/* Process Section */}
-            <section className="border-y border-border/50 py-32 bg-accent/5">
+            <section className="border-y border-border/50 py-32">
                 <div className="container">
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -181,7 +181,7 @@ const Licensing = () => {
                     className="max-w-2xl mx-auto space-y-12"
                 >
                     <h2 className="text-2xl md:text-4xl font-serif">Build your bridge to the Korean market with certain outcome.</h2>
-                    <Button size="lg" className="rounded-none px-12 h-16 text-md font-bold uppercase tracking-widest" onClick={() => navigate('/contact')}>
+                    <Button size="lg" variant="outline" className="rounded-none px-12 h-16 text-md font-bold uppercase tracking-widest border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300" onClick={() => navigate('/contact')}>
                         Start a Partnership
                     </Button>
                 </motion.div>

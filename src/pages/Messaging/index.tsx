@@ -3,8 +3,8 @@ import { motion } from "framer-motion";
 
 const Messaging = () => {
     return (
-        <div className="relative min-h-screen">
-            <div className="fixed inset-0 z-[-1] bg-grid opacity-10" />
+        <div className="relative min-h-screen bg-white">
+            {/* Background elements removed */}
 
             <section className="container pt-32 pb-24">
                 <motion.div
@@ -22,7 +22,7 @@ const Messaging = () => {
             </section>
 
             {/* Philosophy Section */}
-            <section className="border-t border-b border-border/50 py-32 bg-accent/5">
+            <section className="border-t border-b border-border/50 py-32">
                 <div className="container">
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -62,7 +62,7 @@ const Messaging = () => {
             </section>
 
             <section className="container py-24 border-t border-border/50 text-center">
-                <Button size="lg" className="rounded-none px-12" onClick={() => window.location.href = '/contact'}>
+                <Button size="lg" variant="outline" className="rounded-none px-12 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300" onClick={() => window.location.href = '/contact'}>
                     Request a Conversation
                 </Button>
             </section>

@@ -19,10 +19,12 @@
 @layer utilities {
     .text-hero {
         font-family: 'Instrument Serif', serif;
-        font-size: clamp(3.5rem, 10vw, 7rem);
+        font-size: clamp(3.5rem, 8vw, 5rem);
+        /* Max size is now 80px (5rem) */
         line-height: 0.95;
         letter-spacing: -0.04em;
         font-weight: 400;
+        color: #000;
     }
 
     .text-title {
@@ -31,19 +33,20 @@
         line-height: 1;
         letter-spacing: -0.03em;
         font-weight: 400;
+        color: #000;
     }
 
     .text-overline {
-        @apply uppercase tracking-[0.15em] text-[0.75rem] font-bold text-muted-foreground mb-4 block;
+        @apply uppercase tracking-[0.15em] text-[0.75rem] font-bold text-muted-foreground/60 mb-4 block;
     }
 
     .bg-grid {
-        background-image: linear-gradient(to right, hsl(var(--border) / 0.5) 1px, transparent 1px),
-            linear-gradient(to bottom, hsl(var(--border) / 0.5) 1px, transparent 1px);
+        background-image: linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+            linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
         background-size: 80px 80px;
     }
 
     .glow-orb {
-        background: radial-gradient(circle, hsl(var(--accent) / 0.05) 0%, transparent 70%);
+        background: radial-gradient(circle, hsl(var(--accent) / 0.02) 0%, transparent 70%);
     }
 }

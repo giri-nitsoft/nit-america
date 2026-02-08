@@ -42,7 +42,7 @@ const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <Button asChild variant="default" className="rounded-none px-6">
+                    <Button asChild variant="outline" className="rounded-none px-6 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300">
                         <Link to="/contact">Contact</Link>
                     </Button>
                 </div>
@@ -70,7 +70,7 @@ const Navbar = () => {
                                         {link.name}
                                     </Link>
                                 ))}
-                                <Button asChild variant="default" className="w-full mt-4 rounded-none">
+                                <Button asChild variant="outline" className="w-full mt-4 rounded-none border-accent text-accent">
                                     <Link to="/contact">Contact</Link>
                                 </Button>
                             </nav>

@@ -2,59 +2,47 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import VantaGlobe from '@/components/VantaGlobe';
 
 const Home = () => {
     return (
-        <div className="relative min-h-screen">
-            {/* Background Decorative Elements */}
-            <div className="fixed inset-0 z-[-1] bg-grid opacity-20" />
-            <div className="fixed top-[-10%] right-[-10%] w-[70%] h-[70%] z-[-1] glow-orb" />
+        <div className="relative min-h-screen bg-white">
+            {/* Background Decorative Elements removed for clean minimalist look */}
 
             {/* Hero Section */}
             <section className="container pt-32 pb-24 md:pt-48 md:pb-32">
-                <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="relative min-h-[500px] flex items-center">
+                    {/* Layer 0: Wide Aspect Ratio Globe Container (800x500) */}
+                    <div className="absolute top-1/2 -translate-y-1/2 right-0 w-full md:w-[850px] h-full md:h-[550px] z-0 pointer-events-none">
+                        <VantaGlobe />
+                    </div>
+
+                    {/* Layer 1: Foreground Text (Overlapping) */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, ease: "easeOut" }}
-                        className="flex-1"
+                        className="relative z-10 w-full md:w-3/5"
                     >
-                        <h1 className="text-hero mb-8">
-                            Messaging infrastructure, <br className="hidden md:block" />
-                            proven in commerce.
-                        </h1>
+                        <span className="text-overline inline-block mb-4">Nexus of Innovation & Trade</span>
+                        <div className="relative inline-block">
+                            <h1 className="text-hero mb-8 whitespace-nowrap">
+                                Messaging infrastructure, <br />
+                                proven in commerce.
+                            </h1>
+                            <div className="absolute -bottom-2 left-0 w-24 h-[1px] bg-accent opacity-50" />
+                        </div>
                         <p className="text-xl text-muted-foreground mb-12 max-w-xl">
-                            Reliable messaging systems. Market expansion.
-                            Execution-ready infrastructure for brands that demand certainty.
+                            Connecting technology with global brand distribution.
+                            Reliable messaging systems for brands that demand certainty and market expansion.
                         </p>
                         <div className="flex gap-4">
-                            <Button asChild size="lg" className="rounded-none px-8">
+                            <Button asChild size="lg" variant="outline" className="rounded-none px-8 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300">
                                 <Link to="/contact">
                                     Talk to Us <ArrowRight className="ml-2 h-5 w-5" />
                                 </Link>
                             </Button>
                         </div>
-                    </motion.div>
-
-                    {/* Technical Visual */}
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 0.6, scale: 1 }}
-                        transition={{ duration: 1.2, delay: 0.2 }}
-                        className="flex-1 max-w-[400px]"
-                    >
-                        <svg viewBox="0 0 400 400" className="w-full h-auto animate-[spin_60s_linear_infinite]">
-                            <circle cx="200" cy="200" r="150" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="5,5" className="text-border" />
-                            <circle cx="200" cy="200" r="100" fill="none" stroke="currentColor" strokeWidth="1" className="text-border" />
-                            <g>
-                                <circle cx="200" cy="50" r="4" className="fill-accent" />
-                                <circle cx="350" cy="200" r="4" className="fill-accent" />
-                                <circle cx="200" cy="350" r="4" className="fill-accent" />
-                                <circle cx="50" cy="200" r="4" className="fill-accent" />
-                            </g>
-                            <path d="M200 50 L200 350" stroke="currentColor" strokeWidth="0.5" className="text-border" />
-                            <path d="M50 200 L350 200" stroke="currentColor" strokeWidth="0.5" className="text-border" />
-                        </svg>
                     </motion.div>
                 </div>
             </section>
@@ -71,7 +59,7 @@ const Home = () => {
                             transition={{ delay: i * 0.2 }}
                             viewport={{ once: true }}
                         >
-                            <h2 className="text-title max-w-3xl">{text}</h2>
+                            <h2 className="text-title whitespace-nowrap">{text}</h2>
                         </motion.div>
                     ))}
                 </div>

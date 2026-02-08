@@ -2,8 +2,8 @@ import { motion } from "framer-motion";
 
 const Company = () => {
     return (
-        <div className="relative min-h-screen">
-            <div className="fixed inset-0 z-[-1] bg-grid opacity-10" />
+        <div className="relative min-h-screen bg-white">
+            {/* Background elements removed for consistency */}
 
             <section className="container pt-32 pb-24">
                 <motion.div
@@ -14,7 +14,7 @@ const Company = () => {
                     <span className="text-overline">COMPANY</span>
                     <h1 className="text-hero mb-8">Engineering the bridge.</h1>
                     <p className="text-xl text-muted-foreground max-w-2xl">
-                        NIT America is an extension of NIT Group. We combine technical messaging infrastructure with specialized market execution.
+                        NIT — Nexus of Innovation & Trade. We connect technical messaging infrastructure with global brand distribution, creating a bridge for market-ready execution.
                     </p>
                 </motion.div>
             </section>
@@ -47,7 +47,7 @@ const Company = () => {
             </section>
 
             {/* Presence */}
-            <section className="border-t border-border/50 py-32 bg-accent/5">
+            <section className="border-t border-border/50 py-32">
                 <div className="container">
                     <div className="grid md:grid-cols-2 gap-24 items-center">
                         <div className="space-y-6">

@@ -9,8 +9,11 @@ const Footer = () => {
                         <Link to="/" className="font-serif text-2xl font-normal tracking-tight">
                             NIT<span className="font-semibold text-accent">America</span>
                         </Link>
+                        <p className="text-sm font-bold tracking-wider text-foreground">
+                            Nexus of Innovation & Trade
+                        </p>
                         <p className="text-sm text-muted-foreground leading-relaxed">
-                            Messaging infrastructure that powers growth. Engineered for scale, proven in commerce.
+                            Connecting technology with global brand distribution. Engineered for scale, proven in commerce.
                         </p>
                     </div>
 
