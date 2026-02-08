@@ -30,7 +30,6 @@ const Home = () => {
                                 Messaging infrastructure, <br />
                                 proven in commerce.
                             </h1>
-                            <div className="absolute -bottom-2 left-0 w-24 h-[1px] bg-accent opacity-50" />
                         </div>
                         <p className="text-xl text-muted-foreground mb-12 max-w-xl">
                             Connecting technology with global brand distribution.
