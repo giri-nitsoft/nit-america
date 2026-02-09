@@ -133,7 +133,7 @@ const Contact = () => {
                                         />
                                         <label
                                             htmlFor="file"
-                                            className="px-6 py-2 bg-accent text-white text-sm font-semibold cursor-pointer hover:bg-accent/90 transition-colors inline-block"
+                                            className="px-6 py-2 bg-muted/30 border border-border text-foreground text-sm font-semibold cursor-pointer hover:bg-muted/50 transition-colors inline-block"
                                         >
                                             Choose Files
                                         </label>
