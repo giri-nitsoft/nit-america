@@ -224,9 +224,6 @@ const Licensing = () => {
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                         {step.desc}
                                     </p>
-                                    <div className="inline-flex items-center gap-2 px-2 py-1 bg-accent/10 border border-accent/20 rounded text-[9px] font-bold text-accent uppercase tracking-widest">
-                                        System Online
-                                    </div>
                                 </div>
                             </motion.div>
                         ))}
