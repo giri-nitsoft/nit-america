@@ -1,9 +1,15 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useForm, ValidationError } from '@formspree/react';
+import { useState } from 'react';
 
 const Contact = () => {
     const [state, handleSubmit] = useForm("xgolvary");
+    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSelectedFiles(e.target.files);
+    };
 
     return (
         <div className="relative min-h-screen">
@@ -106,6 +112,43 @@ const Contact = () => {
                                     <ValidationError
                                         prefix="Message"
                                         field="message"
+                                        errors={state.errors}
+                                        className="text-sm text-red-500 mt-1"
+                                    />
+                                </div>
+                                <div className="space-y-2 group">
+                                    <label
+                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
+                                    >
+                                        Attachments (Optional)
+                                    </label>
+                                    <div className="relative border-b border-border py-4 flex items-center gap-4">
+                                        <input
+                                            id="file"
+                                            type="file"
+                                            name="file"
+                                            multiple
+                                            onChange={handleFileChange}
+                                            className="hidden"
+                                        />
+                                        <label
+                                            htmlFor="file"
+                                            className="px-6 py-2 bg-accent text-white text-sm font-semibold cursor-pointer hover:bg-accent/90 transition-colors inline-block"
+                                        >
+                                            Choose Files
+                                        </label>
+                                        <span className="text-sm text-muted-foreground">
+                                            {selectedFiles && selectedFiles.length > 0
+                                                ? Array.from(selectedFiles).map(f => f.name).join(', ')
+                                                : 'No files chosen'}
+                                        </span>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                        You can attach documents, images, or other files (max 10MB per file)
+                                    </p>
+                                    <ValidationError
+                                        prefix="File"
+                                        field="file"
                                         errors={state.errors}
                                         className="text-sm text-red-500 mt-1"
                                     />
