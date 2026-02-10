@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useForm, ValidationError } from '@formspree/react';
-import { useState } from 'react';
+import { } from 'react';
 
 const Contact = () => {
     const [state, handleSubmit] = useForm("xgolvary");
