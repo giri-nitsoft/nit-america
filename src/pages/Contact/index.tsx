@@ -1,14 +1,50 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useForm, ValidationError } from '@formspree/react';
 import { useState } from 'react';
 
 const Contact = () => {
-    const [state, handleSubmit] = useForm("xgolvary");
+    const [submitting, setSubmitting] = useState(false);
+    const [succeeded, setSucceeded] = useState(false);
+    const [errors, setErrors] = useState<any[]>([]);
     const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedFiles(e.target.files);
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setSubmitting(true);
+        setErrors([]);
+
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('https://formspree.io/f/xgxlovary', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                setSucceeded(true);
+            } else {
+                const data = await response.json();
+                if (data.errors) {
+                    setErrors(data.errors);
+                } else {
+                    alert('Failed to send message. Please try again later.');
+                }
+            }
+        } catch (error) {
+            console.error('Submission error:', error);
+            alert('An error occurred. Please try again later.');
+        } finally {
+            setSubmitting(false);
+        }
     };
 
     return (
@@ -37,7 +73,7 @@ const Contact = () => {
                         transition={{ delay: 0.2 }}
                         className="max-w-2xl"
                     >
-                        {state.succeeded ? (
+                        {succeeded ? (
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -65,12 +101,9 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors"
                                     />
-                                    <ValidationError
-                                        prefix="Name"
-                                        field="name"
-                                        errors={state.errors}
-                                        className="text-sm text-red-500 mt-1"
-                                    />
+                                    {errors.filter(e => e.field === 'name').map((error, i) => (
+                                        <p key={i} className="text-sm text-red-500 mt-1">{error.message}</p>
+                                    ))}
                                 </div>
                                 <div className="space-y-2 group">
                                     <label
@@ -87,12 +120,9 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors"
                                     />
-                                    <ValidationError
-                                        prefix="Email"
-                                        field="email"
-                                        errors={state.errors}
-                                        className="text-sm text-red-500 mt-1"
-                                    />
+                                    {errors.filter(e => e.field === 'email').map((error, i) => (
+                                        <p key={i} className="text-sm text-red-500 mt-1">{error.message}</p>
+                                    ))}
                                 </div>
                                 <div className="space-y-2 group">
                                     <label
@@ -109,12 +139,9 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors resize-none"
                                     />
-                                    <ValidationError
-                                        prefix="Message"
-                                        field="message"
-                                        errors={state.errors}
-                                        className="text-sm text-red-500 mt-1"
-                                    />
+                                    {errors.filter(e => e.field === 'message').map((error, i) => (
+                                        <p key={i} className="text-sm text-red-500 mt-1">{error.message}</p>
+                                    ))}
                                 </div>
                                 <div className="space-y-2 group">
                                     <label
@@ -146,20 +173,17 @@ const Contact = () => {
                                     <p className="text-xs text-muted-foreground mt-1">
                                         You can attach documents, images, or other files (max 10MB per file)
                                     </p>
-                                    <ValidationError
-                                        prefix="File"
-                                        field="file"
-                                        errors={state.errors}
-                                        className="text-sm text-red-500 mt-1"
-                                    />
+                                    {errors.filter(e => e.field === 'file').map((error, i) => (
+                                        <p key={i} className="text-sm text-red-500 mt-1">{error.message}</p>
+                                    ))}
                                 </div>
                                 <Button
                                     type="submit"
                                     size="lg"
-                                    disabled={state.submitting}
+                                    disabled={submitting}
                                     className="rounded-none px-12 h-16 text-md font-bold uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
                                 >
-                                    {state.submitting ? 'Sending...' : 'Request a Conversation'}
+                                    {submitting ? 'Sending...' : 'Request a Conversation'}
                                 </Button>
                             </form>
                         )}
