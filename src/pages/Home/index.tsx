@@ -10,7 +10,7 @@ const Home = () => {
             {/* HER0 — Identity */}
             <section className="container pt-32 pb-24 md:pt-48 md:pb-32">
                 <div className="relative min-h-[500px] flex items-center">
-                    <div className="absolute top-1/2 -translate-y-1/2 right-0 w-full md:w-[850px] h-full md:h-[550px] z-0 pointer-events-none">
+                    <div className="absolute top-1/2 -translate-y-1/2 right-0 w-full md:w-[900px] h-full md:h-[550px] z-0 pointer-events-none origin-right">
                         <VantaGlobe />
                     </div>
 

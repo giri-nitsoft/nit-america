@@ -34,7 +34,7 @@ const VantaGlobe: React.FC<VantaGlobeProps> = ({ children, className }) => {
                         scaleMobile: 1.00,
                         color: 0x3b82f6,
                         color2: 0x3b82f6,
-                        size: 1.0,
+                        size: 0.70,
                         backgroundColor: 0xffffff,
                         points: 12.00,
                         maxDistance: 20.00,
