@@ -167,8 +167,8 @@ const Licensing = () => {
 
                 <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
                     {[
-                        { name: "MAUI & SONS", image: "/mauiand.jpg" },
-                        { name: "LA GEAR", image: "/lagear.jpg" }
+                        { name: "MAUI & SONS", image: "/mauiand.jpg", isComingSoon: false },
+                        { name: "NEW BRAND", isComingSoon: true }
                     ].map((brand, i) => (
                         <motion.div
                             key={brand.name}
@@ -176,19 +176,30 @@ const Licensing = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: i * 0.1 }}
                             viewport={{ once: true }}
-                            className="relative w-full max-w-[400px] aspect-square mx-auto overflow-hidden group cursor-pointer border border-border/50"
+                            className="relative w-full max-w-[400px] aspect-square mx-auto overflow-hidden group cursor-pointer border border-border/50 bg-slate-50"
                         >
-                            <img
-                                src={brand.image}
-                                alt={brand.name}
-                                className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
-                            <div className="absolute bottom-6 left-6">
-                                <h3 className="text-3xl md:text-4xl font-black italic text-white uppercase tracking-tight drop-shadow-xl">
-                                    {brand.name}
-                                </h3>
-                            </div>
+                            {!brand.isComingSoon ? (
+                                <>
+                                    <img
+                                        src={brand.image}
+                                        alt={brand.name}
+                                        className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+                                    <div className="absolute bottom-6 left-6">
+                                        <h3 className="text-3xl md:text-4xl font-black italic text-white uppercase tracking-tight drop-shadow-xl">
+                                            {brand.name}
+                                        </h3>
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-slate-100">
+                                    <span className="text-xs font-bold text-accent tracking-[0.3em] uppercase mb-4">Coming Soon</span>
+                                    <h3 className="text-3xl md:text-4xl font-black italic text-slate-300 uppercase tracking-tight">
+                                        New Brand
+                                    </h3>
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </div>
