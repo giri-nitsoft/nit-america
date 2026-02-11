@@ -2,10 +2,17 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { ArrowRight, Zap, Layout, ShieldCheck } from "lucide-react";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 
 const Messaging = () => {
     return (
         <div className="relative min-h-screen bg-white">
+            <SEO
+                title="Messaging Infrastructure"
+                description="Reliable messaging infrastructure for global businesses entering the Korean market. Support for Kakao, Naver, Email, and SMS at scale."
+                keywords="Messaging Infrastructure, Kakao Business, Naver Messaging, SMS, Email, Transactional Messaging, Korea Market Entry"
+                canonical="https://nitamerica.com/messaging"
+            />
             {/* [HERO] — Philosophy */}
             <section className="container pt-32 pb-24 md:pt-48 md:pb-32 relative">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-16">
@@ -203,7 +210,11 @@ const Messaging = () => {
                                 '/logo/xexymixlogo.png',
                             ].map((logo, i) => (
                                 <div key={i} className="flex-shrink-0 w-48 h-24 flex items-center justify-center">
-                                    <img src={logo} alt="Partner" className="max-w-full max-h-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                                    <img
+                                        src={logo}
+                                        alt={`${logo.split('/').pop()?.split('logo')[0] || 'Partner'} logo`}
+                                        className="max-w-full max-h-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                                    />
                                 </div>
                             ))}
                             {/* Duplicate for seamless loop */}
@@ -222,7 +233,11 @@ const Messaging = () => {
                                 '/logo/xexymixlogo.png',
                             ].map((logo, i) => (
                                 <div key={`dup-${i}`} className="flex-shrink-0 w-48 h-24 flex items-center justify-center">
-                                    <img src={logo} alt="Partner" className="max-w-full max-h-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+                                    <img
+                                        src={logo}
+                                        alt={`${logo.split('/').pop()?.split('logo')[0] || 'Partner'} logo`}
+                                        className="max-w-full max-h-full object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                                    />
                                 </div>
                             ))}
                         </div>

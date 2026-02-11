@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { useForm, ValidationError } from '@formspree/react';
+import SEO from "@/components/SEO";
 import { } from 'react';
 
 const Contact = () => {
@@ -8,6 +9,12 @@ const Contact = () => {
 
     return (
         <div className="relative min-h-screen">
+            <SEO
+                title="Contact Us"
+                description="Get in touch with NIT America to discuss messaging-driven growth and market expansion in Korea."
+                keywords="Contact NIT America, Partnership, Business Growth Korea, Messaging Solutions"
+                canonical="https://nitamerica.com/contact"
+            />
             <div className="fixed inset-0 z-[-1] bg-grid opacity-10" />
 
             <section className="container pt-32 pb-24">

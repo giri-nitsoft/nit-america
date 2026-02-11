@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Search, FileText, Server, TrendingUp, Globe, Zap } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const Licensing = () => {
     const navigate = useNavigate();
@@ -62,6 +63,12 @@ const Licensing = () => {
 
     return (
         <div className="relative min-h-screen bg-white">
+            <SEO
+                title="Licensing & Distribution"
+                description="The bridge between US trends and Korea. We secure premium US brand licenses and deploy them through specialized execution hubs in Korea."
+                keywords="Brand Licensing, US Brands in Korea, Global Distribution, MAUI & SONS, LA GEAR, Market Expansion Korea"
+                canonical="https://nitamerica.com/licensing"
+            />
             {/* Background elements removed */}
 
             {/* Hero Section */}

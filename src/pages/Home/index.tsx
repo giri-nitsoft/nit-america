@@ -3,10 +3,31 @@ import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import VantaGlobe from '@/components/VantaGlobe';
+import SEO from '@/components/SEO';
 
 const Home = () => {
     return (
         <div className="relative min-h-screen bg-white">
+            <SEO
+                title="Home"
+                description="NIT America connects technology with global brand distribution. Specialized in messaging infrastructure and brand licensing for the Korean market."
+                keywords="NIT America, Messaging Infrastructure, Global Brand Distribution, Brand Licensing, Korea Market, Kakao, Naver"
+                schema={{
+                    "@context": "https://schema.org",
+                    "@type": "Organization",
+                    "name": "NIT America",
+                    "url": "https://nitamerica.com",
+                    "logo": "https://nitamerica.com/favicon.ico",
+                    "sameAs": [],
+                    "description": "Connecting technology with global brand distribution.",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressLocality": "Irvine",
+                        "addressRegion": "CA",
+                        "addressCountry": "US"
+                    }
+                }}
+            />
             {/* HER0 — Identity */}
             <section className="container pt-32 pb-24 md:pt-48 md:pb-32">
                 <div className="relative min-h-[500px] flex items-center">
