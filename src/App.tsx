@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Messaging from './pages/Messaging'
 import Licensing from './pages/Licensing'
 import Contact from './pages/Contact'
+import Messaging2 from './pages/Messaging2'
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/messaging" element={<Messaging />} />
                     <Route path="/licensing" element={<Licensing />} />
+                    <Route path="/messaging2" element={<Messaging2 />} />
                     <Route path="/contact" element={<Contact />} />
                 </Routes>
             </main>
