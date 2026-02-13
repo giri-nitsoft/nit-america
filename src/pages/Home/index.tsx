@@ -9,17 +9,16 @@ const Home = () => {
     return (
         <div className="relative min-h-screen bg-white">
             <SEO
-                title="Home"
-                description="NIT America connects technology with global brand distribution. Specialized in messaging infrastructure and brand licensing for the Korean market."
+                description="NIT America is a U.S.-based global brand licensing and email infrastructure company connecting American brands to Asian markets."
                 keywords="NIT America, Messaging Infrastructure, Global Brand Distribution, Brand Licensing, Korea Market, Kakao, Naver"
                 schema={{
                     "@context": "https://schema.org",
                     "@type": "Organization",
                     "name": "NIT America",
                     "url": "https://nitamerica.com",
-                    "logo": "https://nitamerica.com/favicon.ico",
+                    "logo": "https://nitamerica.com/favicon.png",
                     "sameAs": [],
-                    "description": "Connecting technology with global brand distribution.",
+                    "description": "NIT America is a U.S.-based global brand licensing and email infrastructure company connecting American brands to Asian markets.",
                     "address": {
                         "@type": "PostalAddress",
                         "addressLocality": "Irvine",
@@ -43,7 +42,7 @@ const Home = () => {
                     >
                         <span className="text-overline inline-block mb-4">Nexus of Innovation & Trade</span>
                         <h1 className="text-hero mb-8">
-                            We connect markets.
+                            NIT America connects markets.
                         </h1>
                         <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-xl leading-relaxed">
                             We design the points where business moves — <br className="hidden md:block" />

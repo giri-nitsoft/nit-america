@@ -12,14 +12,14 @@ interface SEOProps {
 
 const SEO = ({
     title,
-    description = "NIT America: Connecting technology with global brand distribution. Messaging infrastructure that powers growth, proven in commerce.",
+    description = "NIT America is a U.S.-based global brand licensing and email infrastructure company connecting American brands to Asian markets.",
     keywords = "NIT America, Messaging Infrastructure, Global Distribution, Brand Licensing, Korea Market Entry, Kakao Business, Naver Messaging",
     ogImage = "https://nitamerica.com/ogtag.png",
     ogType = 'website',
     canonical = "https://nitamerica.com",
     schema,
 }: SEOProps) => {
-    const siteTitle = "NIT America | Nexus of Innovation & Trade";
+    const siteTitle = "NIT America | Global Brand Licensing & Email Marketing Infrastructure";
     const fullTitle = title ? `${title} | ${siteTitle}` : siteTitle;
 
     return (

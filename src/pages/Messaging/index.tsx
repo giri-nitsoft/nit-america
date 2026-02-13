@@ -24,7 +24,7 @@ const Messaging = () => {
                     >
                         <span className="text-overline uppercase tracking-[0.3em] mb-6 block">Philosophy</span>
                         <h1 className="text-hero mb-8">
-                            Messaging is not a channel. <br />
+                            NIT America: Messaging is not a channel. <br />
                             It’s infrastructure.
                         </h1>
                         <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">

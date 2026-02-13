@@ -83,7 +83,7 @@ const Licensing = () => {
                         <span className="text-overline inline-flex items-center gap-2">
                             <Globe className="h-3 w-3" /> GLOBAL VISION, LOCAL ACTION
                         </span>
-                        <h1 className="text-hero mb-8">The bridge between US trends and Korea.</h1>
+                        <h1 className="text-hero mb-8">NIT America: The bridge between US trends and Korea.</h1>
                         <p className="text-xl text-muted-foreground leading-relaxed">
                             We don't just broker deals; we build the entire pathway. NIT America operates as a strategic gateway,
                             securing premium US brand licenses and deploying them through our specialized execution hub in Korea.

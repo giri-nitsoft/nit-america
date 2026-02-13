@@ -26,7 +26,7 @@ const Contact = () => {
                         className="mb-24"
                     >
                         <span className="text-overline">CONTACT</span>
-                        <h1 className="text-hero mb-8">Let's Talk.</h1>
+                        <h1 className="text-hero mb-8">Contact NIT America.</h1>
                         <p className="text-xl text-muted-foreground max-w-2xl">
                             Interested in messaging-driven growth and market expansion?
                             We'd like to hear from you.

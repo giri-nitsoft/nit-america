@@ -39,7 +39,7 @@ const Messaging2 = () => {
                 >
                     <span className="text-overline mb-6 block">Messaging Infrastructure</span>
                     <h1 className="text-hero mb-8">
-                        Email infrastructure <br className="hidden md:block" />
+                        NIT America: Email infrastructure <br className="hidden md:block" />
                         built for scale.
                     </h1>
                     <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl">
