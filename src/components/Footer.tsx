@@ -6,8 +6,12 @@ const Footer = () => {
             <div className="container">
                 <div className="flex flex-col md:flex-row justify-between gap-16 mb-24 text-left">
                     <div className="max-w-xs space-y-6">
-                        <Link to="/" className="font-sans text-2xl font-semibold tracking-tight">
-                            NIT<span className="font-bold text-accent">America</span>
+                        <Link to="/" className="inline-block">
+                            <img
+                                src="/home/homebtn.png"
+                                alt="NIT America"
+                                className="h-8 w-auto"
+                            />
                         </Link>
                         <p className="text-sm font-medium tracking-wider text-foreground">
                             Nexus of Innovation & Trade
