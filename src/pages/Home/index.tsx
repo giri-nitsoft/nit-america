@@ -94,7 +94,7 @@ const Home = () => {
                             </p>
                         </div>
                         <Button asChild variant="link" className="p-0 text-accent font-medium uppercase tracking-widest hover:text-foreground transition-colors h-auto text-sm">
-                            <Link to="/messaging">
+                            <Link to="/">
                                 Explore Messaging Infrastructure →
                             </Link>
                         </Button>

@@ -76,7 +76,7 @@ const Messaging = () => {
                 title="Enterprise Email Infrastructure"
                 description="Secure and scalable email delivery infrastructure tailored to complex enterprise environments."
                 keywords="Enterprise Email, Email Infrastructure, Transactional Email, High Volume Email, Compliance Email"
-                canonical="https://nitamerica.com/messaging"
+                canonical="https://nitamerica.com/"
             />
 
             {/* [HERO] — Enterprise Centric */}
