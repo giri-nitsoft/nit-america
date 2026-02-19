@@ -13,7 +13,6 @@ const Navbar = () => {
     const isActive = (path: string) => location.pathname === path;
 
     const navLinks = [
-        { name: 'Home', path: '/' },
         { name: 'Messaging', path: '/messaging' },
         { name: 'Licensing & Distribution', path: '/licensing' },
     ];
@@ -21,10 +20,12 @@ const Navbar = () => {
     return (
         <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-16 items-center justify-between">
-                <Link to="/" className="flex items-center space-x-2">
-                    <span className="font-serif text-2xl font-normal tracking-tight">
-                        NIT<span className="font-semibold text-accent">America</span>
-                    </span>
+                <Link to="/" className="flex items-center">
+                    <img
+                        src="/home/homebtn.png"
+                        alt="NIT America"
+                        className="h-8 w-auto"
+                    />
                 </Link>
 
                 {/* Desktop Navigation */}

@@ -69,7 +69,7 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <span className="text-overline">CORE BUSINESS</span>
-                        <h2 className="text-4xl md:text-6xl font-bold mt-6 mb-8 tracking-tighter leading-tight">
+                        <h2 className="text-4xl md:text-6xl font-semibold mt-6 mb-8 tracking-tighter leading-tight">
                             We connect businesses <br />
                             through messaging.
                         </h2>
@@ -93,7 +93,7 @@ const Home = () => {
                                 within actual commercial environments.
                             </p>
                         </div>
-                        <Button asChild variant="link" className="p-0 text-accent font-bold uppercase tracking-widest hover:text-foreground transition-colors h-auto text-sm">
+                        <Button asChild variant="link" className="p-0 text-accent font-medium uppercase tracking-widest hover:text-foreground transition-colors h-auto text-sm">
                             <Link to="/messaging">
                                 Explore Messaging Infrastructure →
                             </Link>
@@ -126,11 +126,11 @@ const Home = () => {
                         transition={{ duration: 1 }}
                         className="max-w-4xl"
                     >
-                        <h2 className="text-4xl md:text-6xl font-bold mb-12 tracking-tighter leading-tight">
+                        <h2 className="text-4xl md:text-6xl font-semibold mb-12 tracking-tighter leading-tight">
                             Messaging is not the end. <br />
                             It is the starting point of market entry.
                         </h2>
-                        <p className="text-2xl md:text-3xl text-white/60 leading-relaxed font-light">
+                        <p className="text-2xl md:text-3xl text-white/60 leading-relaxed font-normal">
                             We build communication infrastructure <br className="hidden md:block" />
                             that supports real execution — <br className="hidden md:block" />
                             from engagement to distribution.
@@ -149,7 +149,7 @@ const Home = () => {
                         transition={{ duration: 0.8 }}
                     >
                         <span className="text-overline">NEXT BUSINESS</span>
-                        <h2 className="text-4xl md:text-6xl font-bold mt-6 mb-8 tracking-tighter leading-tight">
+                        <h2 className="text-4xl md:text-6xl font-semibold mt-6 mb-8 tracking-tighter leading-tight">
                             We bring your business <br />
                             to Korea — beyond borders.
                         </h2>
@@ -172,7 +172,7 @@ const Home = () => {
                                 extends into brand licensing and market expansion.
                             </p>
                         </div>
-                        <Button asChild variant="link" className="p-0 text-accent font-bold uppercase tracking-widest hover:text-foreground transition-colors h-auto text-sm">
+                        <Button asChild variant="link" className="p-0 text-accent font-medium uppercase tracking-widest hover:text-foreground transition-colors h-auto text-sm">
                             <Link to="/licensing">
                                 Explore Licensing & Distribution →
                             </Link>
@@ -189,7 +189,7 @@ const Home = () => {
                     viewport={{ once: true }}
                     className="max-w-3xl mx-auto space-y-12"
                 >
-                    <h2 className="text-3xl md:text-5xl font-bold tracking-tighter leading-tight italic">
+                    <h2 className="text-3xl md:text-5xl font-semibold tracking-tighter leading-tight italic">
                         "Infrastructure proven through operation <br />
                         remains stable through expansion."
                     </h2>

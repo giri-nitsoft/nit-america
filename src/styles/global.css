@@ -11,33 +11,60 @@
 
     body {
         @apply bg-background text-foreground font-sans;
+        font-weight: 400;
+        /* Inter Regular */
         font-feature-settings: "rlig" 1, "calt" 1;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-sans;
+        font-weight: 600;
+        /* Inter SemiBold */
+    }
+
+    /* Numbers/UI: Inter Medium */
+    button,
+    a,
+    input,
+    select,
+    textarea,
+    .text-ui,
+    .font-mono,
+    [class*="tracking-widest"] {
+        @apply font-sans;
+        font-weight: 500;
     }
 }
 
 /* Custom styles for the premium feel */
 @layer utilities {
     .text-hero {
-        font-family: 'Instrument Serif', serif;
+        @apply font-sans;
         font-size: clamp(3.5rem, 8vw, 5rem);
-        /* Max size is now 80px (5rem) */
-        line-height: 0.95;
-        letter-spacing: -0.04em;
-        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        font-weight: 600;
+        /* Inter SemiBold */
         color: #000;
     }
 
     .text-title {
-        font-family: 'Instrument Serif', serif;
+        @apply font-sans;
         font-size: clamp(2.5rem, 6vw, 4rem);
-        line-height: 1;
-        letter-spacing: -0.03em;
-        font-weight: 400;
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        font-weight: 600;
+        /* Inter SemiBold */
         color: #000;
     }
 
     .text-overline {
-        @apply uppercase tracking-[0.15em] text-[0.75rem] font-bold text-muted-foreground/60 mb-4 block;
+        @apply uppercase tracking-[0.15em] text-[0.75rem] font-medium text-muted-foreground/60 mb-4 block;
     }
 
     .bg-grid {

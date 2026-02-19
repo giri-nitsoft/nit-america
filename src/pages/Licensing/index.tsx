@@ -127,13 +127,13 @@ const Licensing = () => {
                             <div className="relative z-10">
                                 <div className="flex justify-between items-start mb-8">
                                     <div>
-                                        <span className={`text-[10px] font-bold tracking-[0.2em] ${hub.color}`}>{hub.role}</span>
-                                        <h2 className="text-3xl font-bold mt-2">{hub.title}</h2>
+                                        <span className={`text-[10px] font-medium tracking-[0.2em] ${hub.color}`}>{hub.role}</span>
+                                        <h2 className="text-3xl font-semibold mt-2">{hub.title}</h2>
                                     </div>
-                                    <span className="text-xs font-bold font-mono py-1 px-2 border border-current opacity-50">{hub.location}</span>
+                                    <span className="text-xs font-medium font-mono py-1 px-2 border border-current opacity-50">{hub.location}</span>
                                 </div>
                                 <div className="space-y-4">
-                                    <p className="font-bold text-sm uppercase tracking-wider text-muted-foreground">Core focus: {hub.focus}</p>
+                                    <p className="font-medium text-sm uppercase tracking-wider text-muted-foreground">Core focus: {hub.focus}</p>
                                     <ul className="space-y-3">
                                         {hub.items.map((item) => (
                                             <li key={item} className="flex items-center gap-3 text-sm">
@@ -160,8 +160,8 @@ const Licensing = () => {
                     viewport={{ once: true }}
                     className="text-center mb-24"
                 >
-                    <span className="text-xs font-bold text-accent tracking-[0.3em] uppercase mb-4 block">Portfolio</span>
-                    <h2 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase mb-6">Our Brands</h2>
+                    <span className="text-xs font-medium text-accent tracking-[0.3em] uppercase mb-4 block">Portfolio</span>
+                    <h2 className="text-5xl md:text-7xl font-semibold tracking-tighter uppercase mb-6">Our Brands</h2>
                     <div className="h-1.5 w-24 bg-black mx-auto" />
                 </motion.div>
 
@@ -187,15 +187,15 @@ const Licensing = () => {
                                     />
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
                                     <div className="absolute bottom-6 left-6">
-                                        <h3 className="text-3xl md:text-4xl font-black italic text-white uppercase tracking-tight drop-shadow-xl">
+                                        <h3 className="text-3xl md:text-4xl font-semibold italic text-white uppercase tracking-tight drop-shadow-xl">
                                             {brand.name}
                                         </h3>
                                     </div>
                                 </>
                             ) : (
                                 <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-slate-100">
-                                    <span className="text-xs font-bold text-accent tracking-[0.3em] uppercase mb-4">Coming Soon</span>
-                                    <h3 className="text-3xl md:text-4xl font-black italic text-slate-300 uppercase tracking-tight">
+                                    <span className="text-xs font-medium text-accent tracking-[0.3em] uppercase mb-4">Coming Soon</span>
+                                    <h3 className="text-3xl md:text-4xl font-semibold italic text-slate-300 uppercase tracking-tight">
                                         New Brand
                                     </h3>
                                 </div>
@@ -236,8 +236,8 @@ const Licensing = () => {
                                 </div>
                                 <div className="space-y-4">
                                     <div>
-                                        <span className="text-xs font-bold text-accent font-mono block mb-1">STEP {step.id} — {step.step}</span>
-                                        <h3 className="text-xl font-bold font-sans uppercase tracking-tight">{step.title}</h3>
+                                        <span className="text-xs font-medium text-accent font-mono block mb-1">STEP {step.id} — {step.step}</span>
+                                        <h3 className="text-xl font-semibold font-sans uppercase tracking-tight">{step.title}</h3>
                                     </div>
                                     <p className="text-sm text-muted-foreground leading-relaxed">
                                         {step.desc}
@@ -257,8 +257,8 @@ const Licensing = () => {
                     viewport={{ once: true }}
                     className="max-w-2xl mx-auto space-y-12"
                 >
-                    <h2 className="text-2xl md:text-4xl font-serif">Build your bridge to the Korean market with certain outcome.</h2>
-                    <Button size="lg" variant="outline" className="rounded-none px-12 h-16 text-md font-bold uppercase tracking-widest border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300" onClick={() => navigate('/contact')}>
+                    <h2 className="text-2xl md:text-4xl font-sans font-semibold">Build your bridge to the Korean market with certain outcome.</h2>
+                    <Button size="lg" variant="outline" className="rounded-none px-12 h-16 text-md font-medium uppercase tracking-widest border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300" onClick={() => navigate('/contact')}>
                         Start a Partnership
                     </Button>
                 </motion.div>

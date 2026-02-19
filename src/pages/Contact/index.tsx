@@ -45,7 +45,7 @@ const Contact = () => {
                                 animate={{ opacity: 1, scale: 1 }}
                                 className="bg-accent/10 border border-accent p-12 rounded-sm"
                             >
-                                <h2 className="text-3xl font-bold mb-4">Thank you!</h2>
+                                <h2 className="text-3xl font-semibold mb-4">Thank you!</h2>
                                 <p className="text-lg text-muted-foreground">
                                     We've received your message and will get back to you soon.
                                 </p>
@@ -55,7 +55,7 @@ const Contact = () => {
                                 <div className="space-y-2 group">
                                     <label
                                         htmlFor="name"
-                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
+                                        className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
                                     >
                                         Full Name
                                     </label>
@@ -72,7 +72,7 @@ const Contact = () => {
                                 <div className="space-y-2 group">
                                     <label
                                         htmlFor="email"
-                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
+                                        className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
                                     >
                                         Work Email
                                     </label>
@@ -89,7 +89,7 @@ const Contact = () => {
                                 <div className="space-y-2 group">
                                     <label
                                         htmlFor="message"
-                                        className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
+                                        className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground group-focus-within:text-accent transition-colors"
                                     >
                                         Message
                                     </label>
@@ -109,7 +109,7 @@ const Contact = () => {
                                         type="submit"
                                         size="lg"
                                         disabled={state.submitting}
-                                        className="rounded-none px-12 h-16 text-md font-bold uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="rounded-none px-12 h-16 text-md font-medium uppercase tracking-widest disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         {state.submitting ? 'Sending...' : 'Request a Conversation'}
                                     </Button>
