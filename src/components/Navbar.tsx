@@ -13,7 +13,7 @@ const Navbar = () => {
     const isActive = (path: string) => location.pathname === path;
 
     const navLinks = [
-        { name: 'Messaging', path: '/' },
+        { name: 'Messaging', path: '/mail' },
         { name: 'Licensing & Distribution', path: '/licensing' },
     ];
 
@@ -21,11 +21,13 @@ const Navbar = () => {
         <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
             <div className="container flex h-16 items-center justify-between">
                 <Link to="/" className="flex items-center">
-                    <img
-                        src="/home/homebtn.png"
-                        alt="NIT America"
-                        className="h-8 w-auto"
-                    />
+                    {!isActive('/') && (
+                        <img
+                            src="/home/homebtn.png"
+                            alt="NIT America"
+                            className="h-8 w-auto"
+                        />
+                    )}
                 </Link>
 
                 {/* Desktop Navigation */}
