@@ -4,9 +4,11 @@ import Footer from './components/Footer'
 import ScrollToTop from './components/ScrollToTop'
 import Home from './pages/Home'
 import Messaging from './pages/Messaging'
+import Mail from './pages/Messaging/Mail'
 import Licensing from './pages/Licensing'
 import Contact from './pages/Contact'
 import Messaging2 from './pages/Messaging2'
+import Team from './pages/Team'
 
 import Home2 from './pages/Home2'
 
@@ -23,7 +25,8 @@ function App() {
                             <Routes>
                                 <Route path="/home2" element={<Home />} />
                                 <Route path="/messaging" element={<Messaging />} />
-                                <Route path="/mail" element={<Messaging />} />
+                                <Route path="/mail" element={<Mail />} />
+                                <Route path="/team" element={<Team />} />
                                 <Route path="/licensing" element={<Licensing />} />
                                 <Route path="/messaging2" element={<Messaging2 />} />
                                 <Route path="/contact" element={<Contact />} />

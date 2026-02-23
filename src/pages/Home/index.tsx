@@ -76,7 +76,7 @@ const Home = () => {
                                     </Button>
                                 </div>
                                 <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                                    <Link to="/mail" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors text-sm flex items-center group">
+                                    <Link to="/messaging" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors text-sm flex items-center group">
                                         Explore Messaging <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
                                     <Link to="/licensing" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors text-sm flex items-center group">
@@ -130,7 +130,7 @@ const Home = () => {
                             <p className="text-lg text-foreground/80 mb-10 leading-relaxed max-w-lg">
                                 From authentication to lifecycle notifications, we build messaging systems that perform in real commercial environments. Compliance-ready setup (opt-in/opt-out, A2P registration) and reporting are designed in from day one.
                             </p>
-                            <Link to="/mail" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors group flex items-center text-sm">
+                            <Link to="/messaging" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors group flex items-center text-sm">
                                 Explore Messaging
                                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                             </Link>
