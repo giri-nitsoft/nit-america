@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionTemplate, Variants } from "framer-motion";
 import { Asterisk, ArrowRight } from "lucide-react";
 import { Link } from 'react-router-dom';
@@ -7,8 +8,16 @@ import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
 
 export default function Home2() {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     const { scrollY } = useScroll();
-    const logoScale = useTransform(scrollY, [0, 400], [1, 0.32]);
+    const logoScale = useTransform(scrollY, [0, 400], isMobile ? [1, 0.75] : [1, 0.32]);
     const logoY = useTransform(scrollY, [0, 400], [60, 0]);
     const logoX = useTransform(scrollY, [0, 400], [0, 0]);
 
@@ -72,20 +81,17 @@ export default function Home2() {
                             }}
                             className="pointer-events-auto inline-block"
                         >
-                            <Link to="/" className="flex flex-col items-start gap-2">
-                                <div
-                                    style={{ width: 900, height: 100 }}
-                                    className="flex items-center justify-start"
-                                >
+                            <Link to="/" className="flex flex-col items-start gap-1">
+                                <div className="w-[280px] sm:w-[500px] md:w-[700px] lg:w-[900px] flex items-center justify-start">
                                     <img
                                         src="/home/homebtn.png"
                                         alt="NIT America"
-                                        className="w-full h-full object-contain"
+                                        className="w-full h-auto object-contain"
                                     />
                                 </div>
                                 <motion.span
                                     style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
-                                    className="text-accent font-semibold tracking-[0.3em] uppercase text-sm ml-4"
+                                    className="text-accent font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-sm ml-2 sm:ml-4"
                                 >
                                     Nexus of Innovation & Trade
                                 </motion.span>
@@ -95,43 +101,43 @@ export default function Home2() {
                 </header>
 
                 {/* Hero Section */}
-                <section className="relative h-screen flex flex-col justify-end items-end px-8 md:px-24 pb-32 overflow-hidden">
+                <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-20 sm:pb-32 overflow-hidden">
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
                         style={{ opacity: textOpacity, y: textY }}
-                        className="max-w-full text-right"
+                        className="max-w-full text-center md:text-right"
                     >
                         <div className="overflow-hidden py-1">
                             <motion.h2
                                 variants={itemVariants}
-                                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
+                                className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
                             >
-                                <Typewriter text="Messaging" minWidth="10ch" /> infrastructure
+                                <Typewriter text="Messaging" minWidth="8ch" /> infrastructure
                             </motion.h2>
                         </div>
                         <div className="overflow-hidden py-1">
                             <motion.h2
                                 variants={itemVariants}
-                                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
+                                className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
                             >
                                 that scales.
                             </motion.h2>
                         </div>
 
-                        <div className="h-8 md:h-12" />
+                        <div className="h-4 md:h-12" />
 
                         <div className="overflow-hidden py-1">
                             <motion.div
                                 variants={itemVariants}
-                                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A] flex items-center justify-end gap-3 md:gap-6"
+                                className="text-xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A] flex items-center justify-center md:justify-end gap-2 md:gap-6"
                             >
                                 <span>Launch</span>
-                                <span className="inline-block w-20 h-10 md:w-32 md:h-16 bg-black rounded-full relative overflow-hidden" aria-hidden="true">
+                                <span className="inline-block w-12 h-6 md:w-32 md:h-16 bg-black rounded-full relative overflow-hidden" aria-hidden="true">
                                     <motion.span
                                         animate={{
-                                            x: [-24, 24],
+                                            x: [-10, 10],
                                             rotate: [0, 360]
                                         }}
                                         transition={{
@@ -142,7 +148,7 @@ export default function Home2() {
                                         }}
                                         className="absolute inset-0 flex items-center justify-center"
                                     >
-                                        <Asterisk className="w-[30px] h-[30px] md:w-[42px] md:h-[42px] text-white" />
+                                        <Asterisk className="w-4 h-4 md:w-[42px] md:h-[42px] text-white" />
                                     </motion.span>
                                 </span>
                                 <span>brands</span>
@@ -151,7 +157,7 @@ export default function Home2() {
                         <div className="overflow-hidden py-1">
                             <motion.p
                                 variants={itemVariants}
-                                className="text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
+                                className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
                             >
                                 in Korea.
                             </motion.p>
@@ -159,13 +165,13 @@ export default function Home2() {
 
                         <motion.div
                             variants={itemVariants}
-                            className="mt-12 flex justify-end"
+                            className="mt-8 sm:mt-12 flex justify-center md:justify-end"
                         >
                             <Link
                                 to="/contact"
-                                className="inline-flex items-center gap-4 text-2xl md:text-[48px] font-medium uppercase tracking-tight text-foreground hover:text-accent transition-all duration-300 group pointer-events-auto"
+                                className="inline-flex items-center gap-2 sm:gap-3 text-base sm:text-2xl md:text-[40px] font-bold uppercase tracking-tight text-[#1F1F23] hover:text-accent transition-all duration-300 group pointer-events-auto"
                             >
-                                Request Consultation <ArrowRight className="w-8 h-8 md:w-[48px] md:h-[48px] group-hover:translate-x-3 transition-transform duration-300" />
+                                REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-8 sm:h-8 md:w-[42px] md:h-[42px] group-hover:translate-x-2 transition-transform duration-300" />
                             </Link>
                         </motion.div>
                     </motion.div>
@@ -487,18 +493,18 @@ export default function Home2() {
                 transition={{ duration: 1.2, ease: [0.21, 0.45, 0.32, 0.9] }}
                 className="px-8 md:px-24 py-32 bg-[#F8F9FA] relative z-10 text-center flex flex-col items-center space-y-12"
             >
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-foreground max-w-4xl mx-auto italic leading-tight">
+                <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-foreground max-w-4xl mx-auto italic leading-tight">
                     Operations-proven infrastructure becomes an unfair advantage in expansion.
                 </h2>
                 <Link
                     to="/contact"
-                    className="inline-flex items-center gap-6 px-10 py-5 border-[1.5px] border-[#1F1F23] rounded-full text-xl md:text-2xl font-bold uppercase tracking-wider text-[#1F1F23] hover:bg-[#1F1F23] hover:text-white transition-all duration-300 group"
+                    className="inline-flex items-center gap-4 sm:gap-6 px-6 sm:px-10 py-3 sm:py-5 border-[1.5px] border-[#1F1F23] rounded-full text-base sm:text-xl md:text-2xl font-bold uppercase tracking-wider text-[#1F1F23] hover:bg-[#1F1F23] hover:text-white transition-all duration-300 group"
                 >
-                    REQUEST CONSULTATION <ArrowRight className="w-6 h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform duration-300" />
+                    REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform duration-300" />
                 </Link>
             </motion.section>
 
             <Footer />
-        </div>
+        </div >
     );
 }
