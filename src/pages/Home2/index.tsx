@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate, Variants } from "framer-motion";
-import { Asterisk, ArrowRight } from "lucide-react";
+import { motion, useScroll, useTransform, useMotionTemplate, Variants, AnimatePresence } from "framer-motion";
+import { Asterisk, ArrowRight, Plus, X, Menu } from "lucide-react";
 import { Link } from 'react-router-dom';
 import Typewriter from "./components/Typewriter";
+import CrystalOrb from "./components/CrystalOrb";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
@@ -16,6 +17,8 @@ export default function Home2() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
     const { scrollY } = useScroll();
     const logoScale = useTransform(scrollY, [0, 400], isMobile ? [1, 0.75] : [1, 0.32]);
     const logoY = useTransform(scrollY, [0, 400], [60, 0]);
@@ -25,8 +28,14 @@ export default function Home2() {
     const navBorderAlpha = useTransform(scrollY, [150, 300], [0, 0.1]);
     const navBorder = useMotionTemplate`rgba(0,0,0,${navBorderAlpha})`;
 
+    // MENU + button scroll linked transforms
+    const menuButtonOpacity = useTransform(scrollY, [0, 100], [1, 0]);
+    const menuButtonY = useTransform(scrollY, [0, 100], [35, 20]);
+
     const textOpacity = useTransform(scrollY, [0, 200], [1, 0]);
     const textY = useTransform(scrollY, [0, 200], [0, -50]);
+
+    const orbOpacity = useTransform(scrollY, [0, 300], [0.4, 0]);
 
     const containerVariants: Variants = {
         hidden: { opacity: 1 },
@@ -70,7 +79,7 @@ export default function Home2() {
             <div className="relative">
                 {/* Navigation / Logo Container (Scaled Logo) */}
                 <header className="fixed top-0 left-0 w-full z-50 h-16 pointer-events-none">
-                    <div className="container h-full flex items-center">
+                    <div className="w-full h-full flex items-center justify-between px-6 sm:px-8 md:px-24">
                         <motion.div
                             style={{
                                 scale: logoScale,
@@ -97,8 +106,83 @@ export default function Home2() {
                                 </motion.span>
                             </Link>
                         </motion.div>
+
+                        {/* MENU + Button */}
+                        <motion.div
+                            style={{ opacity: menuButtonOpacity, y: menuButtonY }}
+                            className="pointer-events-auto"
+                        >
+                            <button
+                                onClick={() => setIsMenuOpen(true)}
+                                className="group flex items-center justify-center sm:gap-2 bg-black text-white p-2.5 sm:px-5 sm:py-2.5 rounded-full hover:bg-[#1a1a1a] transition-all duration-300 shadow-sm"
+                            >
+                                <span className="hidden sm:block text-[13px] font-bold tracking-widest uppercase ml-1">Menu</span>
+                                <Plus className="hidden sm:block w-4 h-4 transition-transform group-hover:rotate-90" />
+                                <Menu className="sm:hidden w-5 h-5" />
+                            </button>
+                        </motion.div>
                     </div>
                 </header>
+
+                {/* Slide-in Menu Overlay */}
+                <AnimatePresence>
+                    {isMenuOpen && (
+                        <>
+                            <motion.div
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                onClick={() => setIsMenuOpen(false)}
+                                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
+                            />
+                            <motion.div
+                                initial={{ x: "100%" }}
+                                animate={{ x: 0 }}
+                                exit={{ x: "100%" }}
+                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                                className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] shadow-2xl p-12 flex flex-col items-start"
+                            >
+                                <div className="w-full flex justify-end mb-16">
+                                    <button
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
+                                    >
+                                        <X className="w-8 h-8 text-[#1F1F23]" />
+                                    </button>
+                                </div>
+
+                                <nav className="flex flex-col space-y-8 w-full">
+                                    {[
+                                        { name: 'Messaging', path: '/messaging' },
+                                        { name: 'Licensing & Distribution', path: '/licensing' },
+                                        { name: 'Team', path: '/team' },
+                                        { name: 'Contact', path: '/contact' }
+                                    ].map((link, i) => (
+                                        <motion.div
+                                            key={link.path}
+                                            initial={{ opacity: 0, x: 20 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            transition={{ delay: 0.1 + i * 0.1 }}
+                                        >
+                                            <Link
+                                                to={link.path}
+                                                onClick={() => setIsMenuOpen(false)}
+                                                className="text-4xl font-bold text-[#1F1F23] hover:text-accent transition-colors tracking-tight"
+                                            >
+                                                {link.name}
+                                            </Link>
+                                        </motion.div>
+                                    ))}
+                                </nav>
+
+                                <div className="mt-auto pt-12 border-t border-slate-100 w-full">
+                                    <p className="text-sm text-[#94A3B8] font-medium tracking-wide uppercase">NIT America</p>
+                                    <p className="text-xs text-[#94A3B8] mt-2">Nexus of Innovation & Trade</p>
+                                </div>
+                            </motion.div>
+                        </>
+                    )}
+                </AnimatePresence>
 
                 {/* Hero Section */}
                 <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-20 sm:pb-32 overflow-hidden">
@@ -114,7 +198,7 @@ export default function Home2() {
                                 variants={itemVariants}
                                 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-[#1A1A1A]"
                             >
-                                <Typewriter text="Messaging" minWidth="8ch" /> infrastructure
+                                <Typewriter text="Messaging" minWidth="8ch" typeSpeed={140} deleteSpeed={90} /> infrastructure
                             </motion.h2>
                         </div>
                         <div className="overflow-hidden py-1">
@@ -137,11 +221,11 @@ export default function Home2() {
                                 <span className="inline-block w-12 h-6 md:w-32 md:h-16 bg-black rounded-full relative overflow-hidden" aria-hidden="true">
                                     <motion.span
                                         animate={{
-                                            x: [-10, 10],
+                                            x: isMobile ? [-12, 12] : [-40, 40],
                                             rotate: [0, 360]
                                         }}
                                         transition={{
-                                            duration: 1.6,
+                                            duration: 3.2,
                                             repeat: Infinity,
                                             repeatType: "reverse",
                                             ease: "easeInOut"
@@ -176,24 +260,35 @@ export default function Home2() {
                         </motion.div>
                     </motion.div>
 
-                    {/* Bottom-left Scroll Indicator */}
-                    <div className="absolute bottom-12 left-0 w-full pointer-events-none z-20">
-                        <div className="container">
+                    {/* Bottom-left Decorative Animation & Scroll Indicator */}
+                    <div className="absolute bottom-0 left-0 w-full pointer-events-none z-20">
+                        <div className="container relative h-[400px]">
+                            {/* Spinning Orb Animation with Scroll Fade */}
                             <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 1.5, duration: 1 }}
-                                className="flex items-center gap-4 text-sm uppercase tracking-widest font-medium opacity-30"
+                                style={{ opacity: orbOpacity }}
+                                className="absolute bottom-[50px] left-[-280px] md:left-[-180px]"
                             >
-                                <div className="w-px h-12 bg-foreground/20 relative overflow-hidden">
-                                    <motion.div
-                                        animate={{ y: [0, 48, 0] }}
-                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                        className="absolute top-0 left-0 w-full h-1/3 bg-foreground"
-                                    />
-                                </div>
-                                <span>Scroll to explore</span>
+                                <CrystalOrb />
                             </motion.div>
+
+                            <div className="absolute bottom-12 left-0">
+                                <motion.div
+                                    style={{ opacity: orbOpacity }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.5, duration: 1 }}
+                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-medium opacity-30"
+                                >
+                                    <div className="w-px h-12 bg-foreground/20 relative overflow-hidden">
+                                        <motion.div
+                                            animate={{ y: [0, 48, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                            className="absolute top-0 left-0 w-full h-1/3 bg-foreground"
+                                        />
+                                    </div>
+                                    <span>Scroll to explore</span>
+                                </motion.div>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -250,7 +345,7 @@ export default function Home2() {
                             <div className="flex-1 h-[1px] bg-[#CBD5E1] relative">
                                 <motion.div
                                     animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
+                                    transition={{ duration: 3.0, repeat: Infinity, ease: "linear" }}
                                     className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
                                 />
                             </div>
@@ -265,7 +360,7 @@ export default function Home2() {
                             <div className="flex-1 h-[1px] bg-[#CBD5E1] relative flex justify-center items-end pb-3">
                                 <motion.div
                                     animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 1.5, delay: 0.5, repeat: Infinity, ease: "linear" }}
+                                    transition={{ duration: 3.0, delay: 1.0, repeat: Infinity, ease: "linear" }}
                                     className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
                                 />
                             </div>
@@ -279,7 +374,7 @@ export default function Home2() {
                             <div className="flex-1 h-[1px] bg-[#CBD5E1] relative">
                                 <motion.div
                                     animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 1.5, delay: 1, repeat: Infinity, ease: "linear" }}
+                                    transition={{ duration: 3.0, delay: 2.0, repeat: Infinity, ease: "linear" }}
                                     className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
                                 />
                             </div>

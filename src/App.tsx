@@ -21,7 +21,7 @@ function App() {
                 <Route path="*" element={
                     <>
                         <Navbar />
-                        <main className="flex-grow">
+                        <main className="flex-grow pt-16">
                             <Routes>
                                 <Route path="/home2" element={<Home />} />
                                 <Route path="/messaging" element={<Messaging />} />

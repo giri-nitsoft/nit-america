@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Menu } from "lucide-react"
+import { motion, useScroll, useMotionValueEvent } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import {
     Sheet,
@@ -12,77 +14,109 @@ const Navbar = () => {
     const location = useLocation();
     const isActive = (path: string) => location.pathname === path;
 
+    const [hidden, setHidden] = useState(false);
+    const { scrollY } = useScroll();
+
+    useMotionValueEvent(scrollY, "change", (latest) => {
+        const previous = scrollY.getPrevious() ?? 0;
+        const isHomePage = location.pathname === '/';
+
+        if (!isHomePage && latest > previous && latest > 150) {
+            setHidden(true);
+        } else {
+            setHidden(false);
+        }
+    });
+
     const navLinks = [
         { name: 'Messaging', path: '/messaging' },
         { name: 'Licensing & Distribution', path: '/licensing' },
         { name: 'Team', path: '/team' },
     ];
 
-    return (
-        <nav className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-            <div className="container flex h-16 items-center justify-between">
-                <Link to="/" className="flex items-center">
-                    {!isActive('/') && (
-                        <img
-                            src="/home/homebtn.png"
-                            alt="NIT America"
-                            className="h-8 w-auto"
-                        />
-                    )}
-                </Link>
+    const isHomePage = location.pathname === '/';
 
-                {/* Desktop Navigation */}
-                <div className="hidden md:flex items-center space-x-8">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.path}
-                            to={link.path}
-                            className={cn(
-                                "text-sm font-medium transition-colors hover:text-primary",
-                                isActive(link.path) ? "text-primary" : "text-muted-foreground"
-                            )}
-                        >
-                            {link.name}
-                        </Link>
-                    ))}
-                    <Button asChild variant="outline" className="rounded-none px-6 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300">
-                        <Link to="/contact">Contact</Link>
-                    </Button>
-                </div>
+    const content = (
+        <div className="container flex h-16 items-center justify-between">
+            <Link to="/" className="flex items-center">
+                {!isActive('/') && (
+                    <img
+                        src="/home/homebtn.png"
+                        alt="NIT America"
+                        className="h-8 w-auto"
+                    />
+                )}
+            </Link>
 
-                {/* Mobile Navigation */}
-                <div className="md:hidden">
-                    <Sheet>
-                        <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon" className="md:hidden">
-                                <Menu className="h-6 w-6" />
-                                <span className="sr-only">Toggle menu</span>
-                            </Button>
-                        </SheetTrigger>
-                        <SheetContent side="right" className="w-[300px] sm:w-[400px]">
-                            <nav className="flex flex-col space-y-4 mt-8">
-                                {navLinks.map((link) => (
-                                    <Link
-                                        key={link.path}
-                                        to={link.path}
-                                        className={cn(
-                                            "text-lg font-medium transition-colors hover:text-primary",
-                                            isActive(link.path) ? "text-primary" : "text-muted-foreground"
-                                        )}
-                                    >
-                                        {link.name}
-                                    </Link>
-                                ))}
-                                <Button asChild variant="outline" className="w-full mt-4 rounded-none border-accent text-accent">
-                                    <Link to="/contact">Contact</Link>
-                                </Button>
-                            </nav>
-                        </SheetContent>
-                    </Sheet>
-                </div>
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center space-x-8">
+                {navLinks.map((link) => (
+                    <Link
+                        key={link.path}
+                        to={link.path}
+                        className={cn(
+                            "text-sm font-medium transition-colors hover:text-primary",
+                            isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                        )}
+                    >
+                        {link.name}
+                    </Link>
+                ))}
+                <Button asChild variant="outline" className="rounded-none px-6 border-accent text-accent hover:bg-accent hover:text-white transition-all duration-300">
+                    <Link to="/contact">Contact</Link>
+                </Button>
             </div>
-        </nav>
-    )
+
+            {/* Mobile Navigation */}
+            <div className="md:hidden">
+                <Sheet>
+                    <SheetTrigger asChild>
+                        <Button variant="ghost" size="icon" className="md:hidden">
+                            <Menu className="h-6 w-6" />
+                            <span className="sr-only">Toggle menu</span>
+                        </Button>
+                    </SheetTrigger>
+                    <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                        <nav className="flex flex-col space-y-4 mt-8">
+                            {navLinks.map((link) => (
+                                <Link
+                                    key={link.path}
+                                    to={link.path}
+                                    className={cn(
+                                        "text-lg font-medium transition-colors hover:text-primary",
+                                        isActive(link.path) ? "text-primary" : "text-muted-foreground"
+                                    )}
+                                >
+                                    {link.name}
+                                </Link>
+                            ))}
+                            <Button asChild variant="outline" className="w-full mt-4 rounded-none border-accent text-accent">
+                                <Link to="/contact">Contact</Link>
+                            </Button>
+                        </nav>
+                    </SheetContent>
+                </Sheet>
+            </div>
+        </div>
+    );
+
+    if (isHomePage) {
+        return content;
+    }
+
+    return (
+        <motion.nav
+            variants={{
+                visible: { y: 0 },
+                hidden: { y: "-100%" },
+            }}
+            animate={hidden ? "hidden" : "visible"}
+            transition={{ duration: 0.35, ease: "easeInOut" }}
+            className="fixed top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+        >
+            {content}
+        </motion.nav>
+    );
 }
 
 export default Navbar
