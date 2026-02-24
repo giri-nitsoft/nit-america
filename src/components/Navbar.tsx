@@ -35,6 +35,8 @@ const Navbar = () => {
 
     const isHomePage = location.pathname === '/';
 
+    const [isOpen, setIsOpen] = useState(false);
+
     const content = (
         <div className="container mx-auto px-6 h-full flex items-center justify-between">
             <Link to="/" className="flex items-center shrink-0">
@@ -73,24 +75,10 @@ const Navbar = () => {
                 </Button>
             </div>
 
-            {/* Mobile Navigation (Hybrid) */}
+            {/* Mobile Navigation */}
             <div className="flex md:hidden items-center gap-2">
-                <div className="flex items-center gap-2 sm:gap-4 mr-2">
-                    {navLinks.slice(0, 2).map((link) => (
-                        <Link
-                            key={link.path}
-                            to={link.path}
-                            className={cn(
-                                "px-3 py-2 text-[10px] sm:text-[11px] font-bold tracking-[0.15em] uppercase transition-all rounded-full min-h-[44px] flex items-center",
-                                isActive(link.path) ? "bg-[#EBEFF7] text-[#1F1F23]" : "text-[#1F1F23]/60 active:bg-slate-100"
-                            )}
-                        >
-                            {link.shortName}
-                        </Link>
-                    ))}
-                </div>
 
-                <Sheet>
+                <Sheet open={isOpen} onOpenChange={setIsOpen}>
                     <SheetTrigger asChild>
                         <Button
                             variant="ghost"
@@ -104,7 +92,13 @@ const Navbar = () => {
                     <SheetContent side="right" className="w-[100vw] sm:w-[400px] border-l-[#CCD4E9] bg-white p-0">
                         <div className="flex flex-col h-full">
                             <div className="p-6 flex items-center justify-between border-b border-[#CCD4E9]/30">
-                                <Link to="/" className="text-lg font-bold tracking-tighter text-[#1F1F23]">NIT America</Link>
+                                <Link
+                                    to="/"
+                                    onClick={() => setIsOpen(false)}
+                                    className="text-lg font-bold tracking-tighter text-[#1F1F23]"
+                                >
+                                    NIT America
+                                </Link>
                                 {/* Sheet close is handled by the component automatically, but we ensure the header is clean */}
                             </div>
                             <nav className="flex flex-col p-8 space-y-8">
@@ -112,8 +106,9 @@ const Navbar = () => {
                                     <Link
                                         key={link.path}
                                         to={link.path}
+                                        onClick={() => setIsOpen(false)}
                                         className={cn(
-                                            "text-3xl font-bold tracking-tight transition-all",
+                                            "text-4xl font-bold tracking-tight transition-all",
                                             isActive(link.path) ? "text-[#1F1F23]" : "text-[#1F1F23]/30 hover:text-[#1F1F23]"
                                         )}
                                     >
@@ -122,8 +117,9 @@ const Navbar = () => {
                                 ))}
                                 <Link
                                     to="/contact"
+                                    onClick={() => setIsOpen(false)}
                                     className={cn(
-                                        "text-3xl font-bold tracking-tight transition-all",
+                                        "text-4xl font-bold tracking-tight transition-all",
                                         isActive('/contact') ? "text-[#1F1F23]" : "text-[#1F1F23]/30 hover:text-[#1F1F23]"
                                     )}
                                 >
@@ -131,17 +127,17 @@ const Navbar = () => {
                                 </Link>
 
                                 <div className="pt-12">
-                                    <Button asChild className="w-full h-16 rounded-2xl bg-[#1F1F23] text-[#F7F9FD] text-lg font-bold shadow-lg shadow-[#1F1F23]/10">
-                                        <Link to="/contact">Request Consultation</Link>
+                                    <Button asChild className="w-full h-20 rounded-2xl bg-[#1F1F23] text-[#F7F9FD] text-xl font-bold shadow-lg shadow-[#1F1F23]/10">
+                                        <Link to="/contact" onClick={() => setIsOpen(false)}>Request Consultation</Link>
                                     </Button>
                                 </div>
                             </nav>
                             <div className="mt-auto p-8 border-t border-[#CCD4E9]/30 bg-[#F7F9FD]">
                                 <p className="text-[10px] font-bold tracking-[0.2em] text-[#1F1F23]/40 uppercase">Nexus of Innovation & Trade</p>
                                 <div className="mt-4 flex gap-4 text-[#1F1F23]/60 text-xs font-semibold">
-                                    <Link to="/messaging" className="hover:text-[#1F1F23]">US</Link>
+                                    <Link to="/messaging" onClick={() => setIsOpen(false)} className="hover:text-[#1F1F23]">US</Link>
                                     <span className="text-[#CCD4E9]">/</span>
-                                    <Link to="/licensing" className="hover:text-[#1F1F23]">KOREA</Link>
+                                    <Link to="/licensing" onClick={() => setIsOpen(false)} className="hover:text-[#1F1F23]">KOREA</Link>
                                 </div>
                             </div>
                         </div>

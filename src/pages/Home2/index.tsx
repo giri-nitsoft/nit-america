@@ -420,10 +420,10 @@ export default function Home2() {
                                         focus: "Owns messaging strategy, deliverability, and compliance operations."
                                     },
                                     {
-                                        name: "Woojin Jang",
-                                        role: "Operations / Project Manager",
-                                        initials: "WJ",
-                                        focus: "Drives execution, timelines, and cross-functional delivery."
+                                        name: "Chae woon (Ray) Park",
+                                        role: "Partnerships Manager",
+                                        initials: "CP",
+                                        focus: "Supports partner onboarding and day-to-day coordination."
                                     },
                                     {
                                         name: "Tyler Xu",
@@ -432,10 +432,10 @@ export default function Home2() {
                                         focus: "Builds pipeline through outbound and partner outreach."
                                     },
                                     {
-                                        name: "Chae woon (Ray) Park",
-                                        role: "Partnerships Manager",
-                                        initials: "CP",
-                                        focus: "Supports partner onboarding and day-to-day coordination."
+                                        name: "Woojin Jang",
+                                        role: "Operations / Project Manager",
+                                        initials: "WJ",
+                                        focus: "Drives execution, timelines, and cross-functional delivery."
                                     }
                                 ].map((member, i) => (
                                     <div
