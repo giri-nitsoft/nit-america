@@ -14,6 +14,9 @@
         font-weight: 400;
         /* Inter Regular */
         font-feature-settings: "rlig" 1, "calt" 1;
+        overflow-x: hidden;
+        width: 100%;
+        position: relative;
     }
 
     h1,
@@ -45,35 +48,144 @@
 @layer utilities {
     .text-hero {
         @apply font-sans;
-        font-size: clamp(3.5rem, 8vw, 5rem);
-        line-height: 1.1;
-        letter-spacing: -0.02em;
+        font-size: clamp(2.25rem, 8vw, 5rem);
+        line-height: 1.05;
+        letter-spacing: -0.03em;
         font-weight: 600;
-        /* Inter SemiBold */
-        color: #000;
+        color: #1F1F23;
     }
 
     .text-title {
         @apply font-sans;
-        font-size: clamp(2.5rem, 6vw, 4rem);
+        font-size: clamp(1.75rem, 6vw, 3.5rem);
         line-height: 1.1;
         letter-spacing: -0.02em;
         font-weight: 600;
-        /* Inter SemiBold */
-        color: #000;
+        color: #1F1F23;
     }
 
     .text-overline {
-        @apply uppercase tracking-[0.15em] text-[0.75rem] font-medium text-muted-foreground/60 mb-4 block;
+        @apply uppercase tracking-[0.2em] text-[10px] sm:text-[11px] font-bold text-[#1F1F23]/40 mb-4 block;
     }
 
-    .bg-grid {
-        background-image: linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
-            linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
-        background-size: 80px 80px;
+    /* Mobile-optimized vertical spacing */
+    .section-padding {
+        @apply py-24 md:py-32 px-6 sm:px-8 md:px-24;
     }
 
-    .glow-orb {
-        background: radial-gradient(circle, hsl(var(--accent) / 0.02) 0%, transparent 70%);
+    .focus-ring {
+        @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1F1F23] focus-visible:ring-offset-2;
+    }
+}
+
+.bg-grid {
+    background-image: linear-gradient(to right, hsl(var(--border) / 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, hsl(var(--border) / 0.3) 1px, transparent 1px);
+    background-size: 80px 80px;
+}
+
+.glow-orb {
+    background: radial-gradient(circle, hsl(var(--accent) / 0.02) 0%, transparent 70%);
+}
+
+/* --- PREMIUM MOTION SYSTEM TOKENS --- */
+:root {
+    --motion-fast: 140ms;
+    --motion-base: 220ms;
+    --motion-enter: 520ms;
+    --motion-draw: 800ms;
+    --motion-offset-y: 16px;
+    --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+    --ease-emphasized: cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Reveal Base Styles */
+[data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--motion-offset-y));
+    transition: opacity var(--motion-enter) var(--ease-standard),
+        transform var(--motion-enter) var(--ease-standard);
+    will-change: opacity, transform;
+}
+
+/* For Elements Need to have no transform */
+[data-reveal="opacity"] {
+    transform: none;
+}
+
+/* Revealed state */
+[data-reveal].is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggering utility classes for reveals */
+[data-stagger="1"] {
+    transition-delay: 70ms;
+}
+
+[data-stagger="2"] {
+    transition-delay: 140ms;
+}
+
+[data-stagger="3"] {
+    transition-delay: 210ms;
+}
+
+[data-stagger="4"] {
+    transition-delay: 280ms;
+}
+
+[data-stagger="5"] {
+    transition-delay: 350ms;
+}
+
+/* SVG Stroke Draw */
+[data-svg-draw] path,
+[data-svg-draw] line,
+[data-svg-draw] polyline {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    /* Using inline styles or JS to calculate actual path lengths is better, but as a fallback/general we transition it */
+    transition: stroke-dashoffset var(--motion-draw) var(--ease-standard);
+}
+
+[data-svg-draw].is-visible path,
+[data-svg-draw].is-visible line,
+[data-svg-draw].is-visible polyline {
+    stroke-dashoffset: 0;
+}
+
+/* Prefers Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --motion-fast: 0ms;
+        --motion-base: 0ms;
+        --motion-enter: 0ms;
+        --motion-draw: 0ms;
+        --motion-offset-y: 0px;
+    }
+
+    [data-reveal] {
+        transform: none !important;
+        transition-duration: 0.1s !important;
+        /* tiny fade instead of instant, for less jarring feel */
+        transition-delay: 0s !important;
+    }
+
+    [data-svg-draw] path,
+    [data-svg-draw] line,
+    [data-svg-draw] polyline {
+        stroke-dasharray: none !important;
+        stroke-dashoffset: 0 !important;
+        transition: none !important;
+    }
+
+    /* override custom pulse etc. */
+    .pulse-hover,
+    .motion-pulse,
+    .motion-orb {
+        animation: none !important;
+        transform: none !important;
     }
 }

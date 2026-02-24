@@ -8,7 +8,7 @@ import Mail from './pages/Messaging/Mail'
 import Licensing from './pages/Licensing'
 import Contact from './pages/Contact'
 import Messaging2 from './pages/Messaging2'
-import Team from './pages/Team'
+// import Team from './pages/Team' // Removed
 
 import Home2 from './pages/Home2'
 
@@ -26,7 +26,7 @@ function App() {
                                 <Route path="/home2" element={<Home />} />
                                 <Route path="/messaging" element={<Messaging />} />
                                 <Route path="/mail" element={<Mail />} />
-                                <Route path="/team" element={<Team />} />
+                                {/* <Route path="/team" element={<Team />} /> */}
                                 <Route path="/licensing" element={<Licensing />} />
                                 <Route path="/messaging2" element={<Messaging2 />} />
                                 <Route path="/contact" element={<Contact />} />

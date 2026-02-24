@@ -17,6 +17,25 @@ export default function Home2() {
         return () => window.removeEventListener('resize', checkMobile);
     }, []);
 
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.25,
+            rootMargin: "0px 0px -10% 0px"
+        });
+
+        const revealElements = document.querySelectorAll('[data-reveal], [data-svg-draw]');
+        revealElements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const { scrollY } = useScroll();
@@ -38,23 +57,23 @@ export default function Home2() {
     const orbOpacity = useTransform(scrollY, [0, 300], [0.4, 0]);
 
     const containerVariants: Variants = {
-        hidden: { opacity: 1 },
+        hidden: { opacity: 0 },
         visible: {
             opacity: 1,
             transition: {
-                staggerChildren: 0.12,
+                staggerChildren: 0.15,
                 delayChildren: 0.4,
             },
         },
     };
 
     const itemVariants: Variants = {
-        hidden: { y: "110%", opacity: 0 },
+        hidden: { y: 100, opacity: 0 },
         visible: {
             y: 0,
             opacity: 1,
             transition: {
-                duration: 1.2,
+                duration: 0.9,
                 ease: [0.16, 1, 0.3, 1],
             },
         },
@@ -91,11 +110,11 @@ export default function Home2() {
                             className="pointer-events-auto inline-block"
                         >
                             <Link to="/" className="flex flex-col items-start gap-1">
-                                <div className="w-[280px] sm:w-[500px] md:w-[700px] lg:w-[900px] flex items-center justify-start">
+                                <div className="w-[200px] sm:w-[400px] md:w-[600px] lg:w-[800px] flex items-center justify-start">
                                     <img
                                         src="/home/homebtn.png"
                                         alt="NIT America"
-                                        className="w-full h-auto object-contain"
+                                        className="max-w-full h-auto object-contain"
                                     />
                                 </div>
                                 <motion.span
@@ -155,7 +174,6 @@ export default function Home2() {
                                     {[
                                         { name: 'Messaging', path: '/messaging' },
                                         { name: 'Licensing & Distribution', path: '/licensing' },
-                                        { name: 'Team', path: '/team' },
                                         { name: 'Contact', path: '/contact' }
                                     ].map((link, i) => (
                                         <motion.div
@@ -294,310 +312,189 @@ export default function Home2() {
                 </section>
             </div>
 
-            {/* Messaging Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4, margin: "0px 0px -200px 0px" }}
-                transition={{ duration: 1.2, delay: 0.2, ease: [0.21, 0.45, 0.32, 0.9] }}
-                className="px-8 md:px-24 py-32 bg-[#F8F9FA] relative z-10"
-            >
-                <div className="container mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-[1fr,1.4fr] gap-16 lg:gap-20 items-center">
-                    {/* Left side */}
-                    <div className="space-y-10 text-left pr-4">
-                        <div className="space-y-6">
-                            <h2 className="text-4xl md:text-[3.5rem] leading-[1.1] font-bold tracking-tight text-[#1F1F23]">
-                                Messaging you can trust—<br />at scale.
-                            </h2>
-                            <p className="text-lg md:text-xl text-[#475569] leading-relaxed font-medium">
-                                SMS and RCS with validation, smart routing, and compliance built in.
-                            </p>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                Delivery 99.x% (Example)
-                            </span>
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                Opt-out ready
-                            </span>
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                A2P-ready setup
-                            </span>
-                        </div>
 
-                        <div className="pt-6">
-                            <Link to="/messaging" className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-[#1F1F23] hover:text-[#475569] transition-colors group pb-1 border-b-[2px] border-[#1F1F23] hover:border-[#475569]">
-                                Explore Messaging <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+
+            {/* SECTION B - What we do */}
+            <section className="section-padding bg-[#F7F9FD] relative z-10">
+                <div className="container mx-auto max-w-6xl">
+                    <div className="text-center max-w-5xl mx-auto space-y-4 mb-16 md:mb-24">
+                        {/* Main Section Title */}
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
+                            WHAT WE DO
+                        </h2>
+
+                        {/* Slogan as Subtitle */}
+                        <p data-reveal data-stagger="1" className="text-xl md:text-2xl font-medium tracking-tight text-[#1F1F23]/60 leading-relaxed max-w-5xl mx-auto">
+                            <span className="md:whitespace-nowrap">We help brands enter Korea end to end—licensing, operations, and localized growth.</span><br />
+                            Plus messaging infrastructure designed for compliance and reliability.
+                        </p>
+                    </div>
+
+                    <div className="grid md:grid-cols-2 gap-12 md:gap-0 relative">
+                        {/* Vertical Divider (Desktop) */}
+                        <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-[#CCD4E9]" />
+
+                        {/* Left Column: Messaging */}
+                        <div className="md:pr-12 md:pb-0 pb-12 border-b md:border-b-0 border-[#CCD4E9] flex flex-col items-start space-y-6">
+                            <h3 data-reveal data-stagger="2" className="text-3xl font-bold text-[#1F1F23]">Messaging</h3>
+                            <p data-reveal data-stagger="3" className="text-[#1F1F23]/80 text-lg leading-relaxed max-w-md font-medium">
+                                SMS and RCS built for compliance, deliverability, and reporting.
+                            </p>
+                            <Link
+                                to="/messaging"
+                                data-reveal data-stagger="4"
+                                className="inline-flex items-center text-[#1F1F23] text-sm font-bold transition-all active:translate-y-[1px] group focus-visible:ring-2 focus-visible:ring-[#1F1F23] focus-visible:outline-none rounded-sm"
+                            >
+                                <span className="group-hover:underline underline-offset-4 decoration-[#CCD4E9]">Explore Messaging</span>
+                                <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
                             </Link>
                         </div>
-                    </div>
 
-                    {/* Right side - Diagram Card */}
-                    <div className="w-full bg-white rounded-3xl border border-[#E2E8F0] shadow-sm p-8 md:p-12">
-                        {/* Flow Diagram */}
-                        <div className="flex items-center justify-between gap-1 h-40 relative">
-                            {/* App/CRM */}
-                            <div className="z-10 bg-white border border-[#E2E8F0] rounded-xl px-4 py-4 md:py-6 shadow-sm flex items-center justify-center min-w-[100px]">
-                                <span className="text-[12px] font-bold text-[#475569]">APP/CRM</span>
-                            </div>
-
-                            {/* Line */}
-                            <div className="flex-1 h-[1px] bg-[#CBD5E1] relative">
-                                <motion.div
-                                    animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 3.0, repeat: Infinity, ease: "linear" }}
-                                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
-                                />
-                            </div>
-
-                            {/* NIT Messaging */}
-                            <div className="z-10 bg-[#F4F6F9] border-[1.5px] border-[#1F1F23] rounded-xl px-6 py-6 shadow-sm flex flex-col items-center justify-center min-w-[140px] gap-0.5 relative">
-                                <span className="text-[14px] font-black tracking-tight text-[#1F1F23]">NIT</span>
-                                <span className="text-[11px] font-bold text-[#475569]">Messaging</span>
-                            </div>
-
-                            {/* Line & Text */}
-                            <div className="flex-1 h-[1px] bg-[#CBD5E1] relative flex justify-center items-end pb-3">
-                                <motion.div
-                                    animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 3.0, delay: 1.0, repeat: Infinity, ease: "linear" }}
-                                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
-                                />
-                            </div>
-
-                            {/* SMS/RCS */}
-                            <div className="z-10 bg-white border border-[#E2E8F0] rounded-xl px-4 py-4 md:py-6 shadow-sm flex items-center justify-center min-w-[100px]">
-                                <span className="text-[12px] font-bold text-[#475569]">SMS/RCS</span>
-                            </div>
-
-                            {/* Line */}
-                            <div className="flex-1 h-[1px] bg-[#CBD5E1] relative">
-                                <motion.div
-                                    animate={{ left: ["0%", "100%"] }}
-                                    transition={{ duration: 3.0, delay: 2.0, repeat: Infinity, ease: "linear" }}
-                                    className="absolute top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-[#64748B]"
-                                />
-                            </div>
-
-                            {/* Carrier */}
-                            <div className="z-10 bg-white border border-[#E2E8F0] rounded-xl px-4 py-4 md:py-6 shadow-sm flex items-center justify-center min-w-[100px]">
-                                <span className="text-[12px] font-bold text-[#475569]">Carrier</span>
-                            </div>
+                        {/* Right Column: Brand Licensing */}
+                        <div className="md:pl-12 pt-12 md:pt-0 flex flex-col items-start space-y-6">
+                            <h3 data-reveal data-stagger="2" className="text-3xl font-bold text-[#1F1F23]">Brand Licensing</h3>
+                            <p data-reveal data-stagger="3" className="text-[#1F1F23]/80 text-lg leading-relaxed max-w-md font-medium">
+                                End-to-end licensing & distribution for Korea market entry—operated with precision.
+                            </p>
+                            <Link
+                                to="/licensing"
+                                data-reveal data-stagger="4"
+                                className="inline-flex items-center text-[#1F1F23] text-sm font-bold transition-all active:translate-y-[1px] group focus-visible:ring-2 focus-visible:ring-[#1F1F23] focus-visible:outline-none rounded-sm"
+                            >
+                                <span className="group-hover:underline underline-offset-4 decoration-[#CCD4E9]">Explore Brand Licensing</span>
+                                <span className="ml-2 transition-transform group-hover:translate-x-1">→</span>
+                            </Link>
                         </div>
-
-                        {/* Divider */}
-                        <div className="w-full h-[1px] bg-[#E2E8F0] mt-12 mb-8" />
-
-                        {/* Bottom Metrics */}
-                        <div className="flex justify-between items-center px-2">
-                            <div className="bg-[#F0F4FA] rounded-full px-5 py-2 flex items-center gap-2.5 border border-[#E2E8F0]">
-                                <span className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider">Delivered</span>
-                                <span className="text-[15px] font-black text-[#1F1F23]">99.2%</span>
-                            </div>
-                            <div className="bg-[#F0F4FA] rounded-full px-5 py-2 flex items-center gap-2.5 border border-[#E2E8F0]">
-                                <span className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider">Failed</span>
-                                <span className="text-[15px] font-black text-[#1F1F23]">0.3%</span>
-                            </div>
-                            <div className="bg-[#F0F4FA] rounded-full px-5 py-2 flex items-center gap-2.5 border border-[#E2E8F0]">
-                                <span className="text-[10px] uppercase font-bold text-[#64748B] tracking-wider">Opt-out</span>
-                                <span className="text-[15px] font-black text-[#1F1F23]">0.5%</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </motion.section>
-
-            {/* Dark Transition Section */}
-            <section
-                className="px-8 md:px-24 py-32 bg-[#0F1115] relative z-10 flex flex-col items-center text-center overflow-hidden"
-            >
-                {/* Wavy Background Elements */}
-                <div className="absolute inset-0 opacity-10 pointer-events-none">
-                    <svg className="w-full h-full" viewBox="0 0 1440 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0 200C240 100 480 300 720 200C960 100 1200 300 1440 200" stroke="white" strokeWidth="2" />
-                        <path d="M0 250C240 150 480 350 720 250C960 150 1200 350 1440 250" stroke="white" strokeWidth="1" />
-                    </svg>
-                </div>
-
-                <div className="w-full space-y-8 relative z-10 mx-auto overflow-hidden py-4">
-                    {/* Line 1: Left to Right */}
-                    <div className="flex whitespace-nowrap">
-                        <motion.div
-                            animate={{ x: ["-50%", "0%"] }}
-                            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                            className="flex gap-12"
-                        >
-                            {[...Array(4)].map((_, i) => (
-                                <h2 key={i} className="text-4xl md:text-6xl lg:text-8xl font-medium tracking-tight text-white italic">
-                                    Messaging is not the end.
-                                </h2>
-                            ))}
-                        </motion.div>
-                    </div>
-
-                    {/* Line 2: Right to Left */}
-                    <div className="flex whitespace-nowrap">
-                        <motion.div
-                            animate={{ x: ["0%", "-50%"] }}
-                            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                            className="flex gap-12"
-                        >
-                            {[...Array(4)].map((_, i) => (
-                                <h2 key={i} className="text-4xl md:text-6xl lg:text-8xl font-medium tracking-tight text-white italic">
-                                    It's where market entry begins.
-                                </h2>
-                            ))}
-                        </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* Korea Market Entry Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4, margin: "0px 0px -200px 0px" }}
-                transition={{ duration: 1.2, delay: 0.1, ease: [0.21, 0.45, 0.32, 0.9] }}
-                className="px-8 md:px-24 py-32 bg-white relative z-10"
-            >
-                <div className="container mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-[1fr,1.4fr] gap-16 lg:gap-20 items-center">
-                    {/* Left side */}
-                    <div className="space-y-10 text-left pr-4">
-                        <div className="space-y-6">
-                            <span className="text-[11px] font-bold tracking-[0.1em] text-[#94A3B8] uppercase">Brand Licensing & Distribution</span>
-                            <h2 className="text-4xl md:text-[3.5rem] leading-[1.1] font-bold tracking-tight text-[#1F1F23]">
-                                Launch in Korea — <br />run with precision.
-                            </h2>
-                            <p className="text-lg md:text-xl text-[#475569] leading-relaxed font-medium">
-                                End-to-end licensing and distribution operator.
+            {/* SECTION C - Who we are & People Preview */}
+            <section className="section-padding bg-[#EBEFF7] relative z-10">
+                <div className="container mx-auto max-w-5xl space-y-20">
+                    {/* Brand Identity */}
+                    <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-12">
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">WHO WE ARE</h2>
+                        <div className="space-y-6 md:space-y-8">
+                            <p data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-2xl">
+                                One team across the US and Korea.<br />
+                                We plan with precision and operate end to end.
                             </p>
-                        </div>
-                        <div className="flex flex-wrap gap-3">
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                Licensing & Import
-                            </span>
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                Commerce Ops
-                            </span>
-                            <span className="px-4 py-2 bg-[#F0F4FA] border border-[#E2E8F0] rounded-[16px] text-[13px] font-medium text-[#475569]">
-                                Local Growth
-                            </span>
-                        </div>
 
-                        <div className="pt-6">
-                            <Link to="/licensing" className="inline-flex items-center gap-1.5 text-[17px] font-semibold text-[#1F1F23] hover:text-[#475569] transition-colors group pb-1 border-b-[2px] border-[#1F1F23] hover:border-[#475569]">
-                                Explore Brand Licensing <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                            </Link>
+                            <div className="flex flex-wrap justify-center items-center gap-3 pt-2">
+                                {["Execution-first", "Compliance by default", "Clear ownership"].map((principle, idx) => (
+                                    <div
+                                        key={principle}
+                                        data-reveal
+                                        style={{ transitionDelay: `${70 * idx}ms` }}
+                                        className="px-4 py-2 min-h-[44px] flex items-center border border-[#CCD4E9] rounded-full bg-white/40 text-[11px] font-bold tracking-widest uppercase text-[#1F1F23]"
+                                    >
+                                        {principle}
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
 
-                    {/* Right side - Diagram Card */}
-                    <div className="w-full bg-[#FBFBFC] rounded-3xl border border-[#E2E8F0] p-8 md:p-12 relative overflow-hidden">
-                        <div className="text-[11px] font-bold tracking-[0.05em] text-[#94A3B8] uppercase mb-12">Korea Launch Playbook</div>
-
-                        {/* Launch Playbook Diagram */}
-                        <div className="relative h-64 flex items-center justify-center">
-                            {/* Central Node */}
-                            <motion.div
-                                animate={{ scale: [1, 1.05, 1] }}
-                                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                className="z-20 bg-white border-[1.5px] border-[#1F1F23] rounded-xl px-6 py-4 shadow-sm flex flex-col items-center justify-center min-w-[120px] relative"
-                            >
-                                <span className="text-[14px] font-black tracking-tight text-[#1F1F23]">Korea</span>
-                                <span className="text-[11px] font-bold text-[#475569]">Entry</span>
-                                <motion.div
-                                    animate={{ scale: [1, 1.5, 1], opacity: [0.3, 0, 0.3] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
-                                    className="absolute inset-0 border border-[#1F1F23] rounded-xl"
-                                />
-                            </motion.div>
-
-                            {/* D2C Store (Top Left) */}
-                            <div className="absolute top-0 left-12 z-10 bg-white border border-[#E2E8F0] rounded-xl px-5 py-4 shadow-sm flex flex-col items-center justify-center min-w-[110px]">
-                                <span className="text-[12px] font-bold text-[#1F1F23]">D2C Store</span>
-                                <span className="text-[10px] text-[#94A3B8] font-medium">eCommerce</span>
-                            </div>
-
-                            {/* Influencer (Top Right) */}
-                            <div className="absolute top-0 right-12 z-10 bg-white border border-[#E2E8F0] rounded-xl px-5 py-4 shadow-sm flex flex-col items-center justify-center min-w-[110px]">
-                                <span className="text-[12px] font-bold text-[#1F1F23]">Influencer</span>
-                                <span className="text-[10px] text-[#94A3B8] font-medium">Seeding</span>
-                            </div>
-
-                            {/* Logistics & CS (Bottom) */}
-                            <div className="absolute bottom-0 z-10 bg-white border border-[#E2E8F0] rounded-xl px-6 py-5 shadow-sm flex flex-col items-center justify-center min-w-[140px]">
-                                <span className="text-[12px] font-bold text-[#1F1F23]">Logistics & CS</span>
-                                <span className="text-[10px] text-[#94A3B8] font-medium">Operations</span>
-                            </div>
-
-                            {/* Connecting Lines and Pulse Dots */}
-                            <svg className="absolute inset-0 w-full h-full pointer-events-none overflow-visible">
-                                {/* Lines */}
-                                <line x1="25%" y1="20%" x2="50%" y2="50%" stroke="#1F1F23" strokeWidth="1" opacity="0.1" />
-                                <line x1="75%" y1="20%" x2="50%" y2="50%" stroke="#1F1F23" strokeWidth="1" opacity="0.1" />
-                                <line x1="50%" y1="80%" x2="50%" y2="50%" stroke="#1F1F23" strokeWidth="1" opacity="0.1" />
-
-                                {/* Moving Dots */}
-                                <motion.circle
-                                    animate={{ cx: ["25%", "50%"], cy: ["20%", "50%"], opacity: [0, 1, 0.5, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "linear", times: [0, 0.1, 0.9, 1] }}
-                                    r="3" fill="#1F1F23"
-                                />
-                                <motion.circle
-                                    animate={{ cx: ["75%", "50%"], cy: ["20%", "50%"], opacity: [0, 1, 0.5, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "linear", times: [0, 0.1, 0.9, 1] }}
-                                    r="3" fill="#1F1F23"
-                                />
-                                <motion.circle
-                                    animate={{ cx: ["50%", "50%"], cy: ["80%", "50%"], opacity: [0, 1, 0.5, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "linear", times: [0, 0.1, 0.9, 1] }}
-                                    r="3" fill="#1F1F23"
-                                />
-                            </svg>
+                    {/* People Preview - Unified List (Synced with /team) */}
+                    <div className="space-y-12">
+                        <div className="space-y-1 text-center">
+                            <p data-reveal data-stagger="1" className="text-[#1F1F23]/60 text-sm font-bold tracking-tight">
+                                Meet the team behind the execution.
+                            </p>
                         </div>
 
-                        {/* Divider */}
-                        <div className="w-full h-[1px] bg-[#E2E8F0] mt-16 mb-8" />
-
-                        {/* Bottom Phase indicator */}
-                        <div className="flex flex-col items-center gap-4">
-                            <div className="flex items-center gap-4 text-[#1F1F23] font-bold">
-                                <span className="text-[#94A3B8] font-medium">Discover</span>
-                                <ArrowRight className="w-4 h-4 text-[#E2E8F0]" />
-                                <span className="text-[16px]">Launch</span>
-                                <ArrowRight className="w-4 h-4 text-[#E2E8F0]" />
-                                <span className="text-[#94A3B8] font-medium">Scale</span>
-                            </div>
-                            <div className="flex gap-4 text-[10px] font-bold uppercase tracking-widest text-[#94A3B8]">
-                                <span>Launch plan</span>
-                                <span>•</span>
-                                <span>Channel setup</span>
-                                <span>•</span>
-                                <span>Ops readiness</span>
+                        <div className="max-w-5xl mx-auto">
+                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+                                {[
+                                    {
+                                        name: "Jin-sung Lim",
+                                        role: "CEO & Co-Founder",
+                                        initials: "JL",
+                                        focus: "Leads strategy, partnerships, and cross-border operations."
+                                    },
+                                    {
+                                        name: "Tracy D'Orta",
+                                        role: "Vice President",
+                                        initials: "TD",
+                                        focus: "Owns messaging strategy, deliverability, and compliance operations."
+                                    },
+                                    {
+                                        name: "Woojin Jang",
+                                        role: "Operations / Project Manager",
+                                        initials: "WJ",
+                                        focus: "Drives execution, timelines, and cross-functional delivery."
+                                    },
+                                    {
+                                        name: "Tyler Xu",
+                                        role: "Business Development",
+                                        initials: "TX",
+                                        focus: "Builds pipeline through outbound and partner outreach."
+                                    },
+                                    {
+                                        name: "Chae woon (Ray) Park",
+                                        role: "Partnerships Manager",
+                                        initials: "CP",
+                                        focus: "Supports partner onboarding and day-to-day coordination."
+                                    }
+                                ].map((member, i) => (
+                                    <div
+                                        key={member.name}
+                                        data-reveal
+                                        style={{ transitionDelay: `${i * 80}ms` }}
+                                        className="group relative"
+                                    >
+                                        <div className="flex items-start gap-6">
+                                            {/* Avatar placeholder with initials */}
+                                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white border border-[#E2E8F0] flex items-center justify-center text-xl font-bold text-[#1F1F23] shrink-0 shadow-sm transition-transform group-hover:scale-105">
+                                                {member.initials}
+                                            </div>
+                                            <div className="space-y-2 pt-1 md:pt-2">
+                                                <div>
+                                                    <h3 className="text-lg md:text-xl font-bold text-[#1F1F23] group-hover:underline underline-offset-4 decoration-[#CCD4E9]">
+                                                        {member.name}
+                                                    </h3>
+                                                    <p className="text-[14px] font-bold text-[#3B82F6] mt-0.5 tracking-tight">
+                                                        {member.role}
+                                                    </p>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="text-[13px] text-[#64748B] leading-relaxed max-w-sm">
+                                                        {member.focus}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>
                 </div>
-            </motion.section>
+            </section>
 
-            {/* Closing CTA Section */}
-            <motion.section
-                initial={{ opacity: 0, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.6 }}
-                transition={{ duration: 1.2, ease: [0.21, 0.45, 0.32, 0.9] }}
-                className="px-8 md:px-24 py-32 bg-[#F8F9FA] relative z-10 text-center flex flex-col items-center space-y-12"
-            >
-                <h2 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-medium tracking-tight text-foreground max-w-4xl mx-auto italic leading-tight">
-                    Operations-proven infrastructure becomes an unfair advantage in expansion.
-                </h2>
-                <Link
-                    to="/contact"
-                    className="inline-flex items-center gap-4 sm:gap-6 px-6 sm:px-10 py-3 sm:py-5 border-[1.5px] border-[#1F1F23] rounded-full text-base sm:text-xl md:text-2xl font-bold uppercase tracking-wider text-[#1F1F23] hover:bg-[#1F1F23] hover:text-white transition-all duration-300 group"
-                >
-                    REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-6 sm:h-6 md:w-8 md:h-8 group-hover:translate-x-2 transition-transform duration-300" />
-                </Link>
-            </motion.section>
+            {/* SECTION E - Final CTA */}
+            <section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-20 md:py-32 relative z-10 flex flex-col items-center justify-center text-center px-6">
+                <div className="space-y-8 max-w-4xl mx-auto flex flex-col items-center">
+                    <div className="space-y-4">
+                        <h2 data-reveal className="text-[clamp(2.25rem,8vw,4.5rem)] font-bold tracking-tight whitespace-nowrap">Plan. Execute. Scale.</h2>
+                        <p data-reveal data-stagger="1" className="text-[#F7F9FD]/70 text-base md:text-xl font-medium">A clear rollout plan across licensing and messaging.</p>
+                    </div>
+
+                    <Link
+                        to="/contact"
+                        data-reveal
+                        style={{ transitionDelay: '120ms' }}
+                        className="inline-flex items-center justify-center h-12 min-w-[200px] px-8 rounded-[24px] bg-[#F7F9FD] text-[#1F1F23] text-sm font-bold tracking-wide hover:-translate-y-[1px] hover:bg-white transition-all duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    >
+                        Request Consultation
+                    </Link>
+
+                    <p data-reveal data-stagger="2" className="text-[#F7F9FD]/40 text-xs font-medium uppercase tracking-widest mt-2">
+                        US & Korea execution team
+                    </p>
+                </div>
+            </section>
 
             <Footer />
         </div >
