@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { motion, useScroll, useTransform, useMotionTemplate, Variants, AnimatePresence } from "framer-motion";
-import { Asterisk, ArrowRight, Plus, X, Menu } from "lucide-react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { Asterisk, ArrowRight } from "lucide-react";
 import { Link } from 'react-router-dom';
 import Typewriter from "./components/Typewriter";
 import CrystalOrb from "./components/CrystalOrb";
@@ -36,23 +36,17 @@ export default function Home2() {
         return () => observer.disconnect();
     }, []);
 
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-
     const { scrollY } = useScroll();
     const logoScale = useTransform(scrollY, [0, 400], isMobile ? [1, 0.75] : [1, 0.32]);
     const logoY = useTransform(scrollY, [0, 400], [60, 0]);
     const logoX = useTransform(scrollY, [0, 400], [0, 0]);
 
-    const navOpacity = useTransform(scrollY, [150, 300], [0, 1]);
-    const navBorderAlpha = useTransform(scrollY, [150, 300], [0, 0.1]);
-    const navBorder = useMotionTemplate`rgba(0,0,0,${navBorderAlpha})`;
 
-    // MENU + button scroll linked transforms
-    const menuButtonOpacity = useTransform(scrollY, [0, 100], [1, 0]);
-    const menuButtonY = useTransform(scrollY, [0, 100], [35, 20]);
 
     const textOpacity = useTransform(scrollY, [0, 200], [1, 0]);
     const textY = useTransform(scrollY, [0, 200], [0, -50]);
+
+    const headerHeight = useTransform(scrollY, [0, 100], ["64px", "56px"]);
 
     const orbOpacity = useTransform(scrollY, [0, 300], [0.4, 0]);
 
@@ -86,122 +80,45 @@ export default function Home2() {
                 description="Scaling messaging infrastructure and launching brands in Korea with precision."
             />
 
-            {/* GNB Background - Using the scroll linked opacity and border */}
-            <motion.nav
-                style={{ opacity: navOpacity, borderBottomColor: navBorder as any }}
-                className="fixed top-0 left-0 w-full h-16 bg-background/90 backdrop-blur-md z-40 border-b"
+            <Navbar />
+
+            {/* Floating Scalable Logo */}
+            <motion.header
+                style={{ height: headerHeight }}
+                className="fixed top-0 left-0 w-full z-[51] pointer-events-none flex items-center"
             >
-                <Navbar />
-            </motion.nav>
+                <div className="container mx-auto px-6 h-full flex items-center justify-between">
+                    <motion.div
+                        style={{
+                            scale: logoScale,
+                            x: logoX,
+                            y: logoY,
+                            originX: 0,
+                            originY: 0.5
+                        }}
+                        className="pointer-events-auto inline-block"
+                    >
+                        <Link to="/" className="flex flex-col items-start gap-1">
+                            <div className="w-[200px] sm:w-[400px] md:w-[600px] lg:w-[800px] flex items-center justify-start">
+                                <img
+                                    src="/home/homebtn.png"
+                                    alt="NIT America"
+                                    className="max-w-full h-auto object-contain"
+                                />
+                            </div>
+                            <motion.span
+                                style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
+                                className="text-accent font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-sm ml-2 sm:ml-4"
+                            >
+                                Nexus of Innovation & Trade
+                            </motion.span>
+                        </Link>
+                    </motion.div>
+                </div>
+            </motion.header>
 
             {/* Hero Section Container */}
             <div className="relative">
-                {/* Navigation / Logo Container (Scaled Logo) */}
-                <header className="fixed top-0 left-0 w-full z-50 h-16 pointer-events-none">
-                    <div className="w-full h-full flex items-center justify-between px-6 sm:px-8 md:px-24">
-                        <motion.div
-                            style={{
-                                scale: logoScale,
-                                x: logoX,
-                                y: logoY,
-                                originX: 0,
-                                originY: 0.5
-                            }}
-                            className="pointer-events-auto inline-block"
-                        >
-                            <Link to="/" className="flex flex-col items-start gap-1">
-                                <div className="w-[200px] sm:w-[400px] md:w-[600px] lg:w-[800px] flex items-center justify-start">
-                                    <img
-                                        src="/home/homebtn.png"
-                                        alt="NIT America"
-                                        className="max-w-full h-auto object-contain"
-                                    />
-                                </div>
-                                <motion.span
-                                    style={{ opacity: useTransform(scrollY, [0, 100], [1, 0]) }}
-                                    className="text-accent font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-sm ml-2 sm:ml-4"
-                                >
-                                    Nexus of Innovation & Trade
-                                </motion.span>
-                            </Link>
-                        </motion.div>
-
-                        {/* MENU + Button */}
-                        <motion.div
-                            style={{ opacity: menuButtonOpacity, y: menuButtonY }}
-                            className="pointer-events-auto"
-                        >
-                            <button
-                                onClick={() => setIsMenuOpen(true)}
-                                className="group flex items-center justify-center sm:gap-2 bg-black text-white p-2.5 sm:px-5 sm:py-2.5 rounded-full hover:bg-[#1a1a1a] transition-all duration-300 shadow-sm"
-                            >
-                                <span className="hidden sm:block text-[13px] font-bold tracking-widest uppercase ml-1">Menu</span>
-                                <Plus className="hidden sm:block w-4 h-4 transition-transform group-hover:rotate-90" />
-                                <Menu className="sm:hidden w-5 h-5" />
-                            </button>
-                        </motion.div>
-                    </div>
-                </header>
-
-                {/* Slide-in Menu Overlay */}
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <>
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                exit={{ opacity: 0 }}
-                                onClick={() => setIsMenuOpen(false)}
-                                className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60]"
-                            />
-                            <motion.div
-                                initial={{ x: "100%" }}
-                                animate={{ x: 0 }}
-                                exit={{ x: "100%" }}
-                                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                                className="fixed top-0 right-0 h-full w-full sm:w-[400px] bg-white z-[70] shadow-2xl p-12 flex flex-col items-start"
-                            >
-                                <div className="w-full flex justify-end mb-16">
-                                    <button
-                                        onClick={() => setIsMenuOpen(false)}
-                                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
-                                    >
-                                        <X className="w-8 h-8 text-[#1F1F23]" />
-                                    </button>
-                                </div>
-
-                                <nav className="flex flex-col space-y-8 w-full">
-                                    {[
-                                        { name: 'Messaging', path: '/messaging' },
-                                        { name: 'Licensing & Distribution', path: '/licensing' },
-                                        { name: 'Contact', path: '/contact' }
-                                    ].map((link, i) => (
-                                        <motion.div
-                                            key={link.path}
-                                            initial={{ opacity: 0, x: 20 }}
-                                            animate={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: 0.1 + i * 0.1 }}
-                                        >
-                                            <Link
-                                                to={link.path}
-                                                onClick={() => setIsMenuOpen(false)}
-                                                className="text-4xl font-bold text-[#1F1F23] hover:text-accent transition-colors tracking-tight"
-                                            >
-                                                {link.name}
-                                            </Link>
-                                        </motion.div>
-                                    ))}
-                                </nav>
-
-                                <div className="mt-auto pt-12 border-t border-slate-100 w-full">
-                                    <p className="text-sm text-[#94A3B8] font-medium tracking-wide uppercase">NIT America</p>
-                                    <p className="text-xs text-[#94A3B8] mt-2">Nexus of Innovation & Trade</p>
-                                </div>
-                            </motion.div>
-                        </>
-                    )}
-                </AnimatePresence>
-
                 {/* Hero Section */}
                 <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-20 sm:pb-32 overflow-hidden">
                     <motion.div
@@ -324,10 +241,13 @@ export default function Home2() {
                         </h2>
 
                         {/* Slogan as Subtitle */}
-                        <p data-reveal data-stagger="1" className="text-xl md:text-2xl font-medium tracking-tight text-[#1F1F23]/60 leading-relaxed max-w-5xl mx-auto">
-                            <span className="md:whitespace-nowrap">We help brands enter Korea end to end—licensing, operations, and localized growth.</span><br />
-                            Plus messaging infrastructure designed for compliance and reliability.
-                        </p>
+                        <div data-reveal data-stagger="1" className="text-xl md:text-2xl font-medium tracking-tight leading-relaxed max-w-5xl mx-auto space-y-6">
+                            <p>
+                                <span className="text-[#1F1F23]/60">Compliance-first messaging infrastructure for reliable delivery.</span><br />
+                                <span className="text-[#1F1F23]/60">Brand licensing & distribution support for Korea market entry.</span>
+                            </p>
+
+                        </div>
                     </div>
 
                     <div className="grid md:grid-cols-2 gap-12 md:gap-0 relative">
@@ -376,10 +296,13 @@ export default function Home2() {
                     <div className="max-w-4xl mx-auto text-center space-y-8 md:space-y-12">
                         <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">WHO WE ARE</h2>
                         <div className="space-y-6 md:space-y-8">
-                            <p data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-2xl">
-                                One team across the US and Korea.<br />
-                                We plan with precision and operate end to end.
-                            </p>
+                            <div data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-2xl space-y-6">
+                                <p>
+                                    <span>We’re a messaging infrastructure company built for compliant, dependable delivery—SMS, RCS, and WhatsApp.</span><br />
+                                    <span>We also operate a Korea-focused brand licensing & distribution business.</span>
+                                </p>
+
+                            </div>
 
                             <div className="flex flex-wrap justify-center items-center gap-3 pt-2">
                                 {["Execution-first", "Compliance by default", "Clear ownership"].map((principle, idx) => (
@@ -471,10 +394,10 @@ export default function Home2() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* SECTION E - Final CTA */}
-            <section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-20 md:py-32 relative z-10 flex flex-col items-center justify-center text-center px-6">
+            < section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-20 md:py-32 relative z-10 flex flex-col items-center justify-center text-center px-6" >
                 <div className="space-y-8 max-w-4xl mx-auto flex flex-col items-center">
                     <div className="space-y-4">
                         <h2 data-reveal className="text-[clamp(2.25rem,8vw,4.5rem)] font-bold tracking-tight whitespace-nowrap">Plan. Execute. Scale.</h2>
@@ -494,7 +417,7 @@ export default function Home2() {
                         US & Korea execution team
                     </p>
                 </div>
-            </section>
+            </section >
 
             <Footer />
         </div >

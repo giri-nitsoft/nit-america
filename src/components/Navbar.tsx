@@ -14,26 +14,17 @@ const Navbar = () => {
     const location = useLocation();
     const isActive = (path: string) => location.pathname === path;
 
-    const [hidden, setHidden] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
     const { scrollY } = useScroll();
 
     useMotionValueEvent(scrollY, "change", (latest) => {
-        const previous = scrollY.getPrevious() ?? 0;
-        const isHomePage = location.pathname === '/';
-
-        if (!isHomePage && latest > previous && latest > 150) {
-            setHidden(true);
-        } else {
-            setHidden(false);
-        }
+        setIsScrolled(latest > 20);
     });
 
     const navLinks = [
         { name: 'Messaging', path: '/messaging', shortName: 'Messaging' },
         { name: 'Licensing & Distribution', path: '/licensing', shortName: 'Licensing' },
     ];
-
-    const isHomePage = location.pathname === '/';
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -50,7 +41,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-10">
+            <div className="hidden md:flex items-center space-x-10 md:translate-x-8 lg:translate-x-16 xl:translate-x-24">
                 {navLinks.map((link) => (
                     <Link
                         key={link.path}
@@ -149,24 +140,15 @@ const Navbar = () => {
 
     const headerHeight = useTransform(scrollY, [0, 100], ["64px", "56px"]);
 
-    if (isHomePage) {
-        return (
-            <motion.div style={{ height: headerHeight }} className="flex items-center">
-                {content}
-            </motion.div>
-        );
-    }
-
     return (
         <motion.nav
-            variants={{
-                visible: { y: 0 },
-                hidden: { y: "-100%" },
-            }}
-            animate={hidden ? "hidden" : "visible"}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
             style={{ height: headerHeight }}
-            className="fixed top-0 z-50 w-full border-b border-[#CCD4E9]/30 bg-white/90 backdrop-blur-md"
+            className={cn(
+                "fixed top-0 left-0 z-50 w-full transition-all duration-300",
+                isScrolled
+                    ? "border-b border-[#CCD4E9]/30 bg-white/90 backdrop-blur-md shadow-sm"
+                    : "border-transparent bg-transparent"
+            )}
         >
             {content}
         </motion.nav>

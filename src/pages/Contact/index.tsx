@@ -128,10 +128,10 @@ const Contact = () => {
                                 Or reach us directly at
                             </p>
                             <a
-                                href="mailto:nit@nitsoft.biz"
+                                href="mailto:usanitamerica@nitamerica.com"
                                 className="text-lg font-medium hover:text-accent transition-colors inline-flex items-center gap-2"
                             >
-                                nit@nitsoft.biz
+                                usanitamerica@nitamerica.com
                                 <svg
                                     className="w-4 h-4"
                                     fill="none"
