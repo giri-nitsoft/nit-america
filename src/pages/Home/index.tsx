@@ -1,291 +1,612 @@
+import { useState, useEffect, useRef } from "react";
+import { motion, useScroll, useTransform, Variants, useInView, animate } from "framer-motion";
+import { Asterisk, ArrowRight, Smartphone, LayoutGrid, ShieldCheck, Code2, Store, Server, Globe, Check, MapPin, Send } from "lucide-react";
 import { Link } from 'react-router-dom';
-import { ArrowRight, Globe, MessageSquare, Briefcase } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
-import SEO from '@/components/SEO';
+import GlobeEffect from "../Home2/components/GlobeEffect";
+import LogoMarquee from "../Home2/components/LogoMarquee";
+import TypingIndicator from "./components/TypingIndicator";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import SEO from "@/components/SEO";
 
-const Home = () => {
+function CountUp({ value, duration = 2, decimals = 0, suffix = "" }: { value: number; duration?: number; decimals?: number; suffix?: string }) {
+    const nodeRef = useRef<HTMLSpanElement>(null);
+    const inView = useInView(nodeRef, { once: true, margin: "-100px" });
+
+    useEffect(() => {
+        if (!inView) return;
+
+        const node = nodeRef.current;
+        if (!node) return;
+
+        const controls = animate(0, value, {
+            duration,
+            ease: [0.16, 1, 0.3, 1],
+            onUpdate: (latest) => {
+                node.textContent = latest.toLocaleString(undefined, {
+                    minimumFractionDigits: decimals,
+                    maximumFractionDigits: decimals,
+                }) + suffix;
+            },
+        });
+
+        return () => controls.stop();
+    }, [inView, value, duration, decimals, suffix]);
+
+    return <span ref={nodeRef}>0{suffix}</span>;
+}
+
+function OfficeCard({ city, address, image }: { city: string; address: string; image: string }) {
     return (
-        <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
-            <SEO
-                title="NIT America | Nexus of Innovation & Trade"
-                description="Messaging infrastructure that scales. Launch brands in Korea. SMS/RCS messaging built for deliverability and compliance — plus brand licensing & distribution for Korea market entry."
-                keywords="NIT America, Messaging Infrastructure, Global Brand Distribution, Brand Licensing, Korea Market, Kakao, Naver"
-                schema={{
-                    "@context": "https://schema.org",
-                    "@type": "Organization",
-                    "name": "NIT America",
-                    "url": "https://nitamerica.com",
-                    "logo": "https://nitamerica.com/favicon.png",
-                    "sameAs": [],
-                    "description": "Messaging infrastructure that scales. Launch brands in Korea.",
-                    "address": {
-                        "@type": "PostalAddress",
-                        "addressLocality": "Irvine",
-                        "addressRegion": "CA",
-                        "addressCountry": "US"
-                    }
-                }}
-            />
-
-            {/* HERO SECTION */}
-            <section className="relative pt-32 pb-24 md:pt-48 md:pb-32 overflow-hidden">
-                {/* Background accents */}
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-muted/30 to-transparent pointer-events-none" />
-                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-background to-transparent pointer-events-none z-10" />
-
-                <div className="container relative z-20">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
-                            className="max-w-4xl"
-                        >
-                            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-accent mb-6 flex items-center gap-3">
-                                <span className="w-8 h-px bg-accent/50"></span>
-                                Nexus of Innovation & Trade
-                            </span>
-
-                            <h1 className="text-5xl md:text-7xl font-semibold mb-8 tracking-tight leading-[1.1]">
-                                Messaging infrastructure that scales. <br className="hidden md:block" />
-                                <span className="text-muted-foreground">Launch brands in Korea.</span>
-                            </h1>
-
-                            <div className="text-xl md:text-2xl text-muted-foreground mb-10 max-w-2xl leading-relaxed">
-                                <p>SMS and RCS messaging built for deliverability and compliance.</p>
-                                <p>Brand licensing & distribution for Korea market entry.</p>
-                            </div>
-
-                            <div className="flex flex-wrap items-center gap-3 mb-10">
-                                <span className="px-4 py-2 bg-muted/80 backdrop-blur-sm border border-border/50 text-foreground text-sm font-medium rounded-full flex items-center gap-2">
-                                    <MessageSquare className="w-4 h-4" /> SMS/RCS Messaging
-                                </span>
-                                <span className="px-4 py-2 bg-muted/80 backdrop-blur-sm border border-border/50 text-foreground text-sm font-medium rounded-full flex items-center gap-2">
-                                    <Globe className="w-4 h-4" /> Korea Market Entry (Licensing & Distribution)
-                                </span>
-                            </div>
-
-                            <div className="flex flex-col gap-6">
-                                <div>
-                                    <Button asChild size="lg" className="rounded-none px-8 py-6 text-base group bg-foreground text-background hover:bg-accent hover:text-white transition-all duration-300">
-                                        <Link to="/contact">
-                                            Request Consultation
-                                            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                        </Link>
-                                    </Button>
-                                </div>
-                                <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                                    <Link to="/messaging" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors text-sm flex items-center group">
-                                        Explore Messaging <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </Link>
-                                    <Link to="/licensing" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors text-sm flex items-center group">
-                                        Explore Brand Licensing <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                                    </Link>
-                                </div>
-                            </div>
-                        </motion.div>
-
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.9 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 1, delay: 0.2 }}
-                            className="relative flex justify-center items-center"
-                        >
-                            <img src="/home/hero-globe.png" alt="Global Network Globe" className="w-full max-w-[500px] h-auto object-contain opacity-90 drop-shadow-sm mix-blend-multiply" />
-                        </motion.div>
+        <div data-reveal className="group h-[160px] md:h-[220px] [perspective:1000px]">
+            <div className="relative h-full w-full transition-all duration-700 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                {/* Front Side */}
+                <div className="absolute inset-0 h-full w-full rounded-[24px] overflow-hidden">
+                    <img src={image} alt={`${city} Office`} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors duration-700" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                        <h4 className="text-white text-lg md:text-xl font-bold tracking-widest uppercase">{city} OFFICE</h4>
                     </div>
                 </div>
-            </section>
-
-            {/* TRUST STRIP A */}
-            <div className="border-y border-border/50 py-4 bg-background/50">
-                <div className="container">
-                    <p className="text-[11px] md:text-xs uppercase tracking-[0.2em] text-muted-foreground text-center font-medium">
-                        Built on real-world messaging operations and execution-ready commerce playbooks.
+                {/* Back Side */}
+                <div className="absolute inset-0 h-full w-full rounded-[24px] bg-[#1F1F23] [transform:rotateY(180deg)] [backface-visibility:hidden] flex flex-col items-center justify-center p-6 text-center border border-white/10">
+                    <MapPin className="text-[#355BE5] w-6 h-6 mb-4" />
+                    <p className="text-white/90 text-[13px] md:text-[14px] font-medium leading-relaxed max-w-[240px]">
+                        {address}
                     </p>
                 </div>
             </div>
+        </div>
+    );
+}
 
-            {/* MESSAGING SECTION */}
-            <section className="py-24 md:py-32 bg-card relative">
-                <div className="absolute top-0 right-0 w-1/3 h-full bg-muted/20 skew-x-12 -z-10 hidden lg:block" />
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+export default function Home() {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.25,
+            rootMargin: "0px 0px -10% 0px"
+        });
+
+        const revealElements = document.querySelectorAll('[data-reveal], [data-svg-draw]');
+        revealElements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, []);
+
+    const { scrollY } = useScroll();
+    const logoScale = useTransform(scrollY, [0, 250], isMobile ? [1, 0.75] : [1, 0.45]);
+    const logoY = useTransform(scrollY, [0, 250], [60, 0]);
+    const logoX = useTransform(scrollY, [0, 250], [0, 0]);
+
+
+
+    const textOpacity = useTransform(scrollY, [0, 200], [1, 0]);
+    const textY = useTransform(scrollY, [0, 200], [0, -50]);
+
+    const headerHeight = useTransform(scrollY, [0, 250], ["64px", "64px"]);
+
+    const orbOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.15,
+                delayChildren: 0.4,
+            },
+        },
+    };
+
+    const itemVariants: Variants = {
+        hidden: { y: 100, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                duration: 0.9,
+                ease: [0.16, 1, 0.3, 1],
+            },
+        },
+    };
+
+    return (
+        <div className="min-h-[200vh] bg-background text-foreground font-sans selection:bg-accent selection:text-accent-foreground">
+            <SEO
+                title="NIT America | Advanced Infrastructure"
+                description="Scaling messaging infrastructure and launching brands in Korea with precision."
+            />
+
+            <Navbar />
+
+            {/* Floating Scalable Logo */}
+            <motion.header
+                style={{ height: headerHeight }}
+                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-center"
+            >
+                <div className="container mx-auto px-6 h-full flex items-center justify-between">
+                    <motion.div
+                        style={{
+                            scale: logoScale,
+                            x: logoX,
+                            y: logoY,
+                            originX: 0,
+                            originY: 0.5
+                        }}
+                        className="pointer-events-auto inline-block"
+                    >
+                        <Link to="/" className="relative flex flex-col items-start">
+                            <div className="w-[200px] sm:w-[400px] md:w-[600px] lg:w-[800px] flex items-center justify-start">
+                                <img
+                                    src="/home/homebtn.png"
+                                    alt="NIT America"
+                                    className="max-w-full h-auto object-contain"
+                                />
+                            </div>
+                            <motion.span
+                                style={{ opacity: useTransform(scrollY, [0, 150], [1, 0]) }}
+                                className="absolute left-2 sm:left-4 top-[110%] sm:top-full text-accent font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-sm whitespace-nowrap"
+                            >
+                                Nexus of Innovation & Trade
+                            </motion.span>
+                        </Link>
+                    </motion.div>
+                </div>
+            </motion.header>
+
+            {/* Hero Section Container */}
+            <div className="relative">
+                {/* Hero Section */}
+                <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-32 sm:pb-40 md:pb-32 overflow-hidden">
+                    {/* Globe Background Animation */}
+                    <motion.div
+                        style={{ opacity: orbOpacity }}
+                        className="absolute top-[45%] md:top-[50%] left-[8vw] md:left-[15vw] -translate-y-1/2 z-0 pointer-events-none"
+                    >
+                        <div className="w-[70vw] h-[70vw] md:w-[50vmin] md:h-[50vmin] lg:w-[55vmin] lg:h-[55vmin] relative transition-all duration-700">
+                            <GlobeEffect dark={false} />
+                        </div>
+                    </motion.div>
+                    <motion.div
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                        style={{ opacity: textOpacity, y: textY }}
+                        className="max-w-full text-center md:text-right"
+                    >
+                        <div className="overflow-hidden py-1 flex items-center justify-center md:justify-end gap-4 md:gap-6">
+                            <motion.div variants={itemVariants}>
+                                <TypingIndicator />
+                            </motion.div>
+                            <motion.h2
+                                variants={itemVariants}
+                                className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                Reach More.
+                            </motion.h2>
+                        </div>
+                        <div className="overflow-hidden py-1">
+                            <motion.h2
+                                variants={itemVariants}
+                                className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                Grow Faster.
+                            </motion.h2>
+                        </div>
+                        <div className="overflow-hidden py-1">
+                            <motion.div
+                                variants={itemVariants}
+                                className="flex items-center justify-center md:justify-end gap-3 md:gap-6 text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                <span>Expand</span>
+                                <span className="inline-block w-12 h-6 md:w-32 md:h-16 bg-black rounded-full relative overflow-hidden" aria-hidden="true">
+                                    <motion.span
+                                        animate={{
+                                            x: isMobile ? [-12, 12] : [-40, 40],
+                                            rotate: [0, 360]
+                                        }}
+                                        transition={{
+                                            duration: 3.2,
+                                            repeat: Infinity,
+                                            repeatType: "reverse",
+                                            ease: "easeInOut"
+                                        }}
+                                        className="absolute inset-0 flex items-center justify-center"
+                                    >
+                                        <Asterisk className="w-4 h-4 md:w-[42px] md:h-[42px] text-white" />
+                                    </motion.span>
+                                </span>
+                                <span>Further.</span>
+                            </motion.div>
+                        </div>
+
                         <motion.div
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
+                            variants={itemVariants}
+                            className="mt-8 sm:mt-12 flex justify-center md:justify-end"
                         >
-                            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-accent mb-4 block">
-                                Core Infrastructure
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-semibold mb-6 tracking-tight leading-tight">
-                                Messaging you can trust at scale
-                            </h2>
-                            <h3 className="text-2xl font-medium mb-8 text-muted-foreground">
-                                SMS and RCS built for compliance and reporting.
-                            </h3>
-                            <p className="text-lg text-foreground/80 mb-10 leading-relaxed max-w-lg">
-                                From authentication to lifecycle notifications, we build messaging systems that perform in real commercial environments. Compliance-ready setup (opt-in/opt-out, A2P registration) and reporting are designed in from day one.
-                            </p>
-                            <Link to="/messaging" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors group flex items-center text-sm">
-                                Explore Messaging
-                                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                            <Link
+                                to="/contact"
+                                className="inline-flex items-center gap-2 sm:gap-3 text-base sm:text-2xl md:text-[40px] font-bold uppercase tracking-tight text-[#1F1F23] hover:text-accent transition-all duration-300 group pointer-events-auto"
+                            >
+                                REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-8 sm:h-8 md:w-[42px] md:h-[42px] group-hover:translate-x-2 transition-transform duration-300" />
                             </Link>
                         </motion.div>
+                    </motion.div>
 
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="relative h-[400px] md:h-[500px] w-full bg-muted overflow-hidden flex items-center justify-center p-8"
-                        >
-                            {/* Abstract visual representation of messaging */}
-                            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-
-                            <div className="relative z-10 w-full max-w-sm space-y-4">
+                    {/* Bottom-left Decorative Animation & Scroll Indicator */}
+                    <div className="absolute bottom-0 left-0 w-full pointer-events-none z-20">
+                        <div className="container mx-auto relative h-[400px]">
+                            <div className="absolute bottom-12 left-0 px-6 sm:px-8 md:px-24">
                                 <motion.div
-                                    animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                                    className="bg-background p-6 rounded-lg shadow-sm border border-border/50 w-[85%] self-start"
+                                    style={{ opacity: orbOpacity }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.5, duration: 1 }}
+                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-medium opacity-30"
                                 >
-                                    <div className="w-1/3 h-2 bg-muted rounded-full mb-3" />
-                                    <div className="w-full h-2 bg-muted rounded-full mb-2" />
-                                    <div className="w-4/5 h-2 bg-muted rounded-full" />
-                                </motion.div>
-                                <motion.div
-                                    animate={{ y: [0, 5, 0] }}
-                                    transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                                    className="bg-accent/10 p-6 rounded-lg border border-accent/20 w-[85%] ml-auto"
-                                >
-                                    <div className="w-2/3 h-2 bg-accent/40 rounded-full mb-2" />
-                                    <div className="w-full h-2 bg-accent/40 rounded-full" />
+                                    <div className="w-px h-12 bg-foreground/20 relative overflow-hidden">
+                                        <motion.div
+                                            animate={{ y: [0, 48, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                            className="absolute top-0 left-0 w-full h-1/3 bg-foreground"
+                                        />
+                                    </div>
+                                    <span>Scroll to explore</span>
                                 </motion.div>
                             </div>
-                        </motion.div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+
+
+            {/* Why NIT AMERICA? Section */}
+            <section className="section-padding bg-white relative z-10 border-b border-[#E2E8F0]">
+                <div className="container mx-auto max-w-7xl">
+                    <div className="mb-16 md:mb-24">
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
+                            Why NIT AMERICA?
+                        </h2>
+                    </div>
+
+                    <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+                        {/* Messaging Channels */}
+                        <div data-reveal data-stagger="1" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                                <Smartphone className="w-6 h-6 text-[#355BE5]" />
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Messaging Channels</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23]">SMS / RCS / WA</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
+                                    Comprehensive coverage across all major global carriers with Tier-1 direct connections.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Unified Platform */}
+                        <div data-reveal data-stagger="2" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                                <LayoutGrid className="w-6 h-6 text-[#355BE5]" />
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Unified Platform</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23]">1 Console</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
+                                    Manage campaigns, licensing, and analytics from a single, intuitive dashboard.
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Security First */}
+                        <div data-reveal data-stagger="3" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                                <ShieldCheck className="w-6 h-6 text-[#355BE5]" />
+                            </div>
+                            <div className="space-y-4">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Security First</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23] uppercase">Compliance-first</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
+                                    Fully GDPR, CCPA, and TCPA compliant infrastructure for peace of mind.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* PROOF STRIP - Reach/Scale Numbers */}
+                    <div className="mt-12 md:mt-16 pt-12 border-t border-[#E2E8F0]">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0">
+                            {/* Metric 1 */}
+                            <div data-reveal data-stagger="4" className="flex flex-col items-center md:items-start space-y-2 md:px-8">
+                                <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
+                                    <CountUp value={12.4} decimals={1} suffix="M+" />
+                                </span>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">Messages Delivered / Month</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Rolling 30 days · sample</p>
+                            </div>
+
+                            {/* Metric 2 */}
+                            <div data-reveal data-stagger="5" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-[#E2E8F0]">
+                                <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
+                                    <CountUp value={2250} />
+                                </span>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">msgs/sec Peak Throughput</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Observed peak · sample</p>
+                            </div>
+
+                            {/* Metric 3 */}
+                            <div data-reveal data-stagger="6" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-[#E2E8F0]">
+                                <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
+                                    <CountUp value={99.95} decimals={2} suffix="%" />
+                                </span>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">Delivery Success Rate</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Rolling 30 days · sample</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Trusted By - Partners Logo Marquee */}
+                    <div className="mt-12 md:mt-16 pt-12 border-t border-[#E2E8F0]">
+                        <LogoMarquee dark={false} />
                     </div>
                 </div>
             </section>
 
-            {/* BRIDGE SECTION */}
-            <section className="py-32 md:py-40 bg-foreground text-background text-center relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.05)_0%,transparent_100%)] pointer-events-none" />
-                <div className="container max-w-4xl mx-auto relative z-10">
-                    <motion.div
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                    >
-                        <h2 className="text-4xl md:text-6xl font-semibold mb-8 tracking-tight leading-[1.1]">
-                            Messaging is not the end. <br className="hidden md:block" />
-                            <span className="text-background/60">It's where market entry begins</span>
+            {/* SECTION B - Our Core Services */}
+            <section className="section-padding bg-[#F7F9FD] relative z-10">
+                <div className="container mx-auto max-w-7xl">
+                    <div className="mb-16 md:mb-24">
+                        <h2 data-reveal className="text-[clamp(2.5rem,8vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
+                            Our Core Services
                         </h2>
-                        <div className="w-24 h-px bg-background/20 mx-auto my-10" />
-                        <p className="text-xl md:text-3xl text-background/80 leading-relaxed font-light">
-                            We turn communication into conversion and retention — the foundation for scalable distribution and commerce
-                        </p>
-                    </motion.div>
+                    </div>
+
+                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 pl-0">
+                        {/* Messaging Infrastructure */}
+                        <div data-reveal data-stagger="1" className="group relative p-8 md:p-12 rounded-[40px] border border-[#E2E8F0] bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
+                            {/* Background Motif */}
+                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700">
+                                <Server className="w-64 h-64 text-[#1F1F23]" />
+                            </div>
+
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 rounded-2xl bg-[#355BE5] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20">
+                                    <Code2 className="w-7 h-7 text-white" />
+                                </div>
+                                <div className="space-y-6 max-w-lg">
+                                    <h3 className="text-4xl font-bold text-[#1F1F23]">Messaging Infrastructure</h3>
+                                    <p className="text-lg text-[#1F1F23]/60 font-medium leading-relaxed">
+                                        High-throughput APIs designed for mission-critical notifications and marketing.
+                                    </p>
+
+                                    <ul className="space-y-4 pt-4">
+                                        {[
+                                            "Global SMS Gateway",
+                                            "Verified RCS Business Messaging",
+                                            "Two-Factor Authentication (2FA) SDKs"
+                                        ].map((item) => (
+                                            <li key={item} className="flex items-center gap-3 text-[#1F1F23]/80 font-bold">
+                                                <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center">
+                                                    <Check className="w-3 h-3 text-blue-600 stroke-[3px]" />
+                                                </div>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="relative z-10 pt-12">
+                                <Link to="/messaging" className="inline-flex items-center gap-2 text-[#355BE5] font-bold hover:gap-4 transition-all duration-300">
+                                    Learn more <ArrowRight className="w-5 h-5" />
+                                </Link>
+                            </div>
+                        </div>
+
+                        {/* Brand Distribution & Licensing */}
+                        <div data-reveal data-stagger="2" className="group relative p-8 md:p-12 rounded-[40px] border border-[#E2E8F0] bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
+                            {/* Background Motif */}
+                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700">
+                                <Globe className="w-64 h-64 text-[#1F1F23]" />
+                            </div>
+
+                            <div className="relative z-10">
+                                <div className="w-14 h-14 rounded-2xl bg-[#355BE5] flex items-center justify-center mb-10 shadow-lg shadow-blue-500/20">
+                                    <Store className="w-7 h-7 text-white" />
+                                </div>
+                                <div className="space-y-6 max-w-lg">
+                                    <h3 className="text-4xl font-bold text-[#1F1F23]">Brand Distribution & Licensing</h3>
+                                    <p className="text-lg text-[#1F1F23]/60 font-medium leading-relaxed">
+                                        End-to-end solutions for entering and scaling within the Korean and US markets.
+                                    </p>
+
+                                    <ul className="space-y-4 pt-4">
+                                        {[
+                                            "Cross-border IP Licensing",
+                                            "Local Market Localization",
+                                            "Distribution Channel Management"
+                                        ].map((item) => (
+                                            <li key={item} className="flex items-center gap-3 text-[#1F1F23]/80 font-bold">
+                                                <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center">
+                                                    <Check className="w-3 h-3 text-blue-600 stroke-[3px]" />
+                                                </div>
+                                                {item}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div className="relative z-10 pt-12">
+                                <Link to="/licensing" className="inline-flex items-center gap-2 text-[#355BE5] font-bold hover:gap-4 transition-all duration-300">
+                                    Learn more <ArrowRight className="w-5 h-5" />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* BRAND LICENSING SECTION */}
-            <section className="py-24 md:py-32 relative">
-                <div className="absolute bottom-0 left-0 w-1/3 h-full bg-muted/20 -skew-x-12 -z-10 hidden lg:block" />
-                <div className="container">
-                    <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            whileInView={{ opacity: 1, scale: 1 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
-                            className="order-2 lg:order-1 relative h-[400px] md:h-[500px] w-full bg-muted flex flex-col justify-center items-center p-8 overflow-hidden"
-                        >
-                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,#8080801a_1px,transparent_100%)]"></div>
-                            <div className="relative z-10 grid grid-cols-2 gap-4 w-full max-w-md">
-                                <div className="bg-background h-32 p-4 flex flex-col justify-end border border-border/50">
-                                    <span className="text-xs font-semibold text-muted-foreground tracking-widest uppercase">01</span>
-                                    <span className="font-medium mt-1">Discover</span>
-                                </div>
-                                <div className="bg-background h-32 p-4 flex flex-col justify-end border border-border/50 mt-8">
-                                    <span className="text-xs font-semibold text-muted-foreground tracking-widest uppercase">02</span>
-                                    <span className="font-medium mt-1">Launch</span>
-                                </div>
-                                <div className="col-span-2 bg-foreground text-background h-32 p-4 flex flex-col justify-end -mt-4">
-                                    <span className="text-xs font-semibold text-background/50 tracking-widest uppercase">03</span>
-                                    <span className="font-medium mt-1">Scale</span>
-                                </div>
+            {/* SECTION C - Who we are & People Preview */}
+            <section className="section-padding bg-[#EBEFF7] relative z-10">
+                <div className="container mx-auto max-w-5xl space-y-20">
+                    {/* Brand Identity */}
+                    <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">WHO WE ARE</h2>
+                        <div className="space-y-6 md:space-y-8">
+                            <div data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-none space-y-6">
+                                <p>
+                                    <span className="md:whitespace-nowrap">We help teams reach more customers and grow faster with managed enterprise messaging.</span><br />
+                                    <span className="md:whitespace-nowrap">We combine compliance, deliverability, and reporting into one accountable service.</span><br />
+                                    <span className="md:whitespace-nowrap">And we help brands expand into Korea through licensing & distribution.</span>
+                                </p>
+
                             </div>
-                        </motion.div>
 
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.8, delay: 0.2 }}
-                            className="order-1 lg:order-2"
-                        >
-                            <span className="text-sm font-semibold tracking-[0.2em] uppercase text-accent mb-4 block">
-                                Korea Market Entry
-                            </span>
-                            <h2 className="text-4xl md:text-5xl font-semibold mb-6 tracking-tight leading-tight">
-                                Launch in Korea — <br /> run with precision
-                            </h2>
-                            <h3 className="text-2xl font-medium mb-8 text-muted-foreground">
-                                Brand licensing and distribution, end to end
-                            </h3>
-                            <p className="text-lg text-foreground/80 mb-10 leading-relaxed">
-                                We help U.S. brands enter Korea with a full-stack operating plan: licensing, eCommerce operations, and localized growth. From channel strategy to logistics and customer experience, we execute with measurable outcomes.
-                            </p>
-
-                            <div className="space-y-4 mb-10">
-                                {[
-                                    { icon: Briefcase, title: "Licensing & Import Planning" },
-                                    { icon: Globe, title: "eCommerce Operations (Storefront · CRM · CS)" },
-                                    { icon: MessageSquare, title: "Localized Growth (Creative · Influencers · Paid)" }
-                                ].map((item, i) => (
-                                    <div key={i} className="flex items-center gap-4 p-4 bg-muted/50 border border-border/50">
-                                        <item.icon className="w-5 h-5 text-accent flex-shrink-0" />
-                                        <h4 className="font-medium">{item.title}</h4>
+                            <div className="flex flex-wrap justify-center items-center gap-3 pt-2">
+                                {["Execution-first", "Compliance by default", "Clear ownership"].map((principle, idx) => (
+                                    <div
+                                        key={principle}
+                                        data-reveal
+                                        style={{ transitionDelay: `${70 * idx}ms` }}
+                                        className="px-4 py-2 min-h-[44px] flex items-center border border-[#CCD4E9] rounded-full bg-white/40 text-[11px] font-bold tracking-widest uppercase text-[#1F1F23]"
+                                    >
+                                        {principle}
                                     </div>
                                 ))}
                             </div>
-
-                            <Link to="/licensing" className="text-foreground font-semibold uppercase tracking-widest hover:text-accent transition-colors group flex items-center text-sm">
-                                Explore Brand Licensing
-                                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                            </Link>
-                        </motion.div>
+                        </div>
                     </div>
+
+                    {/* People Preview - Unified List (Synced with /team) */}
+                    <div className="space-y-12">
+                        <div className="space-y-1 text-center">
+                            <p data-reveal data-stagger="1" className="text-[#1F1F23]/60 text-sm font-bold tracking-tight">
+                                Meet the team behind the execution.
+                            </p>
+                        </div>
+
+                        <div className="max-w-5xl mx-auto">
+                            <div className="grid md:grid-cols-2 gap-x-12 gap-y-16">
+                                {[
+                                    {
+                                        name: "Jin-sung Lim",
+                                        role: "CEO & Co-Founder",
+                                        initials: "JL",
+                                        focus: "Leads strategy, partnerships, and cross-border operations."
+                                    },
+                                    {
+                                        name: "Tracy D'Orta",
+                                        role: "Vice President",
+                                        initials: "TD",
+                                        focus: "Owns messaging strategy, deliverability, and compliance operations."
+                                    },
+                                    {
+                                        name: "Chae woon (Ray) Park",
+                                        role: "Partnerships Manager",
+                                        initials: "CP",
+                                        focus: "Supports partner onboarding and day-to-day coordination."
+                                    },
+                                    {
+                                        name: "Tyler Xu",
+                                        role: "Business Development",
+                                        initials: "TX",
+                                        focus: "Builds pipeline through outbound and partner outreach."
+                                    },
+                                    {
+                                        name: "Woojin Jang",
+                                        role: "Operations / Project Manager",
+                                        initials: "WJ",
+                                        focus: "Drives execution, timelines, and cross-functional delivery."
+                                    }
+                                ].map((member, i) => (
+                                    <div
+                                        key={member.name}
+                                        data-reveal
+                                        style={{ transitionDelay: `${i * 80}ms` }}
+                                        className="group relative"
+                                    >
+                                        <div className="flex items-start gap-6">
+                                            {/* Avatar placeholder with initials */}
+                                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white border border-[#E2E8F0] flex items-center justify-center text-xl font-bold text-[#1F1F23] shrink-0 shadow-sm transition-transform group-hover:scale-105">
+                                                {member.initials}
+                                            </div>
+                                            <div className="space-y-2 pt-1 md:pt-2">
+                                                <div>
+                                                    <h3 className="text-lg md:text-xl font-bold text-[#1F1F23] group-hover:underline underline-offset-4 decoration-[#CCD4E9]">
+                                                        {member.name}
+                                                    </h3>
+                                                    <p className="text-[14px] font-bold text-[#3B82F6] mt-0.5 tracking-tight">
+                                                        {member.role}
+                                                    </p>
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <p className="text-[13px] text-[#64748B] leading-relaxed max-w-sm">
+                                                        {member.focus}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                        {/* Office Locations */}
+                        <div className="pt-20 border-t border-[#CCD4E9]/50">
+                            <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
+                                <OfficeCard
+                                    city="IRVINE"
+                                    address="15375 Barranca Pkwy Ste B-203 Irvine CA 92618"
+                                    image="/home/irvine_office.png"
+                                />
+                                <OfficeCard
+                                    city="SEOUL"
+                                    address="15F, 220 Dosan-Daero, Gangnam-gu, Seoul"
+                                    image="/home/seoul_office.png"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section >
+
+            {/* SECTION E - Final CTA */}
+            <section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-16 md:py-24 relative z-10 flex flex-col items-center justify-center text-center px-6">
+                <div className="space-y-10 max-w-7xl mx-auto flex flex-col items-center">
+                    <h2 data-reveal className="text-[clamp(1.75rem,5vw,3.8rem)] font-bold tracking-tight leading-tight">
+                        <span className="block md:whitespace-nowrap">Reach more, grow faster, expand further</span>
+                        <span className="block">—together.</span>
+                    </h2>
+
+                    <Link
+                        to="/contact"
+                        data-reveal
+                        style={{ transitionDelay: '120ms' }}
+                        className="inline-flex items-center justify-center gap-2 h-12 min-w-[200px] px-8 rounded-[24px] bg-[#F7F9FD] text-[#1F1F23] text-sm font-bold tracking-wide hover:-translate-y-[1px] hover:bg-white transition-all duration-200 shadow-sm focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    >
+                        <Send className="w-4 h-4" />
+                        Request Consultation
+                    </Link>
                 </div>
             </section>
 
-            {/* CLOSING SECTION */}
-            <section className="py-32 md:py-48 text-center container border-t border-border/50 relative overflow-hidden">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-muted/20 rounded-full blur-3xl -z-10" />
-
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="max-w-4xl mx-auto"
-                >
-                    <h2 className="text-3xl md:text-5xl font-semibold tracking-tight leading-[1.3] italic mb-16 px-4">
-                        "Operations-proven infrastructure becomes an unfair advantage in expansion"
-                    </h2>
-                    <Button asChild size="lg" className="rounded-none px-12 py-8 text-lg bg-foreground text-background hover:bg-accent transition-all duration-300 group">
-                        <Link to="/contact">
-                            Request Consultation
-                            <ArrowRight className="ml-3 w-5 h-5 group-hover:translate-x-2 transition-transform" />
-                        </Link>
-                    </Button>
-                </motion.div>
-            </section>
-        </div>
+            <Footer />
+        </div >
     );
-};
-
-export default Home;
+}
