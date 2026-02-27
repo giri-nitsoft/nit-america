@@ -8,6 +8,7 @@ import TypingIndicator from "./components/TypingIndicator";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import SEO from "@/components/SEO";
+import { cn } from "@/lib/utils";
 
 function CountUp({ value, duration = 2, decimals = 0, suffix = "" }: { value: number; duration?: number; decimals?: number; suffix?: string }) {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -139,16 +140,19 @@ export default function Home() {
             {/* Floating Scalable Logo */}
             <motion.header
                 style={{ height: headerHeight }}
-                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-start pt-[18px]"
+                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-center"
             >
-                <div className="container mx-auto px-6 h-full flex items-center justify-between">
+                <div className={cn(
+                    "container mx-auto px-6 h-full flex justify-between",
+                    isMobile ? "items-start pt-[20px]" : "items-center"
+                )}>
                     <motion.div
                         style={{
                             scale: logoScale,
                             x: logoX,
                             y: logoY,
                             originX: 0,
-                            originY: 0
+                            originY: isMobile ? 0 : 0.5
                         }}
                         className="pointer-events-auto inline-block"
                     >
