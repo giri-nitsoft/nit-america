@@ -90,7 +90,7 @@ export default function Home() {
 
     const { scrollY } = useScroll();
     const logoScale = useTransform(scrollY, [0, 250], isMobile ? [1, 0.75] : [1, 0.45]);
-    const logoY = useTransform(scrollY, [0, 250], [60, 0]);
+    const logoY = useTransform(scrollY, [0, 250], [0, 0]);
     const logoX = useTransform(scrollY, [0, 250], [0, 0]);
 
 
@@ -101,6 +101,8 @@ export default function Home() {
     const headerHeight = useTransform(scrollY, [0, 250], ["64px", "64px"]);
 
     const orbOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+    const globeOpacity = useTransform(scrollY, [0, 300], [0.3, 0]);
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -137,7 +139,7 @@ export default function Home() {
             {/* Floating Scalable Logo */}
             <motion.header
                 style={{ height: headerHeight }}
-                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-center"
+                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-start pt-[18px]"
             >
                 <div className="container mx-auto px-6 h-full flex items-center justify-between">
                     <motion.div
@@ -146,7 +148,7 @@ export default function Home() {
                             x: logoX,
                             y: logoY,
                             originX: 0,
-                            originY: 0.5
+                            originY: 0
                         }}
                         className="pointer-events-auto inline-block"
                     >
@@ -175,7 +177,7 @@ export default function Home() {
                 <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-32 sm:pb-40 md:pb-32 overflow-hidden">
                     {/* Globe Background Animation */}
                     <motion.div
-                        style={{ opacity: orbOpacity }}
+                        style={{ opacity: globeOpacity }}
                         className="absolute top-[45%] md:top-[50%] left-[8vw] md:left-[15vw] -translate-y-1/2 z-0 pointer-events-none"
                     >
                         <div className="w-[70vw] h-[70vw] md:w-[50vmin] md:h-[50vmin] lg:w-[55vmin] lg:h-[55vmin] relative transition-all duration-700">

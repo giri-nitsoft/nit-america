@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="border-t border-border/50 py-24 bg-background">
+        <footer className="border-t border-border/50 py-24 bg-background text-[#1F1F23]">
             <div className="container">
                 <div className="flex flex-col md:flex-row justify-between gap-16 mb-24 text-left">
                     <div className="max-w-xs space-y-6">
@@ -19,30 +19,30 @@ const Footer = () => {
                     </div>
 
                     <div className="space-y-8">
-                        <h5 className="text-[10px] font-medium uppercase tracking-[0.2em] text-muted-foreground/50">
+                        <h5 className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#1F1F23]/40">
                             A partner company of NIT Group
                         </h5>
                         <div className="grid grid-cols-2 gap-x-16 gap-y-4 sm:gap-x-24">
                             <ul className="space-y-4">
                                 <li>
-                                    <a href="https://www.nitsoft.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium hover:text-accent transition-colors tracking-tight">
+                                    <a href="https://www.nitsoft.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
                                         NITSOFT
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://www.stcomm.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium hover:text-accent transition-colors tracking-tight">
+                                    <a href="https://www.stcomm.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
                                         STCOMM
                                     </a>
                                 </li>
                             </ul>
                             <ul className="space-y-4">
                                 <li>
-                                    <a href="https://www.e-ruda.net/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium hover:text-accent transition-colors tracking-tight">
+                                    <a href="https://www.e-ruda.net/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
                                         ERUDA MARKETING
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="https://echomarketing.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium hover:text-accent transition-colors tracking-tight">
+                                    <a href="https://echomarketing.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
                                         ECHO MARKETING
                                     </a>
                                 </li>
