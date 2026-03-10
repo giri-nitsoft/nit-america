@@ -519,9 +519,9 @@ export default function Home() {
                                     },
                                     {
                                         name: "Tracy D'Orta",
-                                        role: "Vice President",
+                                        role: "VP Business Development",
                                         initials: "TD",
-                                        focus: "Owns messaging strategy, deliverability, and compliance operations."
+                                        focus: "Identifies American companies and products with high Korean market potential and coordinates U.S.-Korea operations."
                                     },
                                     {
                                         name: "Chae woon (Ray) Park",
