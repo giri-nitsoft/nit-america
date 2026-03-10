@@ -83,7 +83,7 @@ const Licensing = () => {
                         <span className="text-overline inline-flex items-center gap-2">
                             <Globe className="h-3 w-3" /> GLOBAL VISION, LOCAL ACTION
                         </span>
-                        <h1 className="text-hero mb-8">NIT America: The bridge between US trends and Korea.</h1>
+                        <h1 className="text-hero mb-8">NIT America: Bringing New US Fashions To Korea</h1>
                         <p className="text-xl text-muted-foreground leading-relaxed">
                             We don't just broker deals; we build the entire pathway. NIT America operates as a strategic gateway,
                             securing premium US brand licenses and deploying them through our specialized execution hub in Korea.
@@ -112,6 +112,16 @@ const Licensing = () => {
 
             {/* Hubs Section */}
             <section className="container py-32">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mb-16 text-center"
+                >
+                    <p className="text-xl md:text-2xl font-medium text-[#1F1F23]/60 italic">
+                        "We operate on both sides of the pacific everyday."
+                    </p>
+                </motion.div>
                 <div className="grid md:grid-cols-2 gap-12">
                     {hubs.map((hub, i) => (
                         <motion.div
@@ -215,7 +225,7 @@ const Licensing = () => {
                         className="mb-24"
                     >
                         <span className="text-overline uppercase tracking-[0.3em]">Operational Flow</span>
-                        <h2 className="text-title">One-Stop Market Entry Solution</h2>
+                        <h2 className="text-title">Comprehensive Market Entry Solutions</h2>
                     </motion.div>
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">

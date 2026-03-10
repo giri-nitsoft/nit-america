@@ -22,7 +22,7 @@ const Navbar = ({ dark = false }: { dark?: boolean }) => {
     });
 
     const navLinks = [
-        { name: 'Messaging', path: '/messaging', shortName: 'Messaging' },
+        { name: 'Messaging Service', path: '/messaging', shortName: 'Messaging Service' },
         { name: 'Licensing & Distribution', path: '/licensing', shortName: 'Licensing' },
     ];
 

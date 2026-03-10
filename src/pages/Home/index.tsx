@@ -157,7 +157,7 @@ export default function Home() {
                         className="pointer-events-auto inline-block"
                     >
                         <Link to="/" className="relative flex flex-col items-start">
-                            <div className="w-[200px] sm:w-[400px] md:w-[600px] lg:w-[800px] flex items-center justify-start">
+                            <div className="w-[150px] sm:w-[250px] md:w-[350px] lg:w-[450px] flex items-center justify-start">
                                 <img
                                     src="/home/homebtn.png"
                                     alt="NIT America"
@@ -469,12 +469,12 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* SECTION C - Who we are & People Preview */}
+            {/* SECTION C - Our Team & People Preview */}
             <section className="section-padding bg-[#EBEFF7] relative z-10">
                 <div className="container mx-auto max-w-5xl space-y-20">
                     {/* Brand Identity */}
                     <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
-                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">WHO WE ARE</h2>
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">OUR TEAM</h2>
                         <div className="space-y-6 md:space-y-8">
                             <div data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-none space-y-6">
                                 <p>

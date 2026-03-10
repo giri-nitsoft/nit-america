@@ -18,36 +18,17 @@ const Footer = () => {
                         </p>
                     </div>
 
-                    <div className="space-y-8">
+                    <div className="space-y-4">
                         <h5 className="text-[10px] font-medium uppercase tracking-[0.2em] text-[#1F1F23]/40">
-                            A partner company of NIT Group
+                            A partner company
                         </h5>
-                        <div className="grid grid-cols-2 gap-x-16 gap-y-4 sm:gap-x-24">
-                            <ul className="space-y-4">
-                                <li>
-                                    <a href="https://www.nitsoft.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
-                                        NITSOFT
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://www.stcomm.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
-                                        STCOMM
-                                    </a>
-                                </li>
-                            </ul>
-                            <ul className="space-y-4">
-                                <li>
-                                    <a href="https://www.e-ruda.net/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
-                                        ERUDA MARKETING
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="https://echomarketing.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
-                                        ECHO MARKETING
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
+                        <ul className="space-y-4">
+                            <li>
+                                <a href="https://www.nitsoft.co.kr/" target="_blank" rel="noopener noreferrer" className="text-xs font-medium text-[#1F1F23]/80 hover:text-accent transition-colors tracking-tight">
+                                    NITSOFT
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 

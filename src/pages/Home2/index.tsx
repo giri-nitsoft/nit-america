@@ -372,12 +372,12 @@ export default function Home2() {
                     </div>
                 </div>
             </section>
-            {/* SECTION D - Who we are & People Preview */}
+            {/* SECTION D - Our Team & People Preview */}
             <section className="section-padding bg-[#1A1A1A] relative z-10">
                 <div className="container mx-auto max-w-5xl space-y-20">
                     {/* Brand Identity */}
                     <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
-                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-white leading-tight uppercase">WHO WE ARE</h2>
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-white leading-tight uppercase">OUR TEAM</h2>
                         <div className="space-y-6 md:space-y-8">
                             <div data-reveal className="text-base md:text-xl text-white/80 leading-relaxed font-medium mx-auto max-w-none space-y-6">
                                 <p>
