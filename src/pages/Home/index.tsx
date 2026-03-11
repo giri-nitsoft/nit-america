@@ -287,7 +287,7 @@ export default function Home() {
                 <div className="container mx-auto max-w-7xl">
                     <div className="mb-16 md:mb-24">
                         <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
-                            Why NIT AMERICA?
+                            How We Drive Your Growth
                         </h2>
                     </div>
 
@@ -524,8 +524,14 @@ export default function Home() {
                                         focus: "Identifies American companies and products with high Korean market potential and coordinates U.S.-Korea operations."
                                     },
                                     {
-                                        name: "Chae woon (Ray) Park",
-                                        role: "Partnerships Manager",
+                                        name: "Woo-jin Jang",
+                                        role: "CFO",
+                                        initials: "WJ",
+                                        focus: "Drives execution, timelines, and cross-functional delivery."
+                                    },
+                                    {
+                                        name: "Chae-woon Park (Ray)",
+                                        role: "Managing Director",
                                         initials: "CP",
                                         focus: "Supports partner onboarding and day-to-day coordination."
                                     },
@@ -534,12 +540,6 @@ export default function Home() {
                                         role: "Business Development",
                                         initials: "TX",
                                         focus: "Builds pipeline through outbound and partner outreach."
-                                    },
-                                    {
-                                        name: "Woojin Jang",
-                                        role: "Operations / Project Manager",
-                                        initials: "WJ",
-                                        focus: "Drives execution, timelines, and cross-functional delivery."
                                     }
                                 ].map((member, i) => (
                                     <div
