@@ -118,7 +118,7 @@ const Licensing = () => {
                     viewport={{ once: true }}
                     className="mb-16"
                 >
-                    <p className="text-2xl md:text-3xl font-medium text-black italic">
+                    <p className="text-2xl md:text-3xl font-medium text-black">
                         We operate on both sides of the Pacific every day.
                     </p>
                 </motion.div>
