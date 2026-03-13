@@ -88,7 +88,7 @@ const Messaging = () => {
     return (
         <div className="relative min-h-screen bg-white font-sans overflow-x-hidden">
             <SEO
-                title="Reliable Multi-Channel Messaging | NIT America"
+                title="Multi-Channel Messaging | NIT America"
                 description="Compliance-first workflows across SMS, RCS, and WhatsApp—built for real-world delivery."
                 canonical="https://nitamerica.com/messaging"
             />
@@ -105,10 +105,10 @@ const Messaging = () => {
                         >
                             {/* Removed Pills */}
                             <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-[4rem] font-bold tracking-tight text-[#1F1F23] leading-[1.1] max-w-2xl">
-                                Reliable Multi-Channel Messaging Across SMS, RCS, and WhatsApp
+                                Multi-Channel Messaging Across SMS, RCS, and WhatsApp
                             </h1>
                             <p className="text-lg text-[#64748B] leading-relaxed max-w-xl font-medium pt-2">
-                                Compliance-first workflows with validation, routing, and monitoring—built for real-world delivery.
+                                Connect with your customers on the channels they use every day.
                             </p>
 
                             <div className="pt-4 pb-2">

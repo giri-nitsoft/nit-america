@@ -287,7 +287,7 @@ export default function Home() {
                 <div className="container mx-auto max-w-7xl">
                     <div className="mb-16 md:mb-24">
                         <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
-                            How We Drive Your Growth
+                            HOW WE DRIVE BRAND GROWTH
                         </h2>
                     </div>
 
