@@ -116,10 +116,10 @@ const Licensing = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mb-16 text-center"
+                    className="mb-16"
                 >
-                    <p className="text-xl md:text-2xl font-medium text-[#1F1F23]/60 italic">
-                        "We operate on both sides of the pacific everyday."
+                    <p className="text-2xl md:text-3xl font-medium text-black italic">
+                        We operate on both sides of the Pacific every day.
                     </p>
                 </motion.div>
                 <div className="grid md:grid-cols-2 gap-12">
