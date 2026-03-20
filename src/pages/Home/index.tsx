@@ -515,7 +515,7 @@ export default function Home() {
                                         name: "Jin-sung Lim",
                                         role: "CEO & Co-Founder",
                                         initials: "JL",
-                                        focus: "Leads strategy, partnerships, and cross-border operations."
+                                        focus: "Leads overall strategy and cross-border partnerships between the U.S. and Korea. Builds scalable business models and drives global growth."
                                     },
                                     {
                                         name: "Tracy D'Orta",
@@ -527,19 +527,19 @@ export default function Home() {
                                         name: "Woo-jin Jang",
                                         role: "CFO",
                                         initials: "WJ",
-                                        focus: "Drives execution, timelines, and cross-functional delivery."
+                                        focus: "Oversees financial planning, budgeting, and performance management. Ensures alignment between financial goals and business execution."
                                     },
                                     {
                                         name: "Chae-woon Park (Ray)",
                                         role: "Managing Director",
                                         initials: "CP",
-                                        focus: "Supports partner onboarding and day-to-day coordination."
+                                        focus: "Leads strategic business development by sourcing and securing high-potential brands. Drives market analysis and partnership execution to expand business opportunities."
                                     },
                                     {
                                         name: "Tyler Xu",
-                                        role: "Business Development",
+                                        role: "Operations Lead",
                                         initials: "TX",
-                                        focus: "Builds pipeline through outbound and partner outreach."
+                                        focus: "Oversee day-to-day operations, lead hiring and office infrastructure development, and act as a key liaison between the CEO and internal team to ensure efficient execution of company initiatives."
                                     }
                                 ].map((member, i) => (
                                     <div
