@@ -420,6 +420,12 @@ export default function Home2() {
                                         focus: "Leads overall strategy and cross-border partnerships between the U.S. and Korea. Builds scalable business models and drives global growth."
                                     },
                                     {
+                                        name: "Vincent Rosso",
+                                        role: "CTO",
+                                        initials: "VR",
+                                        focus: "Leads technological strategy and infrastructure development, ensuring scalable and secure systems to support messaging and distribution operations."
+                                    },
+                                    {
                                         name: "Tracy D'Orta",
                                         role: "VP Business Development",
                                         initials: "TD",
