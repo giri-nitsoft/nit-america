@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
     return (
-        <footer className="border-t border-border/50 py-24 bg-background text-[#1F1F23]">
+        <footer className="border-t border-border/50 pt-8 pb-32 md:pb-8 px-8 sm:px-16 md:px-28 bg-background text-[#1F1F23]">
             <div className="container">
-                <div className="flex flex-col md:flex-row justify-between gap-16 mb-24 text-left">
+                <div className="flex flex-col md:flex-row justify-between gap-16 mb-8 text-left">
                     <div className="max-w-xs space-y-6">
                         <Link to="/" className="inline-block">
                             <img
@@ -32,10 +32,20 @@ const Footer = () => {
                     </div>
                 </div>
 
-                <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-8 border-t border-border/50">
-                    <p className="text-[10px] text-muted-foreground/60 uppercase tracking-widest font-medium font-sans">
-                        &copy; {new Date().getFullYear()} NIT America. All rights reserved.
-                    </p>
+                <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-4 border-t border-border/50">
+                    <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between w-full">
+                        <p className="text-[10px] text-muted-foreground/60 uppercase tracking-[0.2em] font-bold order-2 md:order-1">
+                            &copy; {new Date().getFullYear()} NIT America. All rights reserved.
+                        </p>
+                        <div className="flex gap-8 order-1 md:order-2">
+                            <Link to="/privacy" className="text-[10px] text-muted-foreground/50 hover:text-[#111111] uppercase tracking-[0.2em] font-black transition-colors">
+                                Privacy Policy
+                            </Link>
+                            <Link to="/terms" className="text-[10px] text-muted-foreground/50 hover:text-[#111111] uppercase tracking-[0.2em] font-black transition-colors">
+                                SMS Terms
+                            </Link>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

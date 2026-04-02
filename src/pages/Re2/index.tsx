@@ -1,12 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, Variants, useInView, animate } from "framer-motion";
-import { ArrowRight, Smartphone, LayoutGrid, ShieldCheck, Code2, Store, Server, Globe, Check, MapPin, Send } from "lucide-react";
+import { Asterisk, ArrowRight, Smartphone, LayoutGrid, ShieldCheck, Code2, Store, Server, Globe, Check, MapPin, Send } from "lucide-react";
 import { Link } from 'react-router-dom';
-import Home3Canvas from "./components/Home3Canvas";
-import LogoMarquee from "./components/LogoMarquee";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import GlobeEffect from "../Home2/components/GlobeEffect";
+import LogoMarquee from "../Home2/components/LogoMarquee";
+import TypingIndicator from "../Home/components/TypingIndicator";
 import SEO from "@/components/SEO";
+import { cn } from "@/lib/utils";
 
 function CountUp({ value, duration = 2, decimals = 0, suffix = "" }: { value: number; duration?: number; decimals?: number; suffix?: string }) {
     const nodeRef = useRef<HTMLSpanElement>(null);
@@ -20,7 +20,7 @@ function CountUp({ value, duration = 2, decimals = 0, suffix = "" }: { value: nu
 
         const controls = animate(0, value, {
             duration,
-            ease: [0.16, 1, 0.3, 1], // Premium outward ease
+            ease: [0.16, 1, 0.3, 1],
             onUpdate: (latest) => {
                 node.textContent = latest.toLocaleString(undefined, {
                     minimumFractionDigits: decimals,
@@ -59,7 +59,14 @@ function OfficeCard({ city, address, image }: { city: string; address: string; i
     );
 }
 
-export default function Home2() {
+export default function Home() {
+    const [isMobile, setIsMobile] = useState(false);
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         const observer = new IntersectionObserver((entries) => {
@@ -81,14 +88,20 @@ export default function Home2() {
     }, []);
 
     const { scrollY } = useScroll();
+    const logoScale = useTransform(scrollY, [0, 250], isMobile ? [1, 0.75] : [1, 0.45]);
+    const logoY = useTransform(scrollY, [0, 250], [0, 0]);
+    const logoX = useTransform(scrollY, [0, 250], [0, 0]);
 
 
 
     const textOpacity = useTransform(scrollY, [0, 200], [1, 0]);
     const textY = useTransform(scrollY, [0, 200], [0, -50]);
 
+    const headerHeight = useTransform(scrollY, [0, 250], ["64px", "64px"]);
 
-    const orbOpacity = useTransform(scrollY, [0, 300], [0.4, 0]);
+    const orbOpacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+    const globeOpacity = useTransform(scrollY, [0, 300], [0.3, 0]);
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
@@ -114,127 +127,204 @@ export default function Home2() {
     };
 
     return (
-        <div className="min-h-[200vh] bg-[#111111] text-white font-sans selection:bg-accent selection:text-accent-foreground">
+        <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-accent-foreground">
             <SEO
                 title="NIT America | Advanced Infrastructure"
                 description="Scaling messaging infrastructure and launching brands in Korea with precision."
             />
 
-            <Navbar dark={true} />
-
+            {/* Floating Scalable Logo */}
+            <motion.header
+                style={{ height: headerHeight }}
+                className="fixed top-[10px] left-0 w-full z-[51] pointer-events-none flex items-center"
+            >
+                <div className={cn(
+                    "container mx-auto px-6 h-full flex justify-between",
+                    isMobile ? "items-start pt-[20px]" : "items-center"
+                )}>
+                    <motion.div
+                        style={{
+                            scale: logoScale,
+                            x: logoX,
+                            y: logoY,
+                            originX: 0,
+                            originY: isMobile ? 0 : 0.5
+                        }}
+                        className="pointer-events-auto inline-block"
+                    >
+                        <Link to="/" className="relative flex flex-col items-start">
+                            <div className="w-[150px] sm:w-[250px] md:w-[350px] lg:w-[450px] flex items-center justify-start">
+                                <img
+                                    src="/home/homebtn.png"
+                                    alt="NIT America"
+                                    className="max-w-full h-auto object-contain"
+                                />
+                            </div>
+                            <motion.span
+                                style={{ opacity: useTransform(scrollY, [0, 150], [1, 0]) }}
+                                className="absolute left-2 sm:left-4 top-[110%] sm:top-full text-accent font-semibold tracking-[0.2em] uppercase text-[10px] sm:text-sm whitespace-nowrap"
+                            >
+                                Nexus of Innovation & Trade
+                            </motion.span>
+                        </Link>
+                    </motion.div>
+                </div>
+            </motion.header>
 
             {/* Hero Section Container */}
             <div className="relative">
                 {/* Hero Section */}
-                <section className="relative h-screen flex flex-col justify-center items-center px-6 sm:px-8 md:px-24 overflow-hidden">
-                    {/* Canvas Background */}
-                    <Home3Canvas />
-
+                <section className="relative h-screen flex flex-col justify-end items-center md:items-end px-6 sm:px-8 md:px-24 pb-32 sm:pb-40 md:pb-32 overflow-hidden">
+                    {/* Globe Background Animation */}
+                    <motion.div
+                        style={{ opacity: globeOpacity }}
+                        className="absolute top-[45%] md:top-[50%] left-[8vw] md:left-[15vw] -translate-y-1/2 z-0 pointer-events-none"
+                    >
+                        <div className="w-[70vw] h-[70vw] md:w-[50vmin] md:h-[50vmin] lg:w-[55vmin] lg:h-[55vmin] relative transition-all duration-700">
+                            <GlobeEffect dark={false} />
+                        </div>
+                    </motion.div>
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
                         style={{ opacity: textOpacity, y: textY }}
-                        className="max-w-4xl text-center relative z-10 space-y-6 md:space-y-8"
+                        className="max-w-full text-center md:text-right"
                     >
-                        <motion.div variants={itemVariants}>
-                            <p className="text-[#355BE5] text-xs sm:text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 md:mb-6">
-                                Enterprise Messaging Delivery Service
-                            </p>
-                            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-bold tracking-tight text-white leading-[1.1]">
-                                Reach More. <br />
-                                Grow Faster. <br />
-                                Expand Further.
-                            </h1>
-                            <p className="mt-8 text-white/50 text-sm sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-tight">
-                                Managed SMS, RCS, and WhatsApp Business <br className="hidden sm:block" /> —built for compliance, deliverability, and reporting.
-                            </p>
-                        </motion.div>
+                        <div className="overflow-hidden py-1 flex items-center justify-center md:justify-end gap-4 md:gap-6">
+                            <motion.div variants={itemVariants}>
+                                <TypingIndicator />
+                            </motion.div>
+                            <motion.h2
+                                variants={itemVariants}
+                                className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                Reach More.
+                            </motion.h2>
+                        </div>
+                        <div className="overflow-hidden py-1">
+                            <motion.h2
+                                variants={itemVariants}
+                                className="text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                Grow Faster.
+                            </motion.h2>
+                        </div>
+                        <div className="overflow-hidden py-1">
+                            <motion.div
+                                variants={itemVariants}
+                                className="flex items-center justify-center md:justify-end gap-3 md:gap-6 text-3xl sm:text-5xl md:text-6xl lg:text-[5.5rem] font-bold tracking-tight text-[#1A1A1A] leading-[1.1]"
+                            >
+                                <span>Expand</span>
+                                <span className="inline-block w-12 h-6 md:w-32 md:h-16 bg-black rounded-full relative overflow-hidden" aria-hidden="true">
+                                    <motion.span
+                                        animate={{
+                                            x: isMobile ? [-12, 12] : [-40, 40],
+                                            rotate: [0, 360]
+                                        }}
+                                        transition={{
+                                            duration: 3.2,
+                                            repeat: Infinity,
+                                            repeatType: "reverse",
+                                            ease: "easeInOut"
+                                        }}
+                                        className="absolute inset-0 flex items-center justify-center"
+                                    >
+                                        <Asterisk className="w-4 h-4 md:w-[42px] md:h-[42px] text-white" />
+                                    </motion.span>
+                                </span>
+                                <span>Further.</span>
+                            </motion.div>
+                        </div>
 
                         <motion.div
                             variants={itemVariants}
-                            className="pt-6 sm:pt-10"
+                            className="mt-8 sm:mt-12 flex justify-center md:justify-end"
                         >
                             <Link
                                 to="/contact"
-                                className="inline-flex items-center gap-[7px] sm:gap-[11px] text-[12.6px] sm:text-[14.4px] md:text-[16.2px] font-bold uppercase tracking-wider text-white hover:text-[#355BE5] transition-all duration-300 group px-7 sm:px-9 py-[14px] sm:py-[18px] border border-white/20 rounded-full hover:border-[#355BE5]/50 bg-white/5 hover:bg-white/10 backdrop-blur-md"
+                                className="inline-flex items-center gap-2 sm:gap-3 text-base sm:text-2xl md:text-[40px] font-bold uppercase tracking-tight text-[#1F1F23] hover:text-accent transition-all duration-300 group pointer-events-auto"
                             >
-                                REQUEST CONSULTATION <ArrowRight className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] group-hover:translate-x-2 transition-transform duration-300" />
+                                REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-8 sm:h-8 md:w-[42px] md:h-[42px] group-hover:translate-x-2 transition-transform duration-300" />
                             </Link>
                         </motion.div>
                     </motion.div>
 
-                    {/* Scroll Indicator */}
-                    <div className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10">
-                        <motion.div
-                            style={{ opacity: orbOpacity }}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ delay: 1.5, duration: 1 }}
-                            className="flex flex-col items-center gap-4 text-[10px] uppercase tracking-[0.3em] font-medium opacity-50 text-white"
-                        >
-                            <div className="w-px h-12 bg-white/20 relative overflow-hidden">
+                    {/* Bottom-left Decorative Animation & Scroll Indicator */}
+                    <div className="absolute bottom-0 left-0 w-full pointer-events-none z-20">
+                        <div className="container mx-auto relative h-[400px]">
+                            <div className="absolute bottom-12 left-0 px-6 sm:px-8 md:px-24">
                                 <motion.div
-                                    animate={{ y: [0, 48, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                                    className="absolute top-0 left-0 w-full h-1/3 bg-white"
-                                />
+                                    style={{ opacity: orbOpacity }}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 1.5, duration: 1 }}
+                                    className="flex items-center gap-4 text-sm uppercase tracking-widest font-medium opacity-30"
+                                >
+                                    <div className="w-px h-12 bg-foreground/20 relative overflow-hidden">
+                                        <motion.div
+                                            animate={{ y: [0, 48, 0] }}
+                                            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                            className="absolute top-0 left-0 w-full h-1/3 bg-foreground"
+                                        />
+                                    </div>
+                                    <span>Scroll to explore</span>
+                                </motion.div>
                             </div>
-                            <span>Scroll to explore</span>
-                        </motion.div>
+                        </div>
                     </div>
                 </section>
             </div>
 
 
 
-            {/* SECTION B - Why NIT AMERICA? */}
-            <section className="section-padding bg-[#1A1A1A] relative z-10">
+            {/* Why NIT AMERICA? Section */}
+            <section className="section-padding bg-white relative z-10 border-b border-[#E2E8F0]">
                 <div className="container mx-auto max-w-7xl">
-                    <div className="mb-16 md:mb-24 text-center">
-                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-white leading-tight uppercase">
+                    <div className="mb-16 md:mb-24">
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
                             HOW WE DRIVE BRAND GROWTH
                         </h2>
                     </div>
 
                     <div className="grid md:grid-cols-3 gap-8 md:gap-12">
                         {/* Messaging Channels */}
-                        <div data-reveal data-stagger="1" className="group p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500">
-                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                        <div data-reveal data-stagger="1" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                                 <Smartphone className="w-6 h-6 text-[#355BE5]" />
                             </div>
                             <div className="space-y-4">
-                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]">Messaging Channels</p>
-                                <h3 className="text-3xl md:text-3xl font-bold text-white">SMS / RCS / WA</h3>
-                                <p className="text-white/60 leading-relaxed font-medium">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Messaging Channels</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23]">SMS / RCS / WA</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
                                     Comprehensive coverage across all major global carriers with Tier-1 direct connections.
                                 </p>
                             </div>
                         </div>
 
                         {/* Unified Platform */}
-                        <div data-reveal data-stagger="2" className="group p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500">
-                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                        <div data-reveal data-stagger="2" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                                 <LayoutGrid className="w-6 h-6 text-[#355BE5]" />
                             </div>
                             <div className="space-y-4">
-                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]">Unified Platform</p>
-                                <h3 className="text-3xl md:text-3xl font-bold text-white">1 Console</h3>
-                                <p className="text-white/60 leading-relaxed font-medium">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Unified Platform</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23]">1 Console</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
                                     Manage campaigns, licensing, and analytics from a single, intuitive dashboard.
                                 </p>
                             </div>
                         </div>
 
                         {/* Security First */}
-                        <div data-reveal data-stagger="3" className="group p-8 rounded-3xl border border-white/5 bg-white/5 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/5 transition-all duration-500">
-                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                        <div data-reveal data-stagger="3" className="group p-8 rounded-3xl border border-[#E2E8F0] bg-[#F7F9FD]/50 hover:bg-white hover:shadow-xl hover:shadow-blue-500/5 transition-all duration-500">
+                            <div className="w-12 h-12 rounded-xl bg-[#355BE5]/10 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                                 <ShieldCheck className="w-6 h-6 text-[#355BE5]" />
                             </div>
                             <div className="space-y-4">
-                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]">Security First</p>
-                                <h3 className="text-3xl md:text-3xl font-bold text-white uppercase">Compliance-first</h3>
-                                <p className="text-white/60 leading-relaxed font-medium">
+                                <p className="text-xs font-bold tracking-widest uppercase text-[#355BE5]/60">Security First</p>
+                                <h3 className="text-3xl md:text-3xl font-bold text-[#1F1F23] uppercase">Compliance-first</h3>
+                                <p className="text-[#1F1F23]/60 leading-relaxed font-medium">
                                     Fully GDPR, CCPA, and TCPA compliant infrastructure for peace of mind.
                                 </p>
                             </div>
@@ -242,57 +332,59 @@ export default function Home2() {
                     </div>
 
                     {/* PROOF STRIP - Reach/Scale Numbers */}
-                    <div className="mt-12 md:mt-16 pt-12 border-t border-white/5">
+                    <div className="mt-12 md:mt-16 pt-12 border-t border-[#E2E8F0]">
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-0">
                             {/* Metric 1 */}
                             <div data-reveal data-stagger="4" className="flex flex-col items-center md:items-start space-y-2 md:px-8">
                                 <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
                                     <CountUp value={12.4} decimals={1} suffix="M+" />
                                 </span>
-                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-white/80">Messages Delivered / Month</p>
-                                <p className="text-[10px] md:text-[11px] text-white/30 font-medium italic">Rolling 30 days · sample</p>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">Messages Delivered / Month</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Rolling 30 days · sample</p>
                             </div>
 
                             {/* Metric 2 */}
-                            <div data-reveal data-stagger="5" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-white/5">
+                            <div data-reveal data-stagger="5" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-[#E2E8F0]">
                                 <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
                                     <CountUp value={2250} />
                                 </span>
-                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-white/80">msgs/sec Peak Throughput</p>
-                                <p className="text-[10px] md:text-[11px] text-white/30 font-medium italic">Observed peak · sample</p>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">msgs/sec Peak Throughput</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Observed peak · sample</p>
                             </div>
 
                             {/* Metric 3 */}
-                            <div data-reveal data-stagger="6" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-white/5">
+                            <div data-reveal data-stagger="6" className="flex flex-col items-center md:items-start space-y-2 md:px-12 md:border-l border-[#E2E8F0]">
                                 <span className="text-[42px] md:text-[56px] font-bold text-[#355BE5] leading-none tracking-tight">
                                     <CountUp value={99.95} decimals={2} suffix="%" />
                                 </span>
-                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-white/80">Delivery Success Rate</p>
-                                <p className="text-[10px] md:text-[11px] text-white/30 font-medium italic">Rolling 30 days · sample</p>
+                                <p className="text-[12px] md:text-[13px] font-bold uppercase tracking-widest text-[#1F1F23]">Delivery Success Rate</p>
+                                <p className="text-[10px] md:text-[11px] text-[#1F1F23]/40 font-medium italic">Rolling 30 days · sample</p>
                             </div>
                         </div>
+                    </div>
+
+                    {/* Trusted By - Partners Logo Marquee */}
+                    <div className="mt-12 md:mt-16 pt-12 border-t border-[#E2E8F0]">
+                        <LogoMarquee dark={false} />
                     </div>
                 </div>
             </section>
 
-            {/* Logo Marquee Section */}
-            <LogoMarquee />
-
-            {/* SECTION C - Our Core Services */}
-            <section className="section-padding bg-[#111111] relative z-10">
+            {/* SECTION B - Our Core Services */}
+            <section className="section-padding bg-[#F7F9FD] relative z-10">
                 <div className="container mx-auto max-w-7xl">
                     <div className="mb-16 md:mb-24">
-                        <h2 data-reveal className="text-[clamp(2.5rem,8vw,4.5rem)] font-bold tracking-tight text-white leading-tight uppercase">
+                        <h2 data-reveal className="text-[clamp(2.5rem,8vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">
                             Our Core Services
                         </h2>
                     </div>
 
-                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12">
+                    <div className="grid lg:grid-cols-2 gap-8 md:gap-12 pl-0">
                         {/* Messaging Infrastructure */}
-                        <div data-reveal data-stagger="1" className="group relative p-8 md:p-12 rounded-[40px] border border-white/5 bg-white/5 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
+                        <div data-reveal data-stagger="1" className="group relative p-8 md:p-12 rounded-[40px] border border-[#E2E8F0] bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
                             {/* Background Motif */}
-                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-700">
-                                <Server className="w-64 h-64 text-white" />
+                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700">
+                                <Server className="w-64 h-64 text-[#1F1F23]" />
                             </div>
 
                             <div className="relative z-10">
@@ -300,8 +392,8 @@ export default function Home2() {
                                     <Code2 className="w-7 h-7 text-white" />
                                 </div>
                                 <div className="space-y-6 max-w-lg">
-                                    <h3 className="text-4xl font-bold text-white">Messaging Infrastructure</h3>
-                                    <p className="text-lg text-white/60 font-medium leading-relaxed">
+                                    <h3 className="text-4xl font-bold text-[#1F1F23]">Messaging Infrastructure</h3>
+                                    <p className="text-lg text-[#1F1F23]/60 font-medium leading-relaxed">
                                         High-throughput APIs designed for mission-critical notifications and marketing.
                                     </p>
 
@@ -311,9 +403,9 @@ export default function Home2() {
                                             "Verified RCS Business Messaging",
                                             "Two-Factor Authentication (2FA) SDKs"
                                         ].map((item) => (
-                                            <li key={item} className="flex items-center gap-3 text-white/80 font-bold">
+                                            <li key={item} className="flex items-center gap-3 text-[#1F1F23]/80 font-bold">
                                                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center">
-                                                    <Check className="w-3 h-3 text-[#355BE5] stroke-[3px]" />
+                                                    <Check className="w-3 h-3 text-blue-600 stroke-[3px]" />
                                                 </div>
                                                 {item}
                                             </li>
@@ -330,10 +422,10 @@ export default function Home2() {
                         </div>
 
                         {/* Brand Licensing */}
-                        <div data-reveal data-stagger="2" className="group relative p-8 md:p-12 rounded-[40px] border border-white/5 bg-white/5 hover:bg-white/10 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
+                        <div data-reveal data-stagger="2" className="group relative p-8 md:p-12 rounded-[40px] border border-[#E2E8F0] bg-white hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-700 overflow-hidden min-h-[500px] flex flex-col justify-between">
                             {/* Background Motif */}
-                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.02] group-hover:opacity-[0.04] transition-opacity duration-700">
-                                <Globe className="w-64 h-64 text-white" />
+                            <div className="absolute top-1/2 right-[-10%] -translate-y-1/2 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-700">
+                                <Globe className="w-64 h-64 text-[#1F1F23]" />
                             </div>
 
                             <div className="relative z-10">
@@ -341,8 +433,8 @@ export default function Home2() {
                                     <Store className="w-7 h-7 text-white" />
                                 </div>
                                 <div className="space-y-6 max-w-lg">
-                                    <h3 className="text-4xl font-bold text-white">Brand Licensing</h3>
-                                    <p className="text-lg text-white/60 font-medium leading-relaxed">
+                                    <h3 className="text-4xl font-bold text-[#1F1F23]">Brand Licensing</h3>
+                                    <p className="text-lg text-[#1F1F23]/60 font-medium leading-relaxed">
                                         End-to-end solutions for entering and scaling within the Korean and US markets.
                                     </p>
 
@@ -352,9 +444,9 @@ export default function Home2() {
                                             "Local Market Localization",
                                             "Distribution Channel Management"
                                         ].map((item) => (
-                                            <li key={item} className="flex items-center gap-3 text-white/80 font-bold">
+                                            <li key={item} className="flex items-center gap-3 text-[#1F1F23]/80 font-bold">
                                                 <div className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/10 flex items-center justify-center">
-                                                    <Check className="w-3 h-3 text-[#355BE5] stroke-[3px]" />
+                                                    <Check className="w-3 h-3 text-blue-600 stroke-[3px]" />
                                                 </div>
                                                 {item}
                                             </li>
@@ -372,19 +464,21 @@ export default function Home2() {
                     </div>
                 </div>
             </section>
-            {/* SECTION D - Our Team & People Preview */}
-            <section className="section-padding bg-[#1A1A1A] relative z-10">
+
+            {/* SECTION C - Our Team & People Preview */}
+            <section className="section-padding bg-[#EBEFF7] relative z-10">
                 <div className="container mx-auto max-w-5xl space-y-20">
                     {/* Brand Identity */}
                     <div className="max-w-5xl mx-auto text-center space-y-8 md:space-y-12">
-                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-white leading-tight uppercase">OUR TEAM</h2>
+                        <h2 data-reveal className="text-[clamp(2.5rem,10vw,4.5rem)] font-bold tracking-tight text-[#1F1F23] leading-tight uppercase">OUR TEAM</h2>
                         <div className="space-y-6 md:space-y-8">
-                            <div data-reveal className="text-base md:text-xl text-white/80 leading-relaxed font-medium mx-auto max-w-none space-y-6">
+                            <div data-reveal className="text-base md:text-xl text-[#1F1F23]/80 leading-relaxed font-medium mx-auto max-w-none space-y-6">
                                 <p>
                                     <span className="md:whitespace-nowrap">We help teams reach more customers and grow faster with managed enterprise messaging.</span><br />
                                     <span className="md:whitespace-nowrap">We combine compliance, deliverability, and reporting into one accountable service.</span><br />
                                     <span className="md:whitespace-nowrap">And we help brands expand into Korea through brand licensing.</span>
                                 </p>
+
                             </div>
 
                             <div className="flex flex-wrap justify-center items-center gap-3 pt-2">
@@ -393,7 +487,7 @@ export default function Home2() {
                                         key={principle}
                                         data-reveal
                                         style={{ transitionDelay: `${70 * idx}ms` }}
-                                        className="px-4 py-2 min-h-[44px] flex items-center border border-white/20 rounded-full bg-white/5 text-[11px] font-bold tracking-widest uppercase text-white"
+                                        className="px-4 py-2 min-h-[44px] flex items-center border border-[#CCD4E9] rounded-full bg-white/40 text-[11px] font-bold tracking-widest uppercase text-[#1F1F23]"
                                     >
                                         {principle}
                                     </div>
@@ -405,7 +499,7 @@ export default function Home2() {
                     {/* People Preview - Unified List (Synced with /team) */}
                     <div className="space-y-12">
                         <div className="space-y-1 text-center">
-                            <p data-reveal data-stagger="1" className="text-white/60 text-sm font-bold tracking-tight">
+                            <p data-reveal data-stagger="1" className="text-[#1F1F23]/60 text-sm font-bold tracking-tight">
                                 Meet the team behind the execution.
                             </p>
                         </div>
@@ -458,12 +552,12 @@ export default function Home2() {
                                     >
                                         <div className="flex items-start gap-6">
                                             {/* Avatar placeholder with initials */}
-                                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-[#1A1A1A] border border-white/10 flex items-center justify-center text-xl font-bold text-white shrink-0 shadow-sm transition-transform group-hover:scale-105">
+                                            <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white border border-[#E2E8F0] flex items-center justify-center text-xl font-bold text-[#1F1F23] shrink-0 shadow-sm transition-transform group-hover:scale-105">
                                                 {member.initials}
                                             </div>
                                             <div className="space-y-2 pt-1 md:pt-2">
                                                 <div>
-                                                    <h3 className="text-lg md:text-xl font-bold text-white group-hover:underline underline-offset-4 decoration-white/30">
+                                                    <h3 className="text-lg md:text-xl font-bold text-[#1F1F23] group-hover:underline underline-offset-4 decoration-[#CCD4E9]">
                                                         {member.name}
                                                     </h3>
                                                     <p className="text-[14px] font-bold text-[#3B82F6] mt-0.5 tracking-tight">
@@ -471,7 +565,7 @@ export default function Home2() {
                                                     </p>
                                                 </div>
                                                 <div className="space-y-1">
-                                                    <p className="text-[13px] text-white/50 leading-relaxed max-w-sm">
+                                                    <p className="text-[13px] text-[#64748B] leading-relaxed max-w-sm">
                                                         {member.focus}
                                                     </p>
                                                 </div>
@@ -481,9 +575,8 @@ export default function Home2() {
                                 ))}
                             </div>
                         </div>
-
                         {/* Office Locations */}
-                        <div className="pt-20 border-t border-white/10">
+                        <div className="pt-20 border-t border-[#CCD4E9]/50">
                             <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
                                 <OfficeCard
                                     city="IRVINE"
@@ -499,10 +592,10 @@ export default function Home2() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* SECTION E - Final CTA */}
-            < section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-20 md:py-32 relative z-10 flex flex-col items-center justify-center text-center px-6" >
+            <section className="w-full bg-[#1F1F23] text-[#F7F9FD] py-16 md:py-24 relative z-10 flex flex-col items-center justify-center text-center px-6">
                 <div className="space-y-10 max-w-7xl mx-auto flex flex-col items-center">
                     <h2 data-reveal className="text-[clamp(1.75rem,5vw,3.8rem)] font-bold tracking-tight leading-tight">
                         <span className="block md:whitespace-nowrap">Reach more, grow faster, expand further</span>
@@ -519,9 +612,8 @@ export default function Home2() {
                         Request Consultation
                     </Link>
                 </div>
-            </section >
+            </section>
 
-            <Footer />
         </div >
     );
 }

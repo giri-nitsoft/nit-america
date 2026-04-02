@@ -150,12 +150,12 @@ export default function Re() {
                             <p className="text-[#355BE5] text-xs sm:text-sm md:text-base font-bold tracking-[0.2em] uppercase mb-4 md:mb-6">
                                 Growth Infrastructure
                             </p>
-                            <h1 className="text-[2rem] sm:text-[2.7rem] md:text-[3.375rem] lg:text-[4rem] xl:text-[4.5rem] font-bold tracking-tight text-white leading-[1.1]">
+                            <h1 className="text-[1.8rem] sm:text-[2.43rem] md:text-[3.03rem] lg:text-[3.6rem] xl:text-[4.05rem] font-bold tracking-tight text-white leading-[1.1]">
                                 Connecting Businesses to Customers <br />
                                 and Brands to New Markets
                             </h1>
-                            <p className="mt-8 text-white/50 text-sm sm:text-base md:text-lg font-medium max-w-2xl mx-auto leading-relaxed tracking-tight">
-                                NIT AMERICA helps businesses grow by connecting them to customers through messaging and to new markets through distribution.
+                            <p className="mt-8 text-white/50 text-[12.6px] sm:text-[14.4px] md:text-[16.2px] font-medium max-w-2xl mx-auto leading-relaxed tracking-tight">
+                                NIT AMERICA helps businesses grow by connecting them to customers through messaging and to new markets through brand licensing.
                             </p>
                         </motion.div>
 
@@ -165,9 +165,9 @@ export default function Re() {
                         >
                             <Link
                                 to="/contact"
-                                className="inline-flex items-center gap-2 sm:gap-3 text-sm sm:text-base md:text-lg font-bold uppercase tracking-wider text-white hover:text-[#355BE5] transition-all duration-300 group px-8 sm:px-10 py-4 sm:py-5 border border-white/20 rounded-full hover:border-[#355BE5]/50 bg-white/5 hover:bg-white/10 backdrop-blur-md"
+                                className="inline-flex items-center gap-[7px] sm:gap-[11px] text-[12.6px] sm:text-[14.4px] md:text-[16.2px] font-bold uppercase tracking-wider text-white hover:text-[#355BE5] transition-all duration-300 group px-7 sm:px-9 py-[14px] sm:py-[18px] border border-white/20 rounded-full hover:border-[#355BE5]/50 bg-white/5 hover:bg-white/10 backdrop-blur-md"
                             >
-                                REQUEST CONSULTATION <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-2 transition-transform duration-300" />
+                                REQUEST CONSULTATION <ArrowRight className="w-[14px] h-[14px] sm:w-[18px] sm:h-[18px] group-hover:translate-x-2 transition-transform duration-300" />
                             </Link>
                         </motion.div>
                     </motion.div>
@@ -241,7 +241,7 @@ export default function Re() {
                     </div>
                 </motion.div>
 
-                {/* Right Card: Licensing & Distribution */}
+                {/* Right Card: Brand Licensing */}
                 <motion.div
                     initial={{ y: 50, opacity: 0 }}
                     whileInView={{ y: 0, opacity: 1 }}
@@ -254,7 +254,7 @@ export default function Re() {
                             <motion.img
                                 key={images[currentImage]}
                                 src={images[currentImage]}
-                                alt="Licensing & Distribution"
+                                alt="Brand Licensing"
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
@@ -267,7 +267,7 @@ export default function Re() {
                     <div className="pt-4 pb-2 px-2 sm:pt-6 sm:pb-3 sm:px-3 lg:pt-8 lg:pb-4 lg:px-4 text-left space-y-4 md:space-y-6">
                         <div className="space-y-2 lg:space-y-3">
                             <h3 className="text-[#E2E2E2] text-xl sm:text-2xl md:text-3xl lg:text-[2rem] font-bold tracking-tight">
-                                Brand Distribution & Licensing
+                                Brand Licensing
                             </h3>
                             <p className="text-white/60 text-xs sm:text-sm md:text-base font-medium leading-relaxed max-w-[90%]">
                                 End-to-end solutions for entering and scaling within the Korean and US markets.
@@ -431,7 +431,7 @@ export default function Re() {
                         <div className="space-y-6 md:space-y-8">
                             <div data-reveal className="text-base md:text-xl text-white/80 leading-relaxed font-medium mx-auto max-w-none">
                                 <p>
-                                    We connect businesses to customers through messaging and help brands enter Korea through licensing & distribution. One team, built to execute growth across communication and market expansion.
+                                    We connect businesses to customers through messaging and help brands enter Korea through brand licensing. One team, built to execute growth across communication and market expansion.
                                 </p>
                             </div>
 
@@ -535,7 +535,7 @@ export default function Re() {
                             <div className="max-w-3xl mx-auto text-center mb-16 space-y-4">
                                 <h3 data-reveal className="text-xl md:text-2xl font-bold text-white uppercase tracking-tight">About NIT AMERICA</h3>
                                 <p data-reveal className="text-white/60 text-sm md:text-base leading-relaxed font-medium">
-                                    NIT AMERICA is a U.S.-based growth infrastructure company built on NITSOFT’s proven messaging foundation. We connect businesses to customers through messaging and help brands expand into new markets through licensing & distribution.
+                                    NIT AMERICA is a U.S.-based growth infrastructure company built on NITSOFT’s proven messaging foundation. We connect businesses to customers through messaging and help brands expand into new markets through brand licensing.
                                 </p>
                             </div>
                             <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-5xl mx-auto">
