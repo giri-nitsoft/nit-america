@@ -1,11 +1,45 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { useForm, ValidationError } from '@formspree/react';
 import SEO from "@/components/SEO";
 
-
 const Contact = () => {
-    const [state, handleSubmit] = useForm("xgolvary");
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isSucceeded, setIsSucceeded] = useState(false);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setIsSubmitting(true);
+        setErrorMessage(null);
+
+        const formData = new FormData(e.currentTarget);
+        formData.append("access_key", "4a4b5cef-1554-44b9-8af7-5cc3d3a48c46");
+
+        const object = Object.fromEntries(formData);
+        const json = JSON.stringify(object);
+
+        try {
+            const response = await fetch("https://api.web3forms.com/submit", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                },
+                body: json
+            });
+            const result = await response.json();
+            if (result.success) {
+                setIsSucceeded(true);
+            } else {
+                setErrorMessage(result.message || "Something went wrong. Please try again.");
+            }
+        } catch (err) {
+            setErrorMessage("Network error. Please check your connection.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="relative min-h-screen">
@@ -39,7 +73,7 @@ const Contact = () => {
                         transition={{ delay: 0.2 }}
                         className="max-w-2xl"
                     >
-                        {state.succeeded ? (
+                        {isSucceeded ? (
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.95 }}
                                 animate={{ opacity: 1, scale: 1 }}
@@ -52,6 +86,10 @@ const Contact = () => {
                             </motion.div>
                         ) : (
                             <form onSubmit={handleSubmit} className="space-y-12">
+                                {/* Optional: Hidden field to customize email subject */}
+                                <input type="hidden" name="subject" value="New Contact Form Submission - NIT America" />
+                                <input type="hidden" name="from_name" value="NIT America Website" />
+
                                 <div className="space-y-2 group">
                                     <label
                                         htmlFor="name"
@@ -67,7 +105,6 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors"
                                     />
-                                    <ValidationError prefix="Name" field="name" errors={state.errors} className="text-sm text-red-500 mt-1" />
                                 </div>
                                 <div className="space-y-2 group">
                                     <label
@@ -84,7 +121,6 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors"
                                     />
-                                    <ValidationError prefix="Email" field="email" errors={state.errors} className="text-sm text-red-500 mt-1" />
                                 </div>
                                 <div className="space-y-2 group">
                                     <label
@@ -101,16 +137,17 @@ const Contact = () => {
                                         required
                                         className="w-full bg-transparent border-b border-border py-4 focus:outline-none focus:border-accent transition-colors resize-none"
                                     />
-                                    <ValidationError prefix="Message" field="message" errors={state.errors} className="text-sm text-red-500 mt-1" />
                                 </div>
                                 <div className="pt-4">
-                                    <ValidationError errors={state.errors} className="text-sm text-red-500 mb-4 block" />
+                                    {errorMessage && (
+                                        <p className="text-sm text-red-500 mb-4 block">{errorMessage}</p>
+                                    )}
                                     <Button
                                         type="submit"
-                                        disabled={state.submitting}
+                                        disabled={isSubmitting}
                                         className="w-full md:w-auto h-16 px-12 rounded-full bg-[#111111] text-white font-bold uppercase tracking-[0.2em] text-xs hover:bg-[#333333] hover:-translate-y-1 hover:shadow-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
-                                        {state.submitting ? 'Sending...' : 'Request a Conversation'}
+                                        {isSubmitting ? 'Sending...' : 'Request a Conversation'}
                                     </Button>
                                 </div>
                             </form>
