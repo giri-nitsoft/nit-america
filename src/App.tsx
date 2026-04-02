@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import Footer from './components/Footer'
-import ScrollToTop from './components/ScrollToTop'
 import MainLayout from './components/MainLayout'
 import Messaging from './pages/Messaging'
 import Mail from './pages/Messaging/Mail'
@@ -18,7 +17,6 @@ import Terms from './pages/Terms'
 function App() {
     return (
         <>
-            <ScrollToTop />
             <MainLayout>
                 <div className="flex-1">
                     <Routes>

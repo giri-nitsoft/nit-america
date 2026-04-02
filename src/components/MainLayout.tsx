@@ -1,4 +1,5 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import RightSidebar from './RightSidebar';
 
@@ -8,6 +9,14 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const mainRef = useRef<HTMLElement>(null);
+    const { pathname } = useLocation();
+
+    // Reset scroll to top when pathname changes
+    useEffect(() => {
+        if (mainRef.current) {
+            mainRef.current.scrollTop = 0;
+        }
+    }, [pathname]);
 
     // Check if we are on a page that should use the old top navbar or the new GNB
     // The user said "ALL pages", so we will apply it globally.
