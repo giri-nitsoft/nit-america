@@ -9,14 +9,19 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     const mainRef = useRef<HTMLElement>(null);
-    const { pathname } = useLocation();
+    const location = useLocation();
 
-    // Reset scroll to top when pathname changes
+    // Reset scroll to top when location changes (including hash/key)
     useEffect(() => {
         if (mainRef.current) {
-            mainRef.current.scrollTop = 0;
+            // Using requestAnimationFrame to ensure the scroll happens after the new page is rendered
+            requestAnimationFrame(() => {
+                if (mainRef.current) {
+                    mainRef.current.scrollTo(0, 0);
+                }
+            });
         }
-    }, [pathname]);
+    }, [location.pathname, location.key]);
 
     // Check if we are on a page that should use the old top navbar or the new GNB
     // The user said "ALL pages", so we will apply it globally.

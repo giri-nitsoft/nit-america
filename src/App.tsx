@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Footer from './components/Footer'
 import MainLayout from './components/MainLayout'
+import { TransitionProvider } from './components/TransitionProvider'
 import Messaging from './pages/Messaging'
 import Mail from './pages/Messaging/Mail'
 import Licensing from './pages/Licensing'
@@ -16,7 +17,7 @@ import Terms from './pages/Terms'
 
 function App() {
     return (
-        <>
+        <TransitionProvider>
             <MainLayout>
                 <div className="flex-1">
                     <Routes>
@@ -37,7 +38,7 @@ function App() {
                 </div>
                 <Footer />
             </MainLayout>
-        </>
+        </TransitionProvider>
     )
 }
 

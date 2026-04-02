@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ArrowRight, Home as HomeIcon, MessageSquare, Briefcase, Mail } from 'lucide-react';
+import { usePageTransition } from './TransitionProvider';
 
 export const navItems = [
-    { id: '01', name: 'WORK', color: 'bg-[#8CA2D6]', path: '/' },
-    { id: '02', name: 'ABOUT', color: 'bg-[#9DB2E0]', path: '/#about' },
-    { id: '03', name: 'TEAM', color: 'bg-[#C9D7F2]', path: '/#team' },
-    { id: '04', name: 'CONTACT', color: 'bg-[#DDE9F9]', path: '/contact' },
+    { id: '01', name: 'WORK', color: 'bg-[#8CA2D6]', hex: '#8CA2D6', path: '/' },
+    { id: '02', name: 'ABOUT', color: 'bg-[#9DB2E0]', hex: '#9DB2E0', path: '/#about' },
+    { id: '03', name: 'TEAM', color: 'bg-[#C9D7F2]', hex: '#C9D7F2', path: '/#team' },
+    { id: '04', name: 'CONTACT', color: 'bg-[#DDE9F9]', hex: '#DDE9F9', path: '/contact' },
 ];
 
 interface RightSidebarProps {
@@ -17,12 +18,11 @@ interface RightSidebarProps {
 const RightSidebar: React.FC<RightSidebarProps> = ({ mainRef }) => {
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const { triggerTransition } = usePageTransition();
 
     const handleNavClick = (e: React.MouseEvent, item: typeof navItems[0]) => {
-        if (item.name === 'CONTACT') return;
-        
-        // If we are on the homepage, we want smooth scroll
-        if (location.pathname === '/') {
+        // Special handling for same-page anchors
+        if (location.pathname === '/' && (item.name === 'WORK' || item.name === 'ABOUT' || item.name === 'TEAM')) {
             e.preventDefault();
             const scrollContainer = mainRef?.current || document.querySelector('main');
             if (!scrollContainer) return;
@@ -36,6 +36,13 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ mainRef }) => {
                 const el = document.getElementById('team');
                 if (el) scrollContainer.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
             }
+            return;
+        }
+
+        // Trigger transition if it's a different path
+        if (item.path !== location.pathname) {
+            e.preventDefault();
+            triggerTransition(item.path, item.hex, item.name);
         }
     };
 
@@ -44,23 +51,23 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ mainRef }) => {
             {/* --- RIGHT SIDEBAR NAVIGATION (Fixed GNB) --- */}
             <aside className="hidden md:flex fixed right-0 top-0 w-[240px] lg:w-[330px] h-screen flex-col z-50 border-l border-gray-100 bg-white">
                 {/* Top Sidebar Area (Two Rectangular Boxes for Services) */}
-                <div className="flex-[0.8] flex relative">
-                    <Link
-                        to="/messaging"
-                        className="flex-1 bg-[#A1B3E0] flex items-end justify-end pb-12 border-r border-white/10 pr-4 group cursor-pointer hover:flex-[1.2] transition-all duration-700"
+                <div className="flex-[0.8] flex relative overflow-hidden">
+                    <button
+                        onClick={() => triggerTransition('/messaging', '#A1B3E0', 'Messaging Service')}
+                        className="flex-1 basis-0 h-full bg-[#A1B3E0] flex items-end justify-end pb-12 pr-4 group cursor-pointer hover:flex-[1.2] transition-all duration-700 border-r border-white/5"
                     >
                         <motion.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 0.7 }}
-                            className="[writing-mode:vertical-rl] rotate-180 text-white font-bold uppercase tracking-[0.25em] text-lg lg:text-2xl"
+                            className="[writing-mode:vertical-rl] rotate-180 text-white font-bold uppercase tracking-[0.25em] text-lg lg:text-2xl text-left"
                         >
                             Messaging<br />Service
                         </motion.div>
-                    </Link>
+                    </button>
 
                     {/* Center Logo - Clickable to Home */}
-                    <Link 
-                        to="/" 
+                    <button 
+                        onClick={() => triggerTransition('/', '#FFFFFF', 'NITAMERICA')}
                         className="absolute top-6 lg:top-10 left-1/2 -translate-x-1/2 z-30 group"
                     >
                         <motion.img 
@@ -72,21 +79,21 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ mainRef }) => {
                             transition={{ type: "spring", stiffness: 260, damping: 20, delay: 1 }}
                             whileHover={{ scale: 1.1 }}
                         />
-                    </Link>
+                    </button>
 
-                    <Link
-                        to="/licensing"
-                        className="flex-1 bg-[#BCC9EA] flex items-end justify-end pb-12 pr-0 group cursor-pointer hover:flex-[1.2] transition-all duration-700"
+                    <button
+                        onClick={() => triggerTransition('/licensing', '#BCC9EA', 'Brand Licensing')}
+                        className="flex-1 basis-0 h-full bg-[#BCC9EA] flex items-end justify-end pb-12 pr-4 group cursor-pointer hover:flex-[1.2] transition-all duration-700"
                     >
                         <motion.div 
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 1, delay: 0.7 }}
-                            className="[writing-mode:vertical-rl] rotate-180 text-white font-bold uppercase tracking-[0.25em] text-lg lg:text-2xl"
+                            className="[writing-mode:vertical-rl] rotate-180 text-white font-bold uppercase tracking-[0.25em] text-lg lg:text-2xl text-left"
                         >
-                            Brand Licensing
+                            Brand<br />Licensing
                         </motion.div>
-                    </Link>
+                    </button>
                 </div>
 
                 {/* Bottom Interactive Navigation Strips */}
@@ -191,7 +198,18 @@ const RightSidebar: React.FC<RightSidebarProps> = ({ mainRef }) => {
                                 >
                                     <Link
                                         to={item.path}
-                                        onClick={() => setIsMenuOpen(false)}
+                                        onClick={(e) => {
+                                            if (item.path === location.pathname) {
+                                                setIsMenuOpen(false);
+                                                return;
+                                            }
+                                            e.preventDefault();
+                                            setIsMenuOpen(false);
+                                            // Find the corresponding navItem color if it matches
+                                            const matchingItem = navItems.find(ni => ni.path === item.path);
+                                            const label = item.path === '/' ? 'NITAMERICA' : item.name;
+                                            triggerTransition(item.path, matchingItem?.hex || '#FFFFFF', label);
+                                        }}
                                         className="flex items-center justify-between group py-2"
                                     >
                                         <div className="flex items-center gap-6">
