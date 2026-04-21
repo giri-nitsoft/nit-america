@@ -91,27 +91,52 @@ const teamMembers = [
     {
         name: "Jin-sung Lim",
         role: "CEO & Co-Founder",
-        focus: "Leads overall strategy and cross-border partnerships between the U.S. and Korea. Builds scalable business models and drives global growth."
+        focus: "Drives the company’s vision and growth strategy, leading cross-border partnerships and building scalable business models across the U.S. and Korea.",
+        bullets: [
+            "Entrepreneur with a strong track record of building and scaling technology and commerce businesses",
+            "Deep expertise in cross-border market entry and brand expansion between the U.S. and Korea",
+            "Leads company-wide execution across messaging infrastructure and brand distribution businesses"
+        ]
     },
     {
         name: "Tracy D'Orta",
         role: "VP Business Development",
-        focus: "Identifies American companies and products with high Korean market potential and coordinates U.S.-Korea operations."
+        focus: "Identifies American companies and products with high Korean market potential and coordinates U.S.–Korea operations.",
+        bullets: [
+            "20+ years in international trade across the U.S., Europe, and Asia",
+            "Experience in beauty, apparel, footwear, wellness, and bio/nano sectors",
+            "Multilingual (English, Italian), specialized in cross-border market expansion"
+        ]
     },
     {
         name: "Woo-jin Jang",
         role: "CFO",
-        focus: "Oversees financial planning, budgeting, and performance management. Ensures alignment between financial goals and business execution."
+        focus: "Leads financial planning and performance, ensuring alignment between business execution and financial goals.",
+        bullets: [
+            "Experience in financial planning and business performance management",
+            "Supports decision-making through financial insights",
+            "Ensures financial discipline across operations"
+        ]
     },
     {
         name: "Vincent Rosso",
         role: "CTO",
-        focus: "Leads technological strategy and infrastructure development, ensuring scalable and secure systems to support messaging and distribution operations."
+        focus: "Leads technology and infrastructure, ensuring scalable and secure systems for messaging and distribution.",
+        bullets: [
+            "20+ years in cloud architecture, data platforms, and enterprise systems",
+            "Expertise in AWS, distributed systems, and large-scale data integration",
+            "Connects U.S. and Korean engineering teams to drive faster product delivery"
+        ]
     },
     {
         name: "Tyler Xu",
         role: "Operations Lead",
-        focus: "Oversee day-to-day operations, lead hiring and office infrastructure development, and act as a key liaison between the CEO and internal team to ensure efficient execution of company initiatives."
+        focus: "Oversees operations and drives execution across the organization, ensuring alignment between leadership, teams, and key initiatives.",
+        bullets: [
+            "Experience in building company operations and initiatives from the ground up",
+            "Connects people, processes, and leadership to drive execution",
+            "People-first approach that keeps teams aligned and initiatives on track"
+        ]
     }
 ];
 
@@ -322,7 +347,7 @@ export default function Home() {
                                             preload="auto"
                                             className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:scale-105 transition-transform duration-1000"
                                         >
-                                            <source src="/home/message%20video.mp4" type="video/mp4" />
+                                            <source src="/home/messaging1-sms.mp4" type="video/mp4" />
                                         </video>
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                                         <div className="absolute bottom-4 left-6 z-10">
@@ -678,10 +703,20 @@ export default function Home() {
                                                     {member.role}
                                                 </p>
                                             </div>
-                                            <div className="space-y-1">
+                                            <div className="space-y-3">
                                                 <p className="text-[13px] text-[#1F1F23]/50 leading-relaxed max-w-sm">
                                                     {member.focus}
                                                 </p>
+                                                {'bullets' in member && member.bullets && (
+                                                    <ul className="space-y-1.5">
+                                                        {(member.bullets as string[]).map((bullet, idx) => (
+                                                            <li key={idx} className="flex items-start gap-2 text-[12px] text-[#1F1F23]/50 leading-relaxed">
+                                                                <span className="mt-1.5 w-1 h-1 rounded-full bg-[#355BE5] shrink-0" />
+                                                                {bullet}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
