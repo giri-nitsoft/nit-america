@@ -63,6 +63,12 @@ export default function Re() {
     const [currentImage, setCurrentImage] = useState(0);
     const images = ["/home/licensing_card.jpg", "/home/licensing_card_2.jpg", "/home/licensing_card_3.jpg"];
 
+    const messagingVideos = [
+        "/home/messaging-vans sms.mp4",
+        "/home/messaging-whatsapp.mp4"
+    ];
+    const [msgVIdx, setMsgVIdx] = useState(0);
+
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentImage((prev) => (prev + 1) % images.length);
@@ -186,25 +192,15 @@ export default function Re() {
                 >
                     <div className="bg-[#050505] w-full aspect-[2/1] rounded-[16px] sm:rounded-[20px] lg:rounded-[32px] border border-white/5 flex items-center justify-center relative overflow-hidden group">
                         <video
+                            key={messagingVideos[msgVIdx]}
                             autoPlay
                             muted
                             playsInline
                             preload="auto"
-                            onTimeUpdate={(e) => {
-                                const video = e.currentTarget;
-                                // Increase the threshold even further to ensure no black frames are seen at the loop point
-                                if (video.currentTime >= video.duration - 0.7) {
-                                    video.currentTime = 0.1; // Skip the very beginning on reset too
-                                    video.play();
-                                }
-                            }}
-                            onEnded={(e) => {
-                                e.currentTarget.currentTime = 0.1;
-                                e.currentTarget.play();
-                            }}
+                            onEnded={() => setMsgVIdx((prev) => (prev + 1) % messagingVideos.length)}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out bg-transparent"
                         >
-                            <source src="/home/messaging1-sms.mp4" type="video/mp4" />
+                            <source src={messagingVideos[msgVIdx]} type="video/mp4" />
                         </video>
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-700 pointer-events-none" />
                     </div>

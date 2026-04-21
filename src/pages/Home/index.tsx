@@ -24,6 +24,10 @@ const licensingImages = [
     "/home/licensing_card_2.jpg",
     "/home/licensing_card_3.jpg"
 ];
+const messagingVideos = [
+    "/home/messaging-vans sms.mp4",
+    "/home/messaging-whatsapp.mp4"
+];
 const rollingTexts = [
     "We connect brands and customers through messaging",
     "We deliver reliable, high-volume messaging",
@@ -170,6 +174,7 @@ function CountUp({ value, duration = 2, decimals = 0, suffix = "" }: { value: nu
 export default function Home() {
     const [index, setIndex] = useState(0);
     const [imgIndex, setImgIndex] = useState(0);
+    const [msgVIdx, setMsgVIdx] = useState(0);
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -340,14 +345,15 @@ export default function Home() {
                                     {/* Top: Video/Media Area */}
                                     <div className="h-[43%] relative overflow-hidden border-b border-gray-100/50">
                                         <video
+                                            key={messagingVideos[msgVIdx]}
                                             autoPlay
                                             muted
-                                            loop
                                             playsInline
                                             preload="auto"
+                                            onEnded={() => setMsgVIdx((prev) => (prev + 1) % messagingVideos.length)}
                                             className="absolute inset-0 w-full h-full object-cover opacity-95 group-hover:scale-105 transition-transform duration-1000"
                                         >
-                                            <source src="/home/messaging1-sms.mp4" type="video/mp4" />
+                                            <source src={messagingVideos[msgVIdx]} type="video/mp4" />
                                         </video>
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none" />
                                         <div className="absolute bottom-4 left-6 z-10">
