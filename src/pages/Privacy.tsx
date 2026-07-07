@@ -38,7 +38,10 @@ const Privacy = () => {
                                 <span className="opacity-20">01</span> WHO WE ARE
                             </h2>
                             <p>
-                                NIT America Inc. ("NIT America," "we," "us," or "our") is a subsidiary of NIT Soft Co., Ltd., headquartered in Irvine, California. We provide business messaging services that enable our clients ("Brands") to communicate with their customers via SMS, MMS, and other messaging channels.
+                                NIT America Inc. ("NIT America," "we," "us," or "our") is an independent US company headquartered in Irvine, California. NIT Soft Co., Ltd. (Korea) is a partner company, not a parent. We provide business messaging services that enable our clients ("Brands") to communicate with their customers via SMS, MMS, and other messaging channels.
+                            </p>
+                            <p>
+                                NIT America also sends its own account-notification and verification text messages to its own registered users (for example, sign-up confirmations, login verification codes, and account/security notices). For these messages NIT America is the sender and the data controller. Messages sent by business customers who use our platform are sent by, and are the responsibility of, those businesses, each under its own separate brand and messaging campaign.
                             </p>
                             <p>
                                 This Privacy Policy describes how we collect, use, disclose, and protect your personal information when you visit our website (nitamerica.com), use our services, or otherwise interact with us.

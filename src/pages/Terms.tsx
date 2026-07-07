@@ -39,7 +39,13 @@ const Terms = () => {
                                     <span className="opacity-20 text-sm font-sans">01</span> OVERVIEW
                                 </h2>
                                 <p className="text-sm">
-                                    NIT America Inc. ("NIT America," "we," "us," or "our") provides business messaging services that enable our clients ("Brands") to send SMS and MMS messages to their customers and end users ("Recipients"). This page describes the terms and conditions governing our messaging services, your rights as a message recipient, and how to manage your messaging preferences.
+                                    NIT America Inc. ("NIT America," "we," "us," or "our") provides business messaging services that enable our clients ("Brands") to send SMS and MMS messages to their customers and end users ("Recipients").
+                                </p>
+                                <p className="text-sm">
+                                    NIT America also sends its own account-notification and verification text messages to its own registered users (for example, sign-up confirmations, login verification codes, and account/security notices). For these messages NIT America is the sender and the data controller. Messages sent by business customers who use our platform are sent by, and are the responsibility of, those businesses, each under its own separate brand and messaging campaign.
+                                </p>
+                                <p className="text-sm">
+                                    This page describes the terms and conditions governing our messaging services, your rights as a message recipient, and how to manage your messaging preferences.
                                 </p>
                             </div>
                             <div className="space-y-4">
