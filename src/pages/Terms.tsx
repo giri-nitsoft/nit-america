@@ -63,6 +63,7 @@ const Terms = () => {
                             <h2 className="text-xl font-bold uppercase tracking-widest text-[#111111] pb-2 border-b border-gray-50 flex items-center gap-3">
                                 <span className="opacity-20">03</span> FREQUENCY & CONTENT
                             </h2>
+                            <p className="text-sm">Message frequency varies.</p>
                             <div className="grid md:grid-cols-2 gap-8 pt-2">
                                 <ul className="space-y-3 text-sm list-disc pl-5">
                                     <li>Transactional notifications</li>
